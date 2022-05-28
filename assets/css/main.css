@@ -43,6 +43,7 @@ body {
   background-color: var(--dark-1);
   color: var(--light-1);
   padding: 1rem;
+  margin: auto;
 }
 
 header {
@@ -50,7 +51,7 @@ header {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  padding: 3rem 0 1rem 0;
+  padding: 0rem 0 0rem 0;
 }
 
 header img.profile {
