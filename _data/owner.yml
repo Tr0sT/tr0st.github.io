@@ -1,25 +1,21 @@
-name: Sharad Raj
-dp: https://avatars2.githubusercontent.com/u/36638057?s=460&u=0cbe4fd6b5a3655d91b3eb86db834d0829a0c086&v=4
+name: Сергей Морозов
+dp: https://sun9-2.userapi.com/s/v1/if2/ksyJR9TMWSm_TbKT_D8JVxr47XiOCVN2T-0WeRD5XaxtxYyz-_wdK-YcT1NUgTSjHScjSBCP5b5o1POcxx-WD0Rh.jpg?size=960x1280&quality=95&type=album
 description: "
-  I am a Full Stack Developer / Designer living in Barabanki, India.
+  Я юнити-разработчик из Нижнего Новгорода.
   "
-sub-description: "Web & Flutter for Android/iOS"
-hire: Want to hire me! Just drop a mail
-address: India
-website: https://sharadcodes.github.io
-email: dev_sharad@outlook.com
+sub-description: "Мобильный геймдев и всё такое"
+address: Россия
+website: https://tr0st.github.io
+email: tr0st@bk.ru
 contact:
-  - title: linkedin
-    url: https://www.linkedin.com/in/srsmaurya
+  - title: vk
+    url: https://vk.com/trosty
+  - title: discord
+    url: https://discordapp.com/users/Tr0sT#2607
+  - title: telegram
+    url: https://t.me/tr0st
   - title: github
-    url: https://github.com/sharadcodes
-  - title: dribbble
-    url: https://dribbble.com/iamsharadraj  
-  - title: twitter
-    url: https://twitter.com/iamsharadraj
-  - title: dev
-    url: https://dev.to/sharadcodes
-  # - title: stackOverflow
-  #   url: https://stackoverflow.com/story/iamsharadraj
+    url: https://github.com/tr0st
   - title: email
-    url: mailto:dev_sharad@outlook.com
+    url: mailto:tr0st@bk.ru
+

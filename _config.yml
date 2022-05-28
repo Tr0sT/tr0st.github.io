@@ -1,9 +1,9 @@
-title: sharadcodes
+title: Сергей Морозов
 slogan: all you need to kNow
 logo: "assets/uploads/profile.jpg"
 
 # baseurl: ""
-url: "https://sharadcodes.github.io"
+url: "https://tr0st.github.io"
 
 collections:
   notes:
@@ -15,7 +15,7 @@ defaults:
       path: _posts
     values:
       layout: post
-      author: Sharad Raj
+      author: Сергей Морозов
   # - scope:
   #     path: _notes
   #   values:

@@ -1,7 +1,5 @@
 toc:
-  - title: HOME
+  - title: Обо мне
     url: /
-  - title: ABOUT
-    url: /about
-  - title: PROJECTS
+  - title: Проекты
     url: /projects
