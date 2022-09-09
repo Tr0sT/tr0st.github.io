@@ -99,3 +99,8 @@ xandr.com, 7353, RESELLER, f5ab79cb980f11d1
 yandex.com, 40427798, RESELLER
 yandex.com, 97539269, RESELLER
 yeahmobi.com, 5135195, RESELLER
+appnexus.com, 13227, RESELLER
+pubmatic.com, 162223, RESELLER, 5d62403b186f2ace
+rhythmone.com, 123476257, RESELLER, a670c89d4a324e47
+rubiconproject.com, 17608, RESELLER, 0bfd66d529a55807
+yandex.com, 95746987, RESELLER
