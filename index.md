@@ -7,7 +7,7 @@ layout: page
 
 В свободное время пилю текстовую рпгшку ([узнать подробнее и присоединиться можно тут](https://gamedev.ru/projects/forum/?id=254030))
 
-Несколько моих игрушек: [Вирус](https://play.google.com/store/apps/details?id=godreams.total.board.battles), [Bar Hoppers](https://play.google.com/store/apps/details?id=com.nuclearband.barhoppers) и [Фанты](https://play.google.com/store/apps/details?id=com.NuclearBand.fants)
+Несколько моих игрушек: [Bender](https://play.google.com/store/apps/details?id=com.nuclearband.bender), [Вирус](https://play.google.com/store/apps/details?id=godreams.total.board.battles), [Bar Hoppers](https://play.google.com/store/apps/details?id=com.nuclearband.barhoppers) и [Фанты](https://play.google.com/store/apps/details?id=com.NuclearBand.fants)
 
 В [этом гитхабе](https://github.com/nuclearband) у меня всякие либы, которые я использую в своих пет-проектах
 
