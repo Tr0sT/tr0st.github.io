@@ -101,15 +101,15 @@ public class HealthCharacterCombatDataStat : IntCharacterCombatDataStat
     }
 }
 
-public abstract class CharacterCombatDataStat<T> : CharacterCombatDataStat where T : struct  
-{  
-    public T Value;  
-}
 
 public abstract class IntCharacterCombatDataStat : CharacterCombatDataStat<int>  
 {  
 }
 
+public abstract class CharacterCombatDataStat<T> : CharacterCombatDataStat where T : struct  
+{  
+    public T Value;  
+}
 public abstract class CharacterCombatDataStat  
 {  
     public abstract CharacterCombatDataStatType CharacterCombatDataStatType { get; }  
@@ -124,4 +124,4 @@ int MaxTargets {get;}
 int BonusDamage {get;}
 }
 
-Вся эта система мне и сейчас кажется логичной и гибкой, не нравится мне в ней только енум CharacterCombatDataStatType, но посмотрим как это всё изменится после рефакторинга.
+Вся эта система мне и сейчас кажется логичной и гибкой, не нравится мне в ней только енум CharacterCombatDataStatType и асбтрактные классы вместо интерфейсов. Посмотрим как это всё изменится после рефакторинга.
