@@ -56,7 +56,16 @@ public abstract class CombatStatAttribute<T> : ItemAttribute, ICombatStatAttribu
 }  
 ```
 
-А стат генерации:
+Причем валюты тоже определялись в рамках системы как айтемы с особым атрибутом:
+
+```cs
+public class CurrencyItemAttribute : ItemAttribute
+{
+    public CurrencyDefinition CurrencyDefinition = null!;
+}
+```
+
+А вот статы генерации:
 
 ```cs
 public class HealthCombatStatRangeAttribute : CombatStatRangeAttribute<HealthCharacterCombatDataStat>  
@@ -117,11 +126,6 @@ public abstract class CharacterCombatDataStat
 }
 ```
 
-С виду всё это кажется довольно сложным, но в этом есть логика. Какие-то статы типа Health задаются интом, какие-то типа CriticalMultiplier - флоатом, и могут быть замороченные типа 
-AOEBonusDamage 
-{
-int MaxTargets {get;}
-int BonusDamage {get;}
-}
+С виду всё это кажется довольно сложным, но в этом есть логика. Какие-то статы типа Health задаются интом, какие-то типа CriticalMultiplier - флоатом, и могут быть замороченные типа AOEBonusDamage с интом MaxTargets и вторым интом BonusDamage.
 
-Вся эта система мне и сейчас кажется логичной и гибкой, не нравится мне в ней только енум CharacterCombatDataStatType и асбтрактные классы вместо интерфейсов. Посмотрим как это всё изменится после рефакторинга.
+Вся эта система мне и сейчас кажется логичной и гибкой, не нравится мне в ней только енум CharacterCombatDataStatType и абстрактные классы вместо интерфейсов. Посмотрим как это всё изменится после рефакторинга.
