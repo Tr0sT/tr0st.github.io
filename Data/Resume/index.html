@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Сергей Морозов - Lead Unity Developer</title>
+  <meta name="description" content="Сергей Морозов. Lead Unity Developer, Unity/C#, Hustle Castle, AI-assisted development, техническое лидерство.">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Сергей Морозов - Lead Unity Developer">
+  <meta property="og:description" content="Unity-разработчик и технический лидер. Основной опыт - Hustle Castle в Nord/My.Games.">
+  <meta property="og:url" content="https://tr0st.github.io/Data/Resume/">
+  <link rel="canonical" href="https://tr0st.github.io/Data/Resume/">
+  <style>
+    :root {
+      --bg: #f6f6f3;
+      --paper: #ffffff;
+      --ink: #151515;
+      --muted: #5f6770;
+      --quiet: #8a929a;
+      --line: rgba(21, 21, 21, 0.12);
+      --line-strong: rgba(21, 21, 21, 0.22);
+      --accent: #165f91;
+      --accent-soft: #e6f0f7;
+      --contact-a: #143c5a;
+      --contact-b: #111111;
+      --contact-c: #176b55;
+      color-scheme: light;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    a { color: inherit; }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 56px;
+      padding: 0 28px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(246, 246, 243, 0.92);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav-name {
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 10px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      outline: none;
+      color: var(--ink);
+      background: rgba(21, 21, 21, 0.06);
+    }
+
+    main,
+    header {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 72px 0 44px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--muted);
+      background: var(--paper);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 860px;
+      margin-top: 18px;
+      font-size: clamp(2.8rem, 6vw, 5.7rem);
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .role {
+      display: block;
+      color: var(--accent);
+    }
+
+    .lead {
+      max-width: 760px;
+      margin-top: 24px;
+      color: #30363b;
+      font-size: 1.16rem;
+      line-height: 1.58;
+    }
+
+    .lead strong { color: var(--ink); }
+
+    .top-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--paper);
+      color: var(--ink);
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      outline: none;
+      border-color: var(--line-strong);
+      background: #f1f3f4;
+    }
+
+    .button img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 42px;
+    }
+
+    .metric {
+      min-height: 116px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    .metric b {
+      display: block;
+      font-size: 1.55rem;
+      line-height: 1.05;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.42;
+    }
+
+    .section {
+      padding: 58px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.65fr) minmax(0, 1fr);
+      gap: 36px;
+      align-items: start;
+      margin-bottom: 28px;
+    }
+
+    .kicker {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin-top: 8px;
+      font-size: clamp(1.85rem, 3vw, 2.6rem);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      line-height: 1.62;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .job {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr);
+      gap: 26px;
+      padding: 24px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .job:first-child { border-top: none; }
+
+    .period {
+      color: var(--muted);
+      font-weight: 760;
+      line-height: 1.45;
+    }
+
+    .job h3 {
+      font-size: 1.35rem;
+      line-height: 1.15;
+    }
+
+    .role-line {
+      margin-top: 6px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .job ul {
+      margin: 14px 0 0;
+      padding-left: 20px;
+      color: #333b42;
+      line-height: 1.58;
+    }
+
+    .job-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .job-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 760;
+      text-decoration: none;
+    }
+
+    .job-links a:hover,
+    .job-links a:focus-visible {
+      outline: none;
+      border-color: rgba(22, 95, 145, 0.38);
+      background: var(--accent-soft);
+    }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    .card h3 {
+      margin-bottom: 14px;
+      font-size: 1.25rem;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 31px;
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f7f8f8;
+      color: #2d343a;
+      font-size: 14px;
+      font-weight: 740;
+    }
+
+    .card p {
+      color: var(--muted);
+      line-height: 1.62;
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .link-card {
+      min-height: 138px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .link-card:hover,
+    .link-card:focus-visible {
+      outline: none;
+      border-color: rgba(22, 95, 145, 0.38);
+      background: #f8fbfd;
+    }
+
+    .link-card img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .link-card b {
+      display: block;
+      font-size: 1.04rem;
+    }
+
+    .link-card span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.38;
+    }
+
+    .contact-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 26px;
+      align-items: center;
+      padding: 30px;
+      border-radius: 8px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(22, 95, 145, 0.9), rgba(17, 17, 17, 0.96) 58%, rgba(23, 107, 85, 0.9));
+    }
+
+    .contact-panel h2 {
+      margin: 0;
+      color: #fff;
+    }
+
+    .contact-panel p {
+      max-width: 720px;
+      margin-top: 14px;
+      color: rgba(255, 255, 255, 0.78);
+      line-height: 1.62;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .contact-list a,
+    .copy-button {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 6px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+      font: inherit;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .contact-list a:hover,
+    .contact-list a:focus-visible,
+    .copy-button:hover,
+    .copy-button:focus-visible {
+      outline: none;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .footer {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 24px 0 34px;
+      border-top: 1px solid var(--line);
+      color: var(--quiet);
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .summary,
+      .links-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .section-head,
+      .grid-two,
+      .contact-panel {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .site-nav {
+        position: static;
+        display: block;
+        padding: 14px 18px;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+        margin-top: 10px;
+      }
+
+      main,
+      header,
+      .footer {
+        width: min(100% - 32px, 1120px);
+      }
+
+      .hero {
+        padding: 44px 0 32px;
+      }
+
+      .lead {
+        font-size: 1.04rem;
+      }
+
+      .summary,
+      .links-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metric {
+        min-height: auto;
+      }
+
+      .section {
+        padding: 44px 0;
+      }
+
+      .job {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .card,
+      .contact-panel {
+        padding: 20px;
+      }
+    }
+  </style>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Сергей Морозов",
+      "jobTitle": "Lead Unity Developer",
+      "email": "mailto:tr0st@bk.ru",
+      "telephone": "+7-960-177-27-25",
+      "url": "https://tr0st.github.io/Data/Resume/",
+      "sameAs": [
+        "https://github.com/Tr0sT",
+        "https://t.me/nuclearband",
+        "https://habr.com/ru/users/Tr0sT/posts/",
+        "https://tr0st.github.io/"
+      ],
+      "knowsAbout": ["Unity", "C#", "AI-assisted software development", "Game development", "Hustle Castle", "Technical leadership"]
+    }
+  </script>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Навигация по резюме">
+    <a class="nav-name" href="#top">Сергей Морозов</a>
+    <div class="nav-links">
+      <a href="#experience">Опыт</a>
+      <a href="#skills">Навыки</a>
+      <a href="#links">Ссылки</a>
+      <a href="#contact">Контакты</a>
+    </div>
+  </nav>
+
+  <header id="top" class="hero">
+    <div class="eyebrow">Нижний Новгород / удаленно / командировки</div>
+    <h1>Сергей Морозов <span class="role">Lead Unity Developer</span></h1>
+    <p class="lead">
+      Unity-разработчик и технический лидер. Основной опыт - <strong>Hustle Castle в Nord/My.Games</strong>.
+      Пишу production-код через AI-инструменты и могу выстроить процесс вокруг задач, реализации,
+      ревью, QA и переноса макетов в Unity.
+    </p>
+    <div class="top-links" aria-label="Основные ссылки">
+      <a class="button" href="https://t.me/nuclearband" target="_blank" rel="noreferrer">
+        <img src="../../assets/png/telegram.png" alt=""> Блог
+      </a>
+      <a class="button" href="https://github.com/Tr0sT" target="_blank" rel="noreferrer">
+        <img src="../../assets/png/github.png" alt=""> GitHub
+      </a>
+      <a class="button" href="https://habr.com/ru/users/Tr0sT/posts/" target="_blank" rel="noreferrer">
+        <img src="../../assets/png/habr.png" alt=""> Habr
+      </a>
+    </div>
+
+    <div class="summary" aria-label="Кратко">
+      <div class="metric">
+        <b>14 лет</b>
+        <span>коммерческой разработки</span>
+      </div>
+      <div class="metric">
+        <b>4+ года</b>
+        <span>Hustle Castle, Nord/My.Games</span>
+      </div>
+      <div class="metric">
+        <b>Unity / C#</b>
+        <span>клиентская разработка, gameplay, UI, assets</span>
+      </div>
+      <div class="metric">
+        <b>AI-assisted</b>
+        <span>код, ревью, QA, автоматизация процессов</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="experience" class="section">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Опыт</div>
+          <h2>Коммерческая разработка</h2>
+        </div>
+        <p>
+          Основной профиль - Unity/C# и мобильные игры. Ниже только факты по ролям и зонам ответственности.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <article class="job">
+          <div class="period">Фев 2022 - сейчас<br>4 года 6 мес</div>
+          <div>
+            <h3>Nord / My.Games</h3>
+            <div class="role-line">Unity Developer, Hustle Castle</div>
+            <ul>
+              <li>Разработка клиента Hustle Castle.</li>
+              <li>Работа с большой существующей codebase и live-продуктом.</li>
+              <li>Участие в технических решениях, релизной разработке и командных процессах.</li>
+            </ul>
+            <div class="job-links">
+              <a href="https://play.google.com/store/apps/details?id=com.my.hc.rpg.kingdom.simulator" target="_blank" rel="noreferrer">Google Play</a>
+              <a href="https://hc.my.games/ru/" target="_blank" rel="noreferrer">hc.my.games</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="job">
+          <div class="period">Дек 2016 - Фев 2022<br>5 лет 3 мес</div>
+          <div>
+            <h3>AdoreGames</h3>
+            <div class="role-line">Программист</div>
+            <ul>
+              <li>Полный цикл разработки gameplay для мобильных 2D-игр.</li>
+              <li>Работа в компактной команде из двух-трех программистов.</li>
+              <li>Проекты: Coastal Hill, Ninja Dude vs Zombies 2 и другие.</li>
+            </ul>
+            <div class="job-links">
+              <a href="https://play.google.com/store/apps/details?id=com.adoregames.coastalhill&hl=ru" target="_blank" rel="noreferrer">Coastal Hill</a>
+              <a href="https://apps.apple.com/gb/app/%D0%BD%D0%B8%D0%BD%D0%B4%D0%B7%D1%8F-%D1%87%D1%83%D0%B2%D0%B0%D0%BA-%D0%BF%D1%80%D0%BE%D1%82%D0%B8%D0%B2-%D0%B7%D0%BE%D0%BC%D0%B1%D0%B8-2/id1444288254?l=ru" target="_blank" rel="noreferrer">Ninja Dude vs Zombies 2</a>
+              <a href="https://adoregames.com/" target="_blank" rel="noreferrer">adoregames.com</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="job">
+          <div class="period">Сен 2012 - Дек 2016<br>4 года 4 мес</div>
+          <div>
+            <h3>ВНИИЭФ</h3>
+            <div class="role-line">Математик-программист</div>
+            <ul>
+              <li>Разработка научной программы для моделирования механики сплошных сред.</li>
+              <li>Создание, распараллеливание и оптимизация модулей.</li>
+              <li>Основные языки: C++ и Fortran.</li>
+            </ul>
+            <div class="job-links">
+              <a href="http://www.vniief.ru/" target="_blank" rel="noreferrer">vniief.ru</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Навыки</div>
+          <h2>Технологии и процессы</h2>
+        </div>
+        <p>
+          Сильная сторона - соединить практическую Unity-разработку, техническую ответственность
+          и AI-инструменты в понятный рабочий процесс.
+        </p>
+      </div>
+
+      <div class="grid-two">
+        <div class="card">
+          <h3>Разработка</h3>
+          <div class="chips">
+            <span class="chip">C#</span>
+            <span class="chip">Unity3D</span>
+            <span class="chip">Design Patterns</span>
+            <span class="chip">Assets</span>
+            <span class="chip">Version Control</span>
+            <span class="chip">Multiplayer</span>
+            <span class="chip">Gameplay</span>
+            <span class="chip">Unity UI</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Процессы</h3>
+          <div class="chips">
+            <span class="chip">Technical leadership</span>
+            <span class="chip">AI-assisted coding</span>
+            <span class="chip">AI review</span>
+            <span class="chip">QA workflow</span>
+            <span class="chip">Figma/Photoshop to Unity</span>
+            <span class="chip">Agile Project Management</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>База</h3>
+          <p>
+            Высшее образование: ННГУ им. Н.И. Лобачевского, механико-математический факультет,
+            прикладная математика и информатика, 2012.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Языки</h3>
+          <p>Русский - родной. Английский - B2.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="links" class="section">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Ссылки</div>
+          <h2>Публичные профили</h2>
+        </div>
+        <p>
+          Основные ссылки: блог, GitHub и Habr. Они важнее длинного описания, потому что показывают контекст работы.
+        </p>
+      </div>
+
+      <div class="links-grid">
+        <a class="link-card" href="https://t.me/nuclearband" target="_blank" rel="noreferrer">
+          <img src="../../assets/png/telegram.png" alt="">
+          <div>
+            <b>Блог</b>
+            <span>t.me/nuclearband</span>
+          </div>
+        </a>
+        <a class="link-card" href="https://github.com/Tr0sT" target="_blank" rel="noreferrer">
+          <img src="../../assets/png/github.png" alt="">
+          <div>
+            <b>GitHub</b>
+            <span>github.com/Tr0sT</span>
+          </div>
+        </a>
+        <a class="link-card" href="https://habr.com/ru/users/Tr0sT/posts/" target="_blank" rel="noreferrer">
+          <img src="../../assets/png/habr.png" alt="">
+          <div>
+            <b>Habr</b>
+            <span>habr.com/users/Tr0sT</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="contact-panel">
+        <div>
+          <div class="kicker" style="color: rgba(255,255,255,0.72);">Контакты</div>
+          <h2>Удобнее всего писать в Telegram</h2>
+          <p>
+            Нижний Новгород, удаленный формат, готов к командировкам. Рассматриваю Lead Unity,
+            technical leadership и внедрение AI в процессы разработки игр.
+          </p>
+        </div>
+        <div class="contact-list" aria-label="Контактные ссылки">
+          <a href="https://t.me/Tr0sT" target="_blank" rel="noreferrer">Telegram: @Tr0sT</a>
+          <a href="mailto:tr0st@bk.ru">tr0st@bk.ru</a>
+          <a href="tel:+79601772725">+7 960 177-27-25</a>
+          <button class="copy-button" type="button" data-copy="https://tr0st.github.io/Data/Resume/">Скопировать ссылку на CV</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Обновлено по резюме от 09.06.2026. Публичная ссылка: tr0st.github.io/Data/Resume/.
+  </footer>
+
+  <script>
+    const button = document.querySelector("[data-copy]");
+    if (button) {
+      const originalText = button.textContent;
+      button.addEventListener("click", async () => {
+        const value = button.getAttribute("data-copy");
+        try {
+          await navigator.clipboard.writeText(value);
+          button.textContent = "Ссылка скопирована";
+        } catch (error) {
+          button.textContent = value;
+        }
+        window.setTimeout(() => {
+          button.textContent = originalText;
+        }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>
