@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090c12">
+  <title>От личной магии к инженерному процессу — полная презентация</title>
+  <style>
+/* Исходные стили акта 1 */
+:root {
+      --bg: #090c12; --panel: #111722; --panel2: #171f2d; --panel3: #202a3a;
+      --line: rgba(255,255,255,.13); --line-strong: rgba(255,255,255,.24);
+      --text: #f3f7fc; --muted: #aab5c6; --subtle: #778498;
+      --green: #43dda7; --blue: #73a8ff; --amber: #f2bd62; --red: #f07788; --purple: #ba92ff; --cyan: #70d8f4;
+      --toolbar-h: 58px; --radius: 10px; --shadow: 0 28px 90px rgba(0,0,0,.42); color-scheme: dark;
+    }
+    * { box-sizing: border-box; } html, body { margin:0; min-height:100%; }
+    body { overflow:hidden; background:var(--bg); color:var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    button { font: inherit; }
+    .shell { min-height:100svh; background: radial-gradient(circle at 12% 15%, rgba(115,168,255,.13), transparent 29%), radial-gradient(circle at 88% 82%, rgba(67,221,167,.10), transparent 31%), var(--bg); }
+    .toolbar { position:fixed; z-index:50; inset:0 0 auto; height:var(--toolbar-h); display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:16px; padding:0 18px; border-bottom:1px solid var(--line); background:rgba(7,10,15,.90); backdrop-filter:blur(18px); }
+    .brand { display:flex; align-items:center; min-width:0; gap:12px; } .mark { display:grid; place-items:center; width:29px; height:29px; flex:0 0 auto; border:1px solid rgba(67,221,167,.55); border-radius:7px; color:var(--green); background:rgba(67,221,167,.10); font-weight:900; }
+    .brand-title { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; font-weight:780; } .brand-subtitle { color:var(--subtle); font-size:13px; white-space:nowrap; }
+    .controls { display:flex; align-items:center; gap:8px; } .btn { height:34px; min-width:38px; padding:0 11px; border:1px solid var(--line); border-radius:7px; color:var(--text); background:rgba(255,255,255,.055); cursor:pointer; }
+    .btn:hover,.btn:focus-visible { outline:none; border-color:rgba(115,168,255,.78); background:rgba(115,168,255,.14); } .counter { min-width:68px; color:var(--muted); text-align:center; font-size:13px; }
+    .progress { position:fixed; z-index:55; left:0; right:0; top:calc(var(--toolbar-h) - 2px); height:2px; background:rgba(255,255,255,.06); } .progress span { display:block; width:0; height:100%; background:linear-gradient(90deg,var(--green),var(--blue),var(--purple),var(--amber)); transition:width 180ms ease; }
+    .slides { position:relative; height:100svh; padding-top:var(--toolbar-h); }
+    .slide { --accent:var(--green); position:absolute; inset:var(--toolbar-h) 0 0; display:none; min-height:calc(100svh - var(--toolbar-h)); overflow:auto; padding:42px clamp(20px,4.8vw,74px); }
+    .slide.active { display:grid; align-items:center; } .slide::before { content:""; position:fixed; z-index:-1; width:42vw; height:42vw; right:-18vw; bottom:-24vw; border-radius:50%; background:color-mix(in srgb, var(--accent) 13%, transparent); filter:blur(18px); pointer-events:none; }
+    .slide[data-accent="blue"] { --accent:var(--blue); } .slide[data-accent="amber"] { --accent:var(--amber); } .slide[data-accent="red"] { --accent:var(--red); } .slide[data-accent="purple"] { --accent:var(--purple); } .slide[data-accent="cyan"] { --accent:var(--cyan); }
+    .inner { width:min(1450px,100%); margin:0 auto; } .kicker { display:inline-flex; margin-bottom:18px; padding:7px 10px; border:1px solid color-mix(in srgb, var(--accent) 45%, transparent); border-radius:7px; color:color-mix(in srgb, var(--accent) 72%, white); background:color-mix(in srgb, var(--accent) 11%, transparent); font-size:13px; font-weight:820; text-transform:uppercase; letter-spacing:.035em; }
+    h1,h2,h3,p { margin-top:0; } .title { max-width:1260px; margin-bottom:18px; font-size:clamp(38px,5.15vw,76px); line-height:.99; letter-spacing:-.035em; font-weight:880; } .lead { max-width:1080px; margin-bottom:0; color:var(--muted); font-size:clamp(19px,1.9vw,28px); line-height:1.37; }
+    .hero { overflow:hidden; background:#06080d; } .hero::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg, rgba(6,8,13,.98), rgba(6,8,13,.67) 62%, rgba(6,8,13,.28)), repeating-linear-gradient(90deg, transparent 0 110px, rgba(255,255,255,.025) 111px 112px), repeating-linear-gradient(0deg, transparent 0 110px, rgba(255,255,255,.022) 111px 112px); } .hero .title { max-width:1240px; font-size:clamp(50px,6.8vw,104px); } .hero .lead { max-width:920px; }
+    .chips { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; } .chip { padding:8px 11px; border:1px solid var(--line-strong); border-radius:7px; color:#f8fbff; background:rgba(255,255,255,.065); font-size:13px; font-weight:740; }
+    .grid { display:grid; gap:20px; } .two { grid-template-columns:repeat(2,minmax(0,1fr)); } .three { grid-template-columns:repeat(3,minmax(0,1fr)); } .four { grid-template-columns:repeat(4,minmax(0,1fr)); } .mt { margin-top:28px; }
+    .pipeline-grid { display:grid; grid-template-columns:1fr 1fr 1.25fr; gap:20px; }
+    .panel,.card,.pipeline,.metric,.quote-box { border:1px solid var(--line); border-radius:var(--radius); background:rgba(17,23,34,.82); box-shadow:var(--shadow); } .panel { padding:clamp(20px,2.3vw,34px); } .card { min-height:168px; padding:20px; } .pipeline { padding:22px; }
+    .card h3,.pipeline h3,.panel h3 { margin-bottom:9px; font-size:clamp(19px,1.7vw,25px); } .card p,.pipeline p,.panel p,.plain-list li { margin-bottom:0; color:var(--muted); font-size:clamp(15px,1.22vw,18px); line-height:1.44; } .card strong,.pipeline strong,.panel strong { color:var(--text); } .top-accent { border-top:3px solid var(--accent); } .danger { border-top:3px solid var(--red); } .warning { border-top:3px solid var(--amber); }
+    .price { color:var(--accent); font-size:clamp(35px,4vw,60px); font-weight:900; } .flow { display:flex; flex-wrap:wrap; align-items:center; gap:9px; margin-top:16px; } .node { padding:9px 11px; border:1px solid var(--line-strong); border-radius:7px; color:var(--text); background:rgba(255,255,255,.065); font-size:14px; font-weight:750; } .arrow { color:var(--subtle); font-size:20px; }
+    .quote-box { margin-top:28px; padding:23px 27px; border-color:color-mix(in srgb, var(--accent) 40%, var(--line)); } .quote-box p { margin:0; font-size:clamp(25px,2.55vw,40px); line-height:1.18; font-weight:820; letter-spacing:-.02em; }
+    .plain-list { display:grid; gap:10px; margin:22px 0 0; padding:0; list-style:none; } .plain-list li { padding:13px 15px; border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.045); }
+    .metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-top:28px; } .metric { min-height:150px; padding:20px; } .metric b { display:block; margin-bottom:7px; color:var(--accent); font-size:clamp(28px,3vw,48px); } .metric span { color:var(--muted); font-size:16px; line-height:1.38; } .unknown b { color:var(--red); }
+    .manifest-lines { display:grid; gap:12px; margin-top:28px; max-width:1180px; } .manifest-lines div { padding:16px 17px; border:1px solid var(--line); border-radius:var(--radius); color:var(--muted); background:rgba(255,255,255,.052); font-size:clamp(17px,1.45vw,22px); line-height:1.36; } .manifest-lines b { color:var(--text); }
+    .timeline { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; margin-top:28px; } .time-step { position:relative; min-height:175px; padding:18px; border:1px solid var(--line); border-radius:var(--radius); background:rgba(255,255,255,.045); } .time-step::after { content:"→"; position:absolute; right:-19px; top:68px; color:var(--subtle); font-size:24px; } .time-step:last-child::after { display:none; } .time-step b { display:inline-grid; place-items:center; width:34px; height:34px; margin-bottom:13px; border-radius:8px; color:#07100d; background:var(--accent); font-weight:900; } .time-step h3 { margin-bottom:7px; font-size:20px; } .time-step p { margin:0; color:var(--muted); font-size:16px; line-height:1.42; }
+    .compare { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; } .sequence { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:30px; padding:22px; border:1px solid var(--line); border-radius:var(--radius); background:rgba(255,255,255,.045); box-shadow:var(--shadow); } .sequence span { padding:10px 12px; border-radius:7px; color:var(--text); background:rgba(255,255,255,.07); font-weight:800; } .sequence span:nth-child(even) { color:var(--subtle); background:transparent; }
+    .fork { display:grid; grid-template-columns:minmax(0,1fr) 80px minmax(0,1fr); align-items:stretch; gap:12px; margin-top:28px; } .fork-mid { display:grid; place-items:center; color:var(--subtle); font-size:26px; } .big-question { margin-top:36px; max-width:1200px; font-size:clamp(42px,5.7vw,88px); line-height:1.02; font-weight:900; letter-spacing:-.04em; color:var(--text); }
+    @media (max-width:1100px) { .two,.three,.four,.pipeline-grid,.metrics,.timeline,.compare,.fork { grid-template-columns:1fr; } .time-step::after { display:none; } }
+    @media (max-width:720px) { :root { --toolbar-h:96px; } body { overflow:auto; } .toolbar { height:var(--toolbar-h); grid-template-columns:1fr; padding:9px 12px; } .brand-subtitle,.print,.fullscreen { display:none; } .controls { justify-content:space-between; } .slide { padding:28px 16px 36px; } .title { font-size:clamp(34px,11vw,48px); } }
+    @media print { body { overflow:visible; background:#fff; color:#111; } .toolbar,.progress { display:none!important; } .slides { height:auto; padding:0; } .slide,.slide.active { position:relative; inset:auto; display:block; min-height:100vh; page-break-after:always; overflow:visible; background:#fff!important; color:#111; } .panel,.card,.pipeline,.metric,.quote-box { box-shadow:none; background:#fff; border-color:#bbb; } }
+
+/* Исходные стили акта 2 */
+:root {
+      --bg:#090c12; --panel:#111722; --panel2:#171f2d; --panel3:#202a3a;
+      --line:rgba(255,255,255,.13); --line-strong:rgba(255,255,255,.24);
+      --text:#f3f7fc; --muted:#aab5c6; --subtle:#778498;
+      --green:#43dda7; --blue:#73a8ff; --amber:#f2bd62; --red:#f07788; --purple:#ba92ff; --cyan:#70d8f4;
+      --toolbar-h:58px; --radius:10px; --shadow:0 28px 90px rgba(0,0,0,.42);
+      color-scheme:dark;
+    }
+    * { box-sizing:border-box; }
+    html,body { margin:0; min-height:100%; }
+    body { overflow:hidden; background:var(--bg); color:var(--text); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    button { font:inherit; }
+    .shell { min-height:100svh; background:radial-gradient(circle at 10% 12%,rgba(112,216,244,.14),transparent 27%),radial-gradient(circle at 88% 84%,rgba(67,221,167,.11),transparent 31%),var(--bg); }
+    .toolbar { position:fixed; z-index:50; inset:0 0 auto; height:var(--toolbar-h); display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:16px; padding:0 18px; border-bottom:1px solid var(--line); background:rgba(7,10,15,.9); backdrop-filter:blur(18px); }
+    .brand { display:flex; align-items:center; min-width:0; gap:12px; }
+    .mark { display:grid; place-items:center; width:29px; height:29px; flex:0 0 auto; border:1px solid rgba(67,221,167,.55); border-radius:7px; color:var(--green); background:rgba(67,221,167,.1); font-weight:900; }
+    .brand-title { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; font-weight:780; }
+    .brand-subtitle { color:var(--subtle); font-size:13px; white-space:nowrap; }
+    .controls { display:flex; align-items:center; gap:8px; }
+    .btn { height:34px; min-width:38px; padding:0 11px; border:1px solid var(--line); border-radius:7px; color:var(--text); background:rgba(255,255,255,.055); cursor:pointer; }
+    .btn:hover,.btn:focus-visible { outline:none; border-color:rgba(115,168,255,.78); background:rgba(115,168,255,.14); }
+    .counter { min-width:66px; color:var(--muted); text-align:center; font-size:13px; }
+    .progress { position:fixed; z-index:55; left:0; right:0; top:calc(var(--toolbar-h) - 2px); height:2px; background:rgba(255,255,255,.06); }
+    .progress span { display:block; width:0; height:100%; background:linear-gradient(90deg,var(--green),var(--blue),var(--purple),var(--amber)); transition:width 180ms ease; }
+    .slides { position:relative; height:100svh; padding-top:var(--toolbar-h); }
+    .slide { --accent:var(--green); position:absolute; inset:var(--toolbar-h) 0 0; display:none; min-height:calc(100svh - var(--toolbar-h)); overflow:auto; padding:42px clamp(20px,4.8vw,74px); }
+    .slide.active { display:grid; align-items:center; }
+    .slide::before { content:""; position:fixed; z-index:-1; width:42vw; height:42vw; right:-18vw; bottom:-24vw; border-radius:50%; background:color-mix(in srgb,var(--accent) 13%,transparent); filter:blur(18px); pointer-events:none; }
+    .slide[data-accent="blue"] { --accent:var(--blue); } .slide[data-accent="amber"] { --accent:var(--amber); } .slide[data-accent="red"] { --accent:var(--red); } .slide[data-accent="purple"] { --accent:var(--purple); } .slide[data-accent="cyan"] { --accent:var(--cyan); }
+    .inner { width:min(1450px,100%); margin:0 auto; }
+    .kicker { display:inline-flex; margin-bottom:16px; padding:7px 10px; border:1px solid color-mix(in srgb,var(--accent) 45%,transparent); border-radius:7px; color:color-mix(in srgb,var(--accent) 72%,white); background:color-mix(in srgb,var(--accent) 11%,transparent); font-size:13px; font-weight:820; text-transform:uppercase; letter-spacing:.035em; }
+    h1,h2,h3,p { margin-top:0; }
+    .title { max-width:1220px; margin-bottom:18px; font-size:clamp(48px,6vw,96px); line-height:.95; letter-spacing:-.04em; font-weight:900; }
+    .lead { max-width:1080px; margin:0; color:var(--muted); font-size:clamp(20px,1.9vw,29px); line-height:1.37; }
+    .final-lead { margin-top:26px; }
+    .hero { overflow:hidden; background:#06080d; }
+    .hero::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(6,8,13,.98),rgba(6,8,13,.64) 62%,rgba(6,8,13,.24)),repeating-linear-gradient(90deg,transparent 0 110px,rgba(255,255,255,.025) 111px 112px),repeating-linear-gradient(0deg,transparent 0 110px,rgba(255,255,255,.022) 111px 112px); }
+    .hero .title { max-width:1250px; font-size:clamp(58px,7.6vw,118px); }
+    .chips,.inline-list { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; padding:0; list-style:none; }
+    .chip,.inline-list li { padding:8px 11px; border:1px solid var(--line-strong); border-radius:7px; color:#f8fbff; background:rgba(255,255,255,.065); font-size:13px; font-weight:740; }
+    .grid { display:grid; gap:20px; } .two { grid-template-columns:repeat(2,minmax(0,1fr)); } .three { grid-template-columns:repeat(3,minmax(0,1fr)); } .five { grid-template-columns:repeat(5,minmax(0,1fr)); } .mt { margin-top:28px; }
+    .panel,.card,.quote-box,.runtime-box,.issue-card,.monitor,.bubble,.version-card { border:1px solid var(--line); border-radius:var(--radius); background:rgba(17,23,34,.82); box-shadow:var(--shadow); }
+    .panel { padding:clamp(20px,2.3vw,34px); }
+    .card { min-height:162px; padding:20px; } .card.top { border-top:3px solid var(--accent); }
+    .card h3,.panel h3,.version-card h3 { margin-bottom:9px; font-size:clamp(20px,1.7vw,26px); }
+    .card p,.panel p,.plain-list li,.big-muted { margin-bottom:0; color:var(--muted); font-size:clamp(15px,1.25vw,19px); line-height:1.44; }
+    .quote-box { margin-top:28px; padding:23px 27px; border-color:color-mix(in srgb,var(--accent) 40%,var(--line)); } .quote-box p { margin:0; font-size:clamp(25px,2.6vw,42px); line-height:1.18; font-weight:850; }
+    .plain-list { display:grid; gap:10px; margin:0; padding:0; list-style:none; } .plain-list.compact li { padding:10px 12px; border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.045); }
+    .runtime-row { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; } .runtime-box { min-height:154px; padding:24px; display:grid; align-content:center; gap:8px; border-top:3px solid var(--accent); } .runtime-box b { font-size:30px; } .runtime-box span { color:var(--muted); font-size:20px; } .runtime-box small { color:var(--subtle); font-size:15px; }
+    .agent-diagram { display:grid; grid-template-columns:320px minmax(0,1fr); gap:22px; align-items:stretch; } .agent-core { display:grid; place-items:center; min-height:230px; border-radius:var(--radius); background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 28%,#111722),#111722); border:1px solid color-mix(in srgb,var(--accent) 42%,var(--line)); box-shadow:var(--shadow); font-size:54px; font-weight:900; } .agent-parts { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; } .agent-parts span { display:grid; place-items:center; min-height:104px; padding:12px; border:1px solid var(--line); border-radius:9px; background:rgba(255,255,255,.055); color:var(--text); font-weight:760; text-align:center; }
+    .monitor { overflow:hidden; } .monitor-head,.monitor-row { display:grid; grid-template-columns:1fr 1.5fr 1.25fr 1fr 1.4fr; gap:14px; align-items:center; padding:15px 18px; border-bottom:1px solid var(--line); } .monitor-head { color:var(--subtle); background:rgba(255,255,255,.04); font-size:13px; font-weight:820; text-transform:uppercase; } .monitor-row span { color:var(--muted); } .status { justify-self:start; padding:6px 9px; border-radius:7px; font-size:13px; } .running { color:#d7ffed; background:rgba(67,221,167,.13); } .wait { color:#fff3d2; background:rgba(242,189,98,.14); } .done { color:#dff2ff; background:rgba(115,168,255,.14); } .fail { color:#ffe4e8; background:rgba(240,119,136,.14); }
+    .issue-layout { display:grid; grid-template-columns:1.16fr .84fr; gap:20px; align-items:stretch; } .issue-card { padding:24px; } .issue-title { font-size:30px; font-weight:880; margin-bottom:12px; } .issue-meta { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; } .issue-meta span { padding:7px 9px; border:1px solid var(--line); border-radius:7px; background:rgba(255,255,255,.055); color:var(--muted); font-size:13px; } .issue-block { padding:14px 0; border-top:1px solid var(--line); } .issue-block b { display:block; margin-bottom:5px; color:var(--accent); } .issue-block p { margin:0; color:var(--muted); line-height:1.42; }
+    .chat { display:grid; gap:14px; max-width:1080px; } .bubble { padding:18px 20px; color:var(--muted); font-size:21px; line-height:1.38; } .bubble b { color:var(--text); } .bubble.agent { margin-left:80px; border-color:color-mix(in srgb,var(--accent) 36%,var(--line)); background:color-mix(in srgb,var(--accent) 9%,#111722); } .bubble.human { margin-right:80px; }
+    .version { display:grid; grid-template-columns:minmax(0,1fr) 80px minmax(0,1fr); gap:12px; align-items:center; } .version-arrow { display:grid; place-items:center; color:var(--subtle); font-size:38px; } .version-card { min-height:250px; padding:24px; border-top:3px solid var(--line-strong); } .version-card.current { border-top-color:var(--accent); } .version-card ul { margin:14px 0 0; padding-left:20px; color:var(--muted); font-size:19px; line-height:1.5; }
+    .verb-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; } .verb-grid div { min-height:118px; display:grid; place-items:center; border:1px solid var(--line); border-radius:var(--radius); background:rgba(255,255,255,.055); color:var(--text); font-size:clamp(27px,2.6vw,42px); font-weight:900; }
+    @media (max-width:1100px) { .two,.three,.five,.runtime-row,.issue-layout,.agent-diagram,.version,.verb-grid { grid-template-columns:1fr; } .agent-parts { grid-template-columns:repeat(2,minmax(0,1fr)); } .monitor-head,.monitor-row { grid-template-columns:1fr; } .version-arrow { transform:rotate(90deg); } }
+    @media (max-width:720px) { :root { --toolbar-h:96px; } body { overflow:auto; } .toolbar { height:var(--toolbar-h); grid-template-columns:1fr; padding:9px 12px; } .brand-subtitle,.print,.fullscreen { display:none; } .controls { justify-content:space-between; } .slide { padding:28px 16px 36px; } .title { font-size:clamp(42px,13vw,58px); } .agent-parts { grid-template-columns:1fr; } .bubble.agent,.bubble.human { margin-left:0; margin-right:0; } }
+    @media print { body { overflow:visible; background:#fff; color:#111; } .toolbar,.progress { display:none!important; } .slides { height:auto; padding:0; } .slide,.slide.active { position:relative; inset:auto; display:block; min-height:100vh; page-break-after:always; overflow:visible; background:#fff!important; color:#111; } .panel,.card,.quote-box,.runtime-box,.issue-card,.monitor,.bubble,.version-card { box-shadow:none; background:#fff; border-color:#bbb; } }
+
+/* Исходные стили акта 3 */
+:root{
+      --bg:#090c12; --panel:#111722; --panel2:#171f2d; --line:rgba(255,255,255,.13); --line-strong:rgba(255,255,255,.24);
+      --text:#f3f7fc; --muted:#aab5c6; --subtle:#778498; --green:#43dda7; --blue:#73a8ff; --amber:#f2bd62; --red:#f07788; --purple:#ba92ff; --cyan:#70d8f4;
+      --toolbar-h:58px; --radius:10px; --shadow:0 28px 90px rgba(0,0,0,.42); color-scheme:dark;
+    }
+    *{box-sizing:border-box} html,body{margin:0;min-height:100%}
+    body{overflow:hidden;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    button{font:inherit}
+    .shell{min-height:100svh;background:radial-gradient(circle at 10% 12%,rgba(115,168,255,.14),transparent 27%),radial-gradient(circle at 88% 84%,rgba(67,221,167,.11),transparent 31%),var(--bg)}
+    .toolbar{position:fixed;z-index:50;inset:0 0 auto;height:var(--toolbar-h);display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px;padding:0 18px;border-bottom:1px solid var(--line);background:rgba(7,10,15,.9);backdrop-filter:blur(18px)}
+    .brand{display:flex;align-items:center;min-width:0;gap:12px}.mark{display:grid;place-items:center;width:29px;height:29px;flex:0 0 auto;border:1px solid rgba(67,221,167,.55);border-radius:7px;color:var(--green);background:rgba(67,221,167,.1);font-weight:900}.brand-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;font-weight:780}.brand-subtitle{color:var(--subtle);font-size:13px;white-space:nowrap}.controls{display:flex;align-items:center;gap:8px}.btn{height:34px;min-width:38px;padding:0 11px;border:1px solid var(--line);border-radius:7px;color:var(--text);background:rgba(255,255,255,.055);cursor:pointer}.btn:hover,.btn:focus-visible{outline:none;border-color:rgba(115,168,255,.78);background:rgba(115,168,255,.14)}.counter{min-width:66px;color:var(--muted);text-align:center;font-size:13px}.progress{position:fixed;z-index:55;left:0;right:0;top:calc(var(--toolbar-h) - 2px);height:2px;background:rgba(255,255,255,.06)}.progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--green),var(--blue),var(--purple),var(--amber));transition:width 180ms ease}
+    .slides{position:relative;height:100svh;padding-top:var(--toolbar-h)}.slide{--accent:var(--green);position:absolute;inset:var(--toolbar-h) 0 0;display:none;min-height:calc(100svh - var(--toolbar-h));overflow:auto;padding:42px clamp(20px,4.8vw,74px)}.slide.active{display:grid;align-items:center}.slide::before{content:"";position:fixed;z-index:-1;width:42vw;height:42vw;right:-18vw;bottom:-24vw;border-radius:50%;background:color-mix(in srgb,var(--accent) 13%,transparent);filter:blur(18px);pointer-events:none}.slide[data-accent="blue"]{--accent:var(--blue)}.slide[data-accent="amber"]{--accent:var(--amber)}.slide[data-accent="red"]{--accent:var(--red)}.slide[data-accent="purple"]{--accent:var(--purple)}.slide[data-accent="cyan"]{--accent:var(--cyan)}
+    .inner{width:min(1450px,100%);margin:0 auto}.kicker{display:inline-flex;margin-bottom:16px;padding:7px 10px;border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);border-radius:7px;color:color-mix(in srgb,var(--accent) 72%,white);background:color-mix(in srgb,var(--accent) 11%,transparent);font-size:13px;font-weight:820;text-transform:uppercase;letter-spacing:.035em}h1,h2,h3,p{margin-top:0}.title{max-width:1260px;margin-bottom:18px;font-size:clamp(44px,5.7vw,94px);line-height:.96;letter-spacing:-.04em;font-weight:900}.lead{max-width:1120px;margin:0;color:var(--muted);font-size:clamp(20px,1.9vw,29px);line-height:1.37}.hero{overflow:hidden;background:#06080d}.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(6,8,13,.98),rgba(6,8,13,.64) 62%,rgba(6,8,13,.24)),repeating-linear-gradient(90deg,transparent 0 110px,rgba(255,255,255,.025) 111px 112px),repeating-linear-gradient(0deg,transparent 0 110px,rgba(255,255,255,.022) 111px 112px)}.hero .title{max-width:1280px;font-size:clamp(58px,7.6vw,118px)}
+    .grid{display:grid;gap:20px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.four{grid-template-columns:repeat(4,minmax(0,1fr))}.mt{margin-top:28px}.panel,.card,.quote-box,.flow-card,.stage,.profile,.metric,.mock,.queue{border:1px solid var(--line);border-radius:var(--radius);background:rgba(17,23,34,.82);box-shadow:var(--shadow)}.panel{padding:clamp(20px,2.3vw,34px)}.panel.top,.card.top,.stage.top{border-top:3px solid var(--accent)}.card{min-height:166px;padding:20px}.card h3,.panel h3,.stage h3,.flow-card h3{margin-bottom:9px;font-size:clamp(20px,1.7vw,26px)}.card p,.panel p,.stage p,.plain-list li,.muted{margin-bottom:0;color:var(--muted);font-size:clamp(15px,1.25vw,19px);line-height:1.44}.quote-box{margin-top:28px;padding:23px 27px;border-color:color-mix(in srgb,var(--accent) 40%,var(--line))}.quote-box p{margin:0;font-size:clamp(25px,2.6vw,42px);line-height:1.18;font-weight:850}.plain-list{display:grid;gap:10px;margin:0;padding:0;list-style:none}.plain-list li{padding:11px 13px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.045)}.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;padding:0;list-style:none}.chip{padding:8px 11px;border:1px solid var(--line-strong);border-radius:7px;color:#f8fbff;background:rgba(255,255,255,.065);font-size:13px;font-weight:740}
+    .identity-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.profile{min-height:170px;padding:20px;border-top:3px solid var(--accent)}.profile b{display:block;margin-bottom:9px;font-size:25px}.profile span{color:var(--muted);font-size:17px;line-height:1.38}.owner-line{display:grid;grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr);gap:14px;align-items:center;margin-top:28px}.owner-line .arrow{display:grid;place-items:center;color:var(--subtle);font-size:36px}
+    .sequence{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:28px}.flow-card{min-height:190px;padding:18px;position:relative}.flow-card:not(:last-child)::after{content:"→";position:absolute;right:-20px;top:76px;color:var(--subtle);font-size:24px}.flow-card b{display:inline-grid;place-items:center;width:32px;height:32px;margin-bottom:14px;border-radius:7px;color:#04120c;background:var(--accent);font-weight:900}.flow-card h3{font-size:22px}.flow-card p{color:var(--muted);font-size:16px;line-height:1.42}
+    .mock{overflow:hidden;background:rgba(10,14,20,.8)}.mock-head{display:flex;justify-content:space-between;gap:12px;padding:15px 18px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--subtle);font-size:13px;font-weight:820;text-transform:uppercase}.mock-body{padding:20px}.mock-title{font-size:30px;font-weight:900;margin-bottom:12px}.meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}.meta span{padding:7px 9px;border:1px solid var(--line);border-radius:7px;background:rgba(255,255,255,.055);color:var(--muted);font-size:13px}.comment{margin-top:14px;padding:14px 16px;border-left:3px solid var(--accent);background:rgba(255,255,255,.045);color:var(--muted);font-size:17px;line-height:1.42}.comment b{color:var(--text)}
+    .stage{min-height:205px;padding:22px}.stage-num{display:inline-grid;place-items:center;width:38px;height:38px;margin-bottom:15px;border-radius:8px;background:var(--accent);color:#04120c;font-weight:900}.stage h3{font-size:29px}.stage ul{margin:12px 0 0;padding-left:20px;color:var(--muted);font-size:17px;line-height:1.45}.matrix{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}.matrix-row{display:grid;grid-template-columns:42px minmax(0,1fr);gap:14px;align-items:start;padding:17px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.045)}.matrix-row b{display:grid;place-items:center;width:36px;height:36px;border-radius:8px;background:var(--accent);color:#04120c}.matrix-row h3{margin:0 0 6px;font-size:22px}.matrix-row p{margin:0;color:var(--muted);font-size:16px;line-height:1.42}.infra-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.metric{min-height:160px;padding:20px}.metric b{display:block;margin-bottom:9px;color:var(--accent);font-size:28px}.metric span{color:var(--muted);font-size:16px;line-height:1.4}
+    .queue{overflow:hidden}.queue-head,.queue-row{display:grid;grid-template-columns:1fr 1.25fr 1fr 1fr 1.1fr;gap:12px;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line)}.queue-head{color:var(--subtle);background:rgba(255,255,255,.04);font-size:13px;font-weight:820;text-transform:uppercase}.queue-row span{color:var(--muted)}.status{justify-self:start;padding:6px 9px;border-radius:7px;font-size:13px}.running{color:#d7ffed;background:rgba(67,221,167,.13)}.review{color:#dff2ff;background:rgba(115,168,255,.14)}.wait{color:#fff3d2;background:rgba(242,189,98,.14)}.fail{color:#ffe4e8;background:rgba(240,119,136,.14)}
+    @media(max-width:1100px){.two,.three,.four,.identity-grid,.sequence,.infra-grid,.matrix,.owner-line{grid-template-columns:1fr}.flow-card:not(:last-child)::after{display:none}.owner-line .arrow{display:none}}@media(max-width:720px){:root{--toolbar-h:96px}body{overflow:auto}.toolbar{height:var(--toolbar-h);grid-template-columns:1fr;padding:9px 12px}.brand-subtitle,.print,.fullscreen{display:none}.controls{justify-content:space-between}.slide{padding:28px 16px 36px}.title{font-size:clamp(34px,11vw,50px)}}@media print{body{overflow:visible;background:#fff;color:#111}.toolbar,.progress{display:none!important}.slides{height:auto;padding:0}.slide,.slide.active{position:relative;inset:auto;display:block;min-height:100vh;page-break-after:always;overflow:visible;background:#fff!important;color:#111}.panel,.card,.quote-box,.flow-card,.stage,.profile,.metric,.mock,.queue{box-shadow:none;background:#fff;border-color:#bbb}}
+
+    /* Единая навигация */
+    .toolbar { grid-template-columns:minmax(260px,1fr) auto auto; }
+    .act-jumps { display:flex; align-items:center; gap:7px; }
+    .act-jump { min-width:62px; font-weight:760; }
+    .act-jump[aria-current="true"] { border-color:rgba(67,221,167,.75); color:#eafff7; background:rgba(67,221,167,.15); box-shadow:inset 0 0 0 1px rgba(67,221,167,.08); }
+
+    /* Самый первый слайд */
+    .cover-slide { --accent:var(--green); background:#05070b; overflow:hidden; }
+    .cover-slide::after { content:""; position:absolute; inset:0; z-index:-2; background:radial-gradient(circle at 76% 34%,rgba(67,221,167,.18),transparent 24%),radial-gradient(circle at 83% 74%,rgba(115,168,255,.12),transparent 28%),linear-gradient(112deg,rgba(5,7,11,.99),rgba(5,7,11,.76) 61%,rgba(5,7,11,.96)),repeating-linear-gradient(90deg,transparent 0 110px,rgba(255,255,255,.025) 111px 112px),repeating-linear-gradient(0deg,transparent 0 110px,rgba(255,255,255,.022) 111px 112px); }
+    .cover-inner { display:grid; align-content:center; min-height:calc(100svh - var(--toolbar-h) - 84px); }
+    .cover-eyebrow { margin:0 0 24px; color:var(--green); font-size:13px; font-weight:850; letter-spacing:.2em; text-transform:uppercase; }
+    .cover-title { max-width:1320px; margin:0; color:#fff; font-size:clamp(58px,8.3vw,132px); line-height:.86; font-weight:920; letter-spacing:-.055em; }
+    .cover-title::first-line { color:#fff; }
+    .cover-meta { display:flex; flex-wrap:wrap; gap:clamp(22px,4vw,62px); margin-top:clamp(42px,6vh,74px); padding-top:20px; border-top:1px solid rgba(255,255,255,.14); }
+    .cover-meta div { display:grid; gap:5px; min-width:150px; }
+    .cover-meta span { color:var(--subtle); font-size:11px; font-weight:820; letter-spacing:.13em; text-transform:uppercase; }
+    .cover-meta strong { color:#eef5fb; font-size:clamp(16px,1.4vw,21px); font-weight:760; }
+
+    /* Титульная карта актов */
+    .act-opener { --accent:var(--green); background:#06080d; overflow:hidden; }
+    .act-opener::after { content:""; position:absolute; inset:0; z-index:-2; background:radial-gradient(circle at 78% 44%,rgba(67,221,167,.13),transparent 27%),linear-gradient(115deg,rgba(6,8,13,.99),rgba(6,8,13,.80) 58%,rgba(6,8,13,.96)),repeating-linear-gradient(90deg,transparent 0 110px,rgba(255,255,255,.025) 111px 112px),repeating-linear-gradient(0deg,transparent 0 110px,rgba(255,255,255,.022) 111px 112px); }
+    .act-opener-inner { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:end; gap:42px; }
+    .act-map { position:relative; display:grid; gap:clamp(16px,2.2vh,28px); max-width:1180px; padding-left:clamp(28px,4vw,58px); }
+    .act-map::before { content:""; position:absolute; left:9px; top:14px; bottom:14px; width:1px; background:linear-gradient(var(--green),rgba(255,255,255,.13)); }
+    .act-map-row { position:relative; display:grid; grid-template-columns:58px minmax(0,1fr); align-items:start; gap:18px; transition:opacity 180ms ease,transform 180ms ease; }
+    .act-map-row::before { content:""; position:absolute; left:calc(-1 * clamp(28px,4vw,58px) + 3px); top:13px; width:13px; height:13px; border:2px solid rgba(255,255,255,.24); border-radius:50%; background:#06080d; }
+    .act-map-index { padding-top:5px; color:var(--subtle); font-size:13px; font-weight:850; letter-spacing:.18em; }
+    .act-map-copy { display:grid; gap:3px; }
+    .act-map-label { color:var(--text); font-size:clamp(30px,3.1vw,50px); line-height:1; font-weight:900; letter-spacing:-.035em; }
+    .act-map-title { color:var(--muted); font-size:clamp(17px,1.55vw,24px); line-height:1.2; font-weight:720; }
+    .act-map-row.current { grid-template-columns:72px minmax(0,1fr); padding:clamp(5px,1vh,12px) 0; }
+    .act-map-row.current::before { left:calc(-1 * clamp(28px,4vw,58px)); top:24px; width:19px; height:19px; border-color:var(--green); background:var(--green); box-shadow:0 0 0 7px rgba(67,221,167,.12),0 0 42px rgba(67,221,167,.34); }
+    .act-map-row.current .act-map-index { padding-top:10px; color:var(--green); }
+    .act-map-row.current .act-map-label { color:#fff; font-size:clamp(62px,8.4vw,132px); line-height:.82; }
+    .act-map-row.current .act-map-title { color:#fff; font-size:clamp(30px,4vw,64px); line-height:1.02; font-weight:860; letter-spacing:-.035em; }
+    .act-map-row.past { opacity:.64; }
+    .act-map-row.past .act-map-label { font-size:clamp(22px,2.2vw,34px); }
+    .act-map-row.past .act-map-title { font-size:clamp(15px,1.25vw,20px); }
+    .act-map-row.future { opacity:.23; }
+    .act-map-row.future .act-map-label { color:#9aa4b3; }
+    .act-opener-note { margin:0 0 4px; color:var(--subtle); font-size:13px; font-weight:760; letter-spacing:.04em; writing-mode:vertical-rl; transform:rotate(180deg); text-transform:uppercase; }
+
+    /* Смысловые остановки между группами проблем в первом акте. */
+    .conclusion-slide { isolation:isolate; overflow:hidden; padding-block:28px; background:linear-gradient(108deg,color-mix(in srgb,var(--accent) 13%,#070a10),#070a10 58%,color-mix(in srgb,var(--accent) 7%,#070a10)); box-shadow:inset 9px 0 0 color-mix(in srgb,var(--accent) 82%,white); }
+    .conclusion-slide::after { content:"ВЫВОД"; position:fixed; z-index:-1; right:clamp(20px,5vw,76px); bottom:clamp(18px,4vh,46px); color:color-mix(in srgb,var(--accent) 10%,transparent); font-size:clamp(100px,19vw,310px); line-height:.72; font-weight:950; letter-spacing:-.08em; pointer-events:none; }
+    .conclusion-slide .inner { position:relative; }
+    .conclusion-slide .kicker { margin-bottom:18px; padding:9px 13px; border:0; border-left:5px solid var(--accent); border-radius:0 8px 8px 0; color:#07100d; background:color-mix(in srgb,var(--accent) 88%,white); box-shadow:0 12px 34px color-mix(in srgb,var(--accent) 17%,transparent); font-size:14px; letter-spacing:.11em; }
+    .act-1.conclusion-slide .title { max-width:1330px; margin-bottom:16px; font-size:clamp(44px,4.8vw,78px); line-height:.9; color:#fff; text-wrap:balance; }
+    .act-1.conclusion-slide .lead { max-width:1180px; color:#c9d3df; font-size:clamp(17px,1.55vw,24px); line-height:1.28; }
+    .conclusion-slide .manifest-lines { gap:8px; margin-top:18px; }
+    .conclusion-slide .manifest-lines div { padding:12px 14px; border-left:3px solid color-mix(in srgb,var(--accent) 72%,white); background:rgba(255,255,255,.07); font-size:clamp(16px,1.25vw,20px); line-height:1.28; }
+    .conclusion-slide .quote-box { margin-top:18px; padding:16px 20px; border-width:2px; border-color:color-mix(in srgb,var(--accent) 64%,white); background:color-mix(in srgb,var(--accent) 12%,rgba(17,23,34,.94)); box-shadow:0 24px 70px rgba(0,0,0,.40),0 0 54px color-mix(in srgb,var(--accent) 10%,transparent); }
+    .conclusion-slide .quote-box p { font-size:clamp(22px,2.2vw,34px); line-height:1.13; }
+
+    /* Сохраняем разные композиции одноимённых компонентов. */
+    .act-1 .sequence { display:flex; grid-template-columns:none; flex-wrap:wrap; align-items:center; gap:12px; margin-top:30px; padding:22px; }
+    .act-1 .sequence span { padding:10px 12px; border-radius:7px; color:var(--text); background:rgba(255,255,255,.07); font-weight:800; }
+    .act-1 .sequence span:nth-child(even) { color:var(--subtle); background:transparent; }
+    .act-1 .title { font-size:clamp(38px,5.15vw,76px); line-height:.99; letter-spacing:-.035em; font-weight:880; }
+    .act-2 .title { font-size:clamp(48px,6vw,96px); line-height:.95; }
+    .act-3 .title { font-size:clamp(44px,5.7vw,94px); line-height:.96; }
+    .act-2.hero .title,.act-3.hero .title { font-size:clamp(58px,7.6vw,118px); }
+    .act-1.hero:not(.act-opener) .title { font-size:clamp(50px,6.8vw,104px); }
+    .act-3 .sequence { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; margin-top:28px; padding:0; border:0; background:transparent; box-shadow:none; }
+
+    @media (max-width:1100px) {
+      .act-3 .sequence { grid-template-columns:1fr; }
+    }
+    @media (max-width:900px) {
+      :root { --toolbar-h:104px; }
+      .toolbar { height:var(--toolbar-h); grid-template-columns:minmax(0,1fr) auto; grid-template-rows:auto auto; gap:6px 10px; padding:9px 12px; }
+      .brand { grid-column:1 / -1; }
+      .act-jumps { justify-self:start; }
+      .controls { justify-self:end; }
+      .brand-subtitle { display:none; }
+      .slide { padding:28px 16px 36px; }
+      .act-opener-inner { grid-template-columns:1fr; }
+      .act-opener-note { display:none; }
+    }
+    @media (max-width:560px) {
+      :root { --toolbar-h:142px; }
+      .toolbar { grid-template-columns:1fr; grid-template-rows:auto auto auto; }
+      .act-jumps,.controls { justify-self:stretch; justify-content:space-between; }
+      .fullscreen { display:none; }
+      .act-map { padding-left:30px; }
+      .act-map-row.current .act-map-label { font-size:clamp(50px,18vw,84px); }
+      .act-map-row.current .act-map-title { font-size:clamp(26px,9vw,42px); }
+      .cover-title { font-size:clamp(46px,14vw,72px); }
+      .cover-meta { gap:18px; margin-top:34px; }
+    }
+    @media print {
+      .act-jumps { display:none!important; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="toolbar">
+      <div class="brand">
+        <span class="mark">M</span>
+        <span class="brand-title">От личной магии к инженерному процессу</span>
+        <span class="brand-subtitle">Сергей Морозов · Nord Studio · MY.GAMES</span>
+      </div>
+      <nav class="act-jumps" aria-label="Переход к акту">
+        <button class="btn act-jump" type="button" data-act-jump="1">Акт 1</button>
+        <button class="btn act-jump" type="button" data-act-jump="2">Акт 2</button>
+        <button class="btn act-jump" type="button" data-act-jump="3">Акт 3</button>
+      </nav>
+      <nav class="controls" aria-label="Навигация по слайдам">
+        <button class="btn" type="button" data-action="prev" aria-label="Назад">‹</button>
+        <span class="counter" aria-live="polite">1 / 50</span>
+        <button class="btn" type="button" data-action="next" aria-label="Вперёд">›</button>
+        <button class="btn fullscreen" type="button" data-action="fullscreen">Экран</button>
+      </nav>
+    </header>
+    <div class="progress" aria-hidden="true"><span></span></div>
+    <main class="slides">
+
+      <section id="intro" class="slide hero cover-slide" data-act="0" data-accent="green" aria-labelledby="cover-title">
+        <div class="inner cover-inner">
+          <p class="cover-eyebrow">Презентация</p>
+          <h1 class="cover-title" id="cover-title">От личной магии<br>к инженерному процессу</h1>
+          <div class="cover-meta" aria-label="Автор и студия">
+            <div><span>Автор</span><strong>Сергей Морозов</strong></div>
+            <div><span>Студия</span><strong>Nord Studio</strong></div>
+            <div><span>Компания</span><strong>MY.GAMES</strong></div>
+          </div>
+        </div>
+      </section>
+<section id="act-1" class="slide hero act-1 act-opener" data-act="1" data-accent="green" aria-labelledby="a1-s1">
+    <div class="inner act-opener-inner">
+      <div class="act-map" aria-label="Структура презентации">
+      <div class="act-map-row current">
+        <span class="act-map-index">01</span>
+        <div class="act-map-copy">
+          <span class="act-map-label" id="a1-s1">Акт 1</span>
+          <span class="act-map-title">Диагностика</span>
+        </div>
+      </div>
+      <div class="act-map-row future">
+        <span class="act-map-index">02</span>
+        <div class="act-map-copy">
+          <span class="act-map-label">Акт 2</span>
+          
+        </div>
+      </div>
+      <div class="act-map-row future">
+        <span class="act-map-index">03</span>
+        <div class="act-map-copy">
+          <span class="act-map-label">Акт 3</span>
+          
+        </div>
+      </div>
+      </div>
+      <p class="act-opener-note">От личной магии к инженерному процессу</p>
+    </div>
+    </section>
+      <section class="slide act-1" data-act="1" data-accent="blue" aria-labelledby="a1-s2">
+        <div class="inner">
+          <span class="kicker">Проблема 1 · процесс нельзя проверить</span>
+          <h1 class="title" id="a1-s2">Нельзя нормально экспериментировать с agent pipelines</h1>
+          <p class="lead">Разные комбинации моделей, harness, skills и стратегий работы остаются личными экспериментами конкретного разработчика.</p>
+          <div class="pipeline-grid mt"><article class="pipeline"><h3>Plan → Act</h3><p>План через Claude / Fable, реализация через Codex или другой implementer.</p><div class="flow"><span class="node">planner</span><span class="arrow">→</span><span class="node">plan review</span><span class="arrow">→</span><span class="node">implementer</span></div></article><article class="pipeline"><h3>Один сильный агент</h3><p>Одна модель с хорошим context, tools и project-specific skills.</p><div class="flow"><span class="node">Jira</span><span class="arrow">→</span><span class="node">agent</span><span class="arrow">→</span><span class="node">result</span></div></article><article class="pipeline"><h3>Swarm</h3><p>N независимых агентов решают задачу параллельно, а финальный агент объединяет лучшие решения.</p><div class="flow"><span class="node">agent × N</span><span class="arrow">→</span><span class="node">candidate solutions</span><span class="arrow">→</span><span class="node">merge agent</span></div></article></div><div class="quote-box"><p>Мы используем не обязательно лучший pipeline, а тот, к которому у конкретного человека есть доступ.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="purple" aria-labelledby="a1-s3">
+        <div class="inner">
+          <span class="kicker">Проблема 2 · процесс не сравнить</span>
+          <h1 class="title" id="a1-s3">Нельзя сравнить инженерные процессы</h1>
+          <p class="lead">Финальный результат задачи виден. Способ его производства — нет.</p>
+          <div class="grid three mt"><article class="pipeline"><div class="price">$20</div><h3>Cursor</h3><p>Jira → агент → QA. Возможно, много ручной доводки за кадром.</p><div class="flow"><span class="node">Jira</span><span class="arrow">→</span><span class="node">agent</span><span class="arrow">→</span><span class="node">QA</span></div></article><article class="pipeline"><div class="price">$200</div><h3>Claude</h3><p>brainstorm → plan → act → review → fix. Возможно, меньше ручного кода, но больше orchestration.</p><div class="flow"><span class="node">brainstorm</span><span class="arrow">→</span><span class="node">plan</span><span class="arrow">→</span><span class="node">act</span><span class="arrow">→</span><span class="node">review</span><span class="arrow">→</span><span class="node">fix</span></div></article><article class="pipeline"><div class="price">custom</div><h3>Локальный harness</h3><p>Свой набор prompts, skills, tools и привычных проверок.</p><div class="flow"><span class="node">task</span><span class="arrow">→</span><span class="node">harness</span><span class="arrow">→</span><span class="node">done</span></div></article></div><div class="quote-box"><p>Мы не можем сравнить способ производства результата.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="amber" aria-labelledby="a1-s4">
+        <div class="inner">
+          <span class="kicker">Проблема 3 · compute разложен по людям</span>
+          <h1 class="title" id="a1-s4">Compute фрагментирован по персональным подпискам</h1>
+          <p class="lead">Оплаченная вычислительная ёмкость распределена между людьми, а не между задачами.</p>
+          <div class="grid two mt"><article class="card warning"><h3>Дефицит у одного</h3><p>У разработчика закончился weekly limit. Задача ждёт обновления квоты, хотя компании прямо сейчас нужен результат.</p></article><article class="card warning"><h3>Простой у другого</h3><p>У другого разработчика дорогая подписка, но половина лимита не используется. Оплаченный compute простаивает.</p></article></div><div class="metrics"><div class="metric unknown"><b>?</b><span>реальная совокупная ёмкость команды</span></div><div class="metric unknown"><b>?</b><span>сколько лимитов простаивает</span></div><div class="metric unknown"><b>?</b><span>где возникает дефицит compute</span></div><div class="metric unknown"><b>?</b><span>кому компания переплачивает или недодаёт ресурс</span></div></div><div class="quote-box"><p>У компании одновременно есть оплаченный неиспользованный compute и задачи, которые ждут свободного compute.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="red" aria-labelledby="a1-s5">
+        <div class="inner">
+          <span class="kicker">Проблема 4 · экономика не видна</span>
+          <h1 class="title" id="a1-s5">Нельзя определить реальную стоимость принятого результата</h1>
+          <p class="lead">Цена подписки и количество токенов не равны стоимости разработки.</p>
+          <div class="grid two mt"><article class="card danger"><h3>Видимая стоимость</h3><p>API, подписка, tokens, лимиты модели.</p></article><article class="card danger"><h3>Скрытая стоимость</h3><p>Постановка, ожидание, перезапуски, ручные правки, review, QA, CI, пропущенные ошибки и последующий технический долг.</p></article></div><ul class="plain-list"><li>Дешёвая модель может быть дорогой, если требует часов человеческого сопровождения.</li><li>Дорогая модель может быть выгодной, если результат принимается с первой попытки.</li></ul><div class="quote-box"><p>Видна стоимость compute. Не видна стоимость принятого результата.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="cyan" aria-labelledby="a1-s6">
+        <div class="inner">
+          <span class="kicker">Проблема 5 · параллельность упирается в runtime</span>
+          <h1 class="title" id="a1-s6">Параллельность ограничена локальным runtime</h1>
+          <p class="lead">Разработчик может вести несколько задач, но его компьютер не является инфраструктурой для параллельного agent execution.</p>
+          <div class="grid four mt"><article class="card top-accent"><h3>Отдельные checkout</h3><p>Каждая задача требует изолированного состояния проекта и ветки.</p></article><article class="card top-accent"><h3>Unity / editor instances</h3><p>Несколько запущенных окружений быстро съедают RAM и CPU.</p></article><article class="card top-accent"><h3>Build & test</h3><p>Сборки, тесты и QA конкурируют за один локальный ресурс.</p></article><article class="card top-accent"><h3>Storage & cache</h3><p>Артефакты и зависимости множатся на каждой параллельной сессии.</p></article></div><div class="quote-box"><p>Масштаб agent execution определяется не задачами компании, а ноутбуком конкретного разработчика.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1 conclusion-slide" data-act="1" data-accent="blue" aria-labelledby="a1-s7" data-kind="conclusion">
+        <div class="inner">
+          <span class="kicker">Вывод группы 1</span>
+          <h1 class="title" id="a1-s7">Нет механизма развития agent pipeline</h1>
+          <p class="lead">Команда не может честно проверять разные модели, конфигурации и процессы на сопоставимых задачах.</p>
+          <div class="manifest-lines"><div><b>Нет общего benchmark-набора:</b> разные pipeline проверяются на разных задачах, в разных условиях и с разным участием человека.</div><div><b>Нет честного сравнения:</b> результат виден, но не видно полной цены, количества итераций, ручной доводки и ожидания compute.</div><div><b>Нет управляемой оптимизации:</b> процесс развивается на ощущениях и личных привычках, а не на измеримых данных.</div></div><div class="quote-box"><p>Agent pipeline пока не является измеримым объектом инженерного улучшения.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="green" aria-labelledby="a1-s8">
+        <div class="inner">
+          <span class="kicker">Проблема 6 · task tracker устарел</span>
+          <h1 class="title" id="a1-s8">Task tracker больше не отражает реальный жизненный цикл задачи</h1>
+          <p class="lead">Статус «задача у разработчика» скрывает несколько стадий agent execution.</p>
+          <div class="timeline"><div class="time-step"><b>1</b><h3>Постановка</h3><p>Человек формулирует задачу и контекст.</p></div><div class="time-step"><b>2</b><h3>Ожидание</h3><p>Агент работает или ждёт compute.</p></div><div class="time-step"><b>3</b><h3>План</h3><p>Возникает решение, которое надо проверить.</p></div><div class="time-step"><b>4</b><h3>Реализация</h3><p>Агент пишет код, запускает проверки.</p></div><div class="time-step"><b>5</b><h3>Возврат</h3><p>Человек принимает, правит или возвращает.</p></div></div><div class="quote-box"><p>В Jira всё это часто выглядит как один этап: «задача находится на разработчике».</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="purple" aria-labelledby="a1-s9">
+        <div class="inner">
+          <span class="kicker">Проблема 7 · план не является артефактом</span>
+          <h1 class="title" id="a1-s9">Промежуточные результаты не являются артефактами задачи</h1>
+          <p class="lead">Код сохраняется в PR. Но исследование, план, альтернативы и причины возвратов часто остаются в session history.</p>
+          <div class="compare mt"><article class="card top-accent"><h3>Формально сохраняется</h3><p>Код, pull request, комментарии code review, финальный статус задачи.</p></article><article class="card warning"><h3>Часто исчезает</h3><p>Research, plan, rejected approaches, plan review, agent QA, причины внутреннего возврата и вмешательства человека.</p></article></div><div class="quote-box"><p>Code review формализован. Plan review остаётся внутри персональной сессии.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="amber" aria-labelledby="a1-s10">
+        <div class="inner">
+          <span class="kicker">Проблема 8 · новая роль без новой дисциплины</span>
+          <h1 class="title" id="a1-s10">Разработчики стали менеджерами agent pipeline, но без менеджерской практики</h1>
+          <p class="lead">С агентами программист всё чаще не пишет код сам, а делегирует работу, контролирует исполнителя и принимает результат.</p>
+          <div class="grid two mt"><article class="card warning"><h3>Оценка как инструмента</h3><p>«Я умею пользоваться AI». Тогда микроконтроль, ручная доработка и постоянные подсказки воспринимаются как нормальная часть работы.</p></article><article class="card warning"><h3>Оценка как сотрудника</h3><p>«Я делегировал работу исполнителю». Тогда важно, насколько автономно он справился, сколько потребовал контроля и где сорвал delegation.</p></article></div><ul class="plain-list"><li>Разработчик может не замечать, что весь день занимается микроменеджментом агента.</li><li>Проблема pipeline оценивается уже не только программистскими навыками, а навыками постановки, делегирования и контроля.</li></ul><div class="quote-box"><p>AI-агента нужно оценивать не только как инструмент, а как исполнителя, которому делегируют работу.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="red" aria-labelledby="a1-s11">
+        <div class="inner">
+          <span class="kicker">Проблема 9 · человеческая работа не видна</span>
+          <h1 class="title" id="a1-s11">Реальная человеческая работа не отражается в задачах</h1>
+          <p class="lead">Когда агент решает задачу с первого запуска, ценность человека часто была создана раньше или между видимыми статусами.</p>
+          <div class="grid four mt"><article class="card top-accent"><h3>Настройка pipeline</h3><p>Выбор harness, модели, tools, правил и режимов работы.</p></article><article class="card top-accent"><h3>Создание skills</h3><p>Формализация проектных conventions и типовых действий.</p></article><article class="card top-accent"><h3>Принятие решений</h3><p>Plan review, выбор подхода, оценка рисков, acceptance.</p></article><article class="card top-accent"><h3>Управление агентом</h3><p>Постановка, возвраты, корректировки, разбор неудачных попыток.</p></article></div><div class="quote-box"><p>То, что видно в Jira, всё чаще выполняет агент. То, что реально делает человек, часто не видно.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1 conclusion-slide" data-act="1" data-accent="green" aria-labelledby="a1-s12" data-kind="conclusion">
+        <div class="inner">
+          <span class="kicker">Вывод группы 2</span>
+          <h1 class="title" id="a1-s12">Человеческая работа в agent pipeline не наблюдается end-to-end</h1>
+          <p class="lead">Не видно, где человек создал ценность: в постановке, выборе pipeline, plan review, делегировании, ручной доработке или финальном решении.</p>
+          <div class="manifest-lines"><div><b>Не видны стадии:</b> ожидание, research, planning, внутренние возвраты, agent QA.</div><div><b>Не видны решения:</b> что человек утвердил, отклонил, поправил или доделал вручную.</div><div><b>Не видна управленческая нагрузка:</b> сколько контроля потребовал агент и насколько реально получилось делегирование.</div></div><div class="quote-box"><p>Agent execution происходит вне общего контура наблюдаемости разработки.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="cyan" aria-labelledby="a1-s13">
+        <div class="inner">
+          <span class="kicker">Проблема 10 · исполнитель недоступен</span>
+          <h1 class="title" id="a1-s13">Фактический исполнитель недоступен другим участникам процесса</h1>
+          <p class="lead">Агент исследовал код, написал реализацию и знает контекст задачи. Но обратиться к нему может только владелец сессии.</p>
+          <div class="sequence mt"><span>QA / Lead / Dev</span><span>→</span><span>разработчик</span><span>→</span><span>agent session</span><span>→</span><span>разработчик</span><span>→</span><span>ответ</span></div><ul class="plain-list"><li>QA не может прямо спросить про regression risk.</li><li>Лид не может уточнить у исполнителя, почему выбран такой подход.</li><li>Другой разработчик не может продолжить обсуждение с agent context.</li></ul><div class="quote-box"><p>Разработчик становится ручным API-шлюзом к собственной agent session.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="blue" aria-labelledby="a1-s14">
+        <div class="inner">
+          <span class="kicker">Проблема 11 · harness недоступен другим людям</span>
+          <h1 class="title" id="a1-s14">Harness, skills и context недоступны другим разработчикам</h1>
+          <p class="lead">Это не только межкомандная проблема. Даже два разработчика внутри одной области часто не имеют доступа к agent stack друг друга.</p>
+          <div class="grid two mt"><article class="card top-accent"><h3>Межличностно</h3><p>Два клиентских программиста не могут корректно синхронизироваться по agents, skills, session history и локальным conventions.</p></article><article class="card top-accent"><h3>Межкомандно</h3><p>Клиентский разработчик не может запустить серверный harness, а клиентский агент не может обратиться к серверному агенту.</p></article></div><div class="quote-box"><p>Исполняемая инженерная экспертиза существует, но остаётся привязанной к человеку или локальному team context.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="red" aria-labelledby="a1-s15">
+        <div class="inner">
+          <span class="kicker">Проблема 12 · доступ и безопасность не формализованы</span>
+          <h1 class="title" id="a1-s15">Нет общей модели доступа, безопасности и ответственности</h1>
+          <p class="lead">Agent pipeline может иметь очень разные полномочия: от read-only анализа до доступа к production-инструментам.</p>
+          <div class="grid three mt"><article class="card danger"><h3>Права</h3><p>Что агент может читать, редактировать, запускать и публиковать?</p></article><article class="card danger"><h3>Безопасность</h3><p>Какие действия требуют approval, sandbox или запрета?</p></article><article class="card danger"><h3>Ответственность</h3><p>Кто отвечает за результат, если junior с агентом меняет админку опубликованной игры?</p></article></div><ul class="plain-list"><li>Кто-то даёт агенту только локальный repo.</li><li>Кто-то может дать доступ к shell, секретам, билд-системе или production admin.</li><li>Без общей модели это зависит от личной осторожности разработчика.</li></ul><div class="quote-box"><p>Открывать agent harness наружу нельзя безопасно, пока не определены identity, permissions и approval boundaries.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1 conclusion-slide" data-act="1" data-accent="purple" aria-labelledby="a1-s16" data-kind="conclusion">
+        <div class="inner">
+          <span class="kicker">Вывод группы 3</span>
+          <h1 class="title" id="a1-s16">Agent harness изолирован границей разработчика</h1>
+          <p class="lead">Доступ к context, sessions, tools и исполнителям не является формальной частью процесса разработки.</p>
+          <div class="manifest-lines"><div><b>Команда не может напрямую взаимодействовать с исполнителем.</b></div><div><b>Другие разработчики не могут использовать или продолжить чужой harness.</b></div><div><b>Безопасность зависит от локальных настроек, а не от общей модели permissions.</b></div></div><div class="quote-box"><p>Agent stack существует внутри границы конкретного пользователя, а не внутри границы задачи или проекта.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="amber" aria-labelledby="a1-s17">
+        <div class="inner">
+          <span class="kicker">Проблема 13 · skills без lifecycle</span>
+          <h1 class="title" id="a1-s17">Skills не являются общим управляемым активом</h1>
+          <p class="lead">Skill влияет на production pipeline, но часто живёт как локальная инструкция, zip-архив, копия в проекте или submodule-репозиторий.</p>
+          <div class="grid four mt"><article class="card warning"><h3>Zip / copy</h3><p>Версии расходятся почти сразу после передачи.</p></article><article class="card warning"><h3>Submodule repo</h3><p>Синхронизация неудобна, не всем нужен этот skill, а обновления трудно проталкивать.</p></article><article class="card warning"><h3>Локальные версии</h3><p>Каждый меняет под себя, но непонятно, какая версия recommended.</p></article><article class="card warning"><h3>Нет owner</h3><p>Не ясно, кто отвечает за качество, совместимость и вывод из эксплуатации.</p></article></div><div class="quote-box"><p>Skill управляется хуже, чем обычная библиотека, хотя напрямую влияет на производство кода.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="cyan" aria-labelledby="a1-s18">
+        <div class="inner">
+          <span class="kicker">Проблема 14 · fail-сессии нельзя ревьюить</span>
+          <h1 class="title" id="a1-s18">Нельзя воспроизвести и отревьюить неудачную agent session</h1>
+          <p class="lead">Когда у разработчика «не получается с агентом», помочь трудно: проблема могла быть в постановке, context, tools, plan, модели или ручном вмешательстве.</p>
+          <div class="compare mt"><article class="card top-accent"><h3>Раньше</h3><p>Можно было отревьюить код, показать неправильный подход и объяснить, как сделать лучше.</p></article><article class="card danger"><h3>Сейчас</h3><p>Нужно ревьюить взаимодействие с агентом, но session history уходит в локальную историю, окружение меняется, context устаревает.</p></article></div><ul class="plain-list"><li>Нельзя увидеть, где именно разработчик ошибся при делегировании.</li><li>Нельзя повторить fail case в тех же условиях.</li><li>Нельзя научить команду на реальном провале pipeline.</li></ul><div class="quote-box"><p>Мы не можем ревьюить agent session так же естественно, как ревьюим код.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="green" aria-labelledby="a1-s19">
+        <div class="inner">
+          <span class="kicker">Проблема 15 · память ограничена личными задачами</span>
+          <h1 class="title" id="a1-s19">Agent memory обучается на личном наборе задач</h1>
+          <p class="lead">Каждый разработчик развивает своего агента на ограниченном поле собственных задач, хотя на проекте решается гораздо больше похожих задач.</p>
+          <div class="fork"><article class="panel"><h3>Личная память</h3><p>Агент знает мои ошибки, мои задачи, мои правки и мои локальные conventions.</p></article><div class="fork-mid">≠</div><article class="panel"><h3>Память проекта</h3><p>Агент должен знать опыт всех задач проекта: успешные подходы, провалы, review comments, QA findings и типовые решения.</p></article></div><div class="quote-box"><p>Агент развивается медленнее, если учится только на задачах одного человека, а не на опыте всего проекта.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1 conclusion-slide" data-act="1" data-accent="green" aria-labelledby="a1-s20" data-kind="conclusion">
+        <div class="inner">
+          <span class="kicker">Вывод группы 4</span>
+          <h1 class="title" id="a1-s20">Опыт решения задач не становится общей памятью проекта</h1>
+          <p class="lead">Проект сохраняет код, но почти не сохраняет производственный опыт, который позволил этот код получить.</p>
+          <div class="manifest-lines"><div><b>Не накапливаются traces:</b> как агент пришёл к решению и где ошибся.</div><div><b>Не накапливается опыт задач:</b> какие подходы сработали, какие провалились, что заметил review и QA.</div><div><b>Не развивается общий context:</b> агент не наследует опыт всех разработчиков проекта.</div></div><div class="quote-box"><p>Сохраняется результат работы. Не сохраняется опыт производства результата.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="purple" aria-labelledby="a1-s21">
+        <div class="inner">
+          <span class="kicker">Сведение</span>
+          <h1 class="title" id="a1-s21">Это не пятнадцать независимых проблем</h1>
+          <p class="lead">У локальных проблем повторяется один и тот же паттерн.</p>
+          <div class="grid two mt"><article class="card top-accent"><h3>1. Нет механизма развития pipeline</h3><p>Нельзя честно сравнивать модели, конфигурации и процессы.</p></article><article class="card top-accent"><h3>2. Human work не наблюдается</h3><p>Не видно реальной роли человека внутри agent execution.</p></article><article class="card top-accent"><h3>3. Harness изолирован</h3><p>Context, tools, sessions и permissions замкнуты на пользователя.</p></article><article class="card top-accent"><h3>4. Опыт не становится памятью</h3><p>Задачи учат отдельных людей и агентов, но не проект.</p></article></div><div class="quote-box"><p>У этих четырёх групп проблем есть общий root cause.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="red" aria-labelledby="a1-s22">
+        <div class="inner">
+          <span class="kicker">Root cause</span>
+          <h1 class="title" id="a1-s22">Агентская разработка сегодня организована как личный, локальный и закрытый заводик конкретного разработчика</h1>
+          <p class="lead">Это финальный диагноз первого акта.</p>
+          <div class="grid three mt"><article class="card danger"><h3>Личный</h3><p>Подписки, API keys, лимиты, модели, skills, prompts, sessions и накопленный опыт привязаны к человеку.</p></article><article class="card danger"><h3>Локальный</h3><p>Runtime, worktrees, Unity, тестовые окружения, active sessions и compute живут на машине разработчика.</p></article><article class="card danger"><h3>Закрытый</h3><p>Команда не видит stages, traces, исполнителей, decisions, промежуточные artifacts и причины ошибок.</p></article></div><div class="quote-box"><p>У компании уже есть множество персональных agent stacks, но нет общего agent engineering process.</p></div>
+        </div>
+      </section>
+      <section class="slide act-1" data-act="1" data-accent="blue" aria-labelledby="a1-s23">
+        <div class="inner">
+          <span class="kicker">Переход ко второму акту</span>
+          <h1 class="title" id="a1-s23">Что должно измениться?</h1>
+          <p class="lead">Если root cause в том, что agent stack привязан к отдельному разработчику, следующий вопрос очевиден: как перенести agent execution в общий инженерный процесс?</p>
+          <div class="big-question">Как превратить личную магию в инженерный процесс?</div>
+        </div>
+      </section>
+
+<section id="act-2" class="slide hero act-2 act-opener" data-act="2" data-accent="green" aria-labelledby="a2-s1">
+    <div class="inner act-opener-inner">
+      <div class="act-map" aria-label="Структура презентации">
+      <div class="act-map-row past">
+        <span class="act-map-index">01</span>
+        <div class="act-map-copy">
+          <span class="act-map-label">Акт 1</span>
+          <span class="act-map-title">Диагностика</span>
+        </div>
+      </div>
+      <div class="act-map-row current">
+        <span class="act-map-index">02</span>
+        <div class="act-map-copy">
+          <span class="act-map-label" id="a2-s1">Акт 2</span>
+          <span class="act-map-title">Multica</span>
+        </div>
+      </div>
+      <div class="act-map-row future">
+        <span class="act-map-index">03</span>
+        <div class="act-map-copy">
+          <span class="act-map-label">Акт 3</span>
+          
+        </div>
+      </div>
+      </div>
+      <p class="act-opener-note">От личной магии к инженерному процессу</p>
+    </div>
+    </section>
+      <section class="slide act-2" data-act="2" data-accent="blue" aria-labelledby="a2-s2">
+        <div class="inner">
+          <span class="kicker">Определение</span>
+          <h1 class="title" id="a2-s2">Multica — платформа агентов</h1>
+          <p class="lead">Multica делает работу ИИ-агентов отдельной частью инженерной системы: её можно запускать, наблюдать, настраивать и анализировать.</p>
+          <div class="grid five mt">
+  <article class="card top"><h3>Runtime</h3><p>Машина, где реально выполняются агенты.</p></article>
+  <article class="card top"><h3>Agent</h3><p>Цифровой исполнитель с конфигурацией, tools и правами.</p></article>
+  <article class="card top"><h3>Skills</h3><p>Общие способности, которые можно развивать и переиспользовать.</p></article>
+  <article class="card top"><h3>Issue</h3><p>Единица агентской работы внутри Multica.</p></article>
+  <article class="card top"><h3>Artifacts</h3><p>Планы, логи, результаты, метрики и trace выполнения.</p></article>
+</div>
+<div class="quote-box"><p>Это не чат с моделью. Это среда, где агентская работа становится видимой частью разработки.</p></div>
+        </div>
+      </section>
+      <section class="slide act-2" data-act="2" data-accent="cyan" aria-labelledby="a2-s3">
+        <div class="inner">
+          <span class="kicker">Сущность 01</span>
+          <h1 class="title" id="a2-s3">Runtime</h1>
+          <p class="lead">Runtime — это место работы агентов: отдельная машина или worker, на котором запускаются агентские задачи.</p>
+          <div class="grid two mt">
+  <div class="panel">
+    <h3>Аналогия</h3>
+    <p class="big-muted">Как TeamCity agents или GitHub runners: инфраструктура, которая берёт работу из очереди и выполняет её в подготовленном окружении.</p>
+  </div>
+  <div class="panel">
+    <h3>Что видно в runtime</h3>
+    <ul class="plain-list compact">
+      <li>какие агенты могут запускаться;</li>
+      <li>какие задачи сейчас выполняются;</li>
+      <li>какая загрузка и доступность машины;</li>
+      <li>какие процессы и артефакты связаны с запуском.</li>
+    </ul>
+  </div>
+</div>
+<div class="runtime-row mt">
+  <div class="runtime-box"><b>Runtime A</b><span>VPS / worker</span><small>agents · issues · load</small></div>
+  <div class="runtime-box"><b>Runtime B</b><span>VPS / worker</span><small>agents · issues · load</small></div>
+  <div class="runtime-box"><b>Runtime C</b><span>VPS / worker</span><small>agents · issues · load</small></div>
+</div>
+        </div>
+      </section>
+      <section class="slide act-2" data-act="2" data-accent="purple" aria-labelledby="a2-s4">
+        <div class="inner">
+          <span class="kicker">Сущность 02</span>
+          <h1 class="title" id="a2-s4">Agent</h1>
+          <p class="lead">Agent — это цифровой исполнитель: настроенная конфигурация, которую можно запускать на задачах и развивать как инженерный инструмент.</p>
+          <div class="agent-diagram mt">
+  <div class="agent-core">Agent</div>
+  <div class="agent-parts">
+    <span>model</span><span>harness</span><span>system prompt</span><span>skills</span><span>tools / MCP</span><span>permissions</span><span>runtime policy</span><span>project context</span>
+  </div>
+</div>
+<div class="grid two mt">
+  <article class="card"><h3>Модель — только часть агента</h3><p>Один и тот же model provider может вести себя по-разному в разных harness, с разными skills, tools и правами.</p></article>
+  <article class="card"><h3>Агент — это исполняемая роль</h3><p>Например: планировщик, кодер, ревьюер, QA-агент или агент для конкретного класса задач проекта.</p></article>
+</div>
+        </div>
+      </section>
+      <section class="slide act-2" data-act="2" data-accent="amber" aria-labelledby="a2-s5">
+        <div class="inner">
+          <span class="kicker">Сущность 03</span>
+          <h1 class="title" id="a2-s5">Skills</h1>
+          <p class="lead">Skills — это общие способности агентов: reusable-инструкции, правила, знания и процедуры для конкретных типов работы.</p>
+          <div class="grid three mt">
+  <article class="card top"><h3>Unity UI layout</h3><p>Как искать нужные prefab, проверять экран и не ломать соседние окна.</p></article>
+  <article class="card top"><h3>Code review</h3><p>Какие ошибки искать, как оформлять замечания и что считать блокером.</p></article>
+  <article class="card top"><h3>Project conventions</h3><p>Архитектурные правила, naming, структура директорий и принятые подходы.</p></article>
+</div>
+<div class="quote-box"><p>Skill должен быть инженерным активом команды, а не устным советом «попробуй вот так».</p></div>
+<ul class="inline-list"><li>общий доступ</li><li>версии</li><li>история изменений</li><li>привязка к агентам</li><li>обновления</li></ul>
+        </div>
+      </section>
+      <section class="slide act-2" data-act="2" data-accent="blue" aria-labelledby="a2-s6">
+        <div class="inner">
+          <span class="kicker">Операционная панель</span>
+          <h1 class="title" id="a2-s6">Мониторинг работы агентов</h1>
+          <p class="lead">Multica показывает, что сейчас происходит с агентами, runtime и задачами исполнения. Это не замена Jira, а слой наблюдения за agent execution.</p>
+          <div class="monitor mt">
+  <div class="monitor-head"><span>Issue</span><span>Agent</span><span>Runtime</span><span>Status</span><span>Metrics</span></div>
+  <div class="monitor-row"><span>#102</span><span>Coder.Unity</span><span>Runtime A</span><b class="status running">running</b><span>18m · 42k токенов</span></div>
+  <div class="monitor-row"><span>#103</span><span>Reviewer</span><span>Runtime B</span><b class="status wait">waiting</b><span>нужен ответ</span></div>
+  <div class="monitor-row"><span>#104</span><span>Planner</span><span>Runtime C</span><b class="status done">done</b><span>plan attached</span></div>
+  <div class="monitor-row"><span>#105</span><span>Coder.Unity</span><span>Runtime A</span><b class="status fail">failed</b><span>trace saved</span></div>
+</div>
+<div class="quote-box"><p>У агентской работы появляется состояние: queued, running, waiting, failed, done.</p></div>
+        </div>
+      </section>
+      <section class="slide act-2" data-act="2" data-accent="green" aria-labelledby="a2-s7">
+        <div class="inner">
+          <span class="kicker">Сущность 04</span>
+          <h1 class="title" id="a2-s7">Issue</h1>
+          <p class="lead">Issue — это единица работы внутри Multica. В ней хранится постановка, исполнитель, состояние, комментарии, запуски и все материалы выполнения.</p>
+          <div class="issue-layout mt">
+  <div class="issue-card">
+    <div class="issue-title">Issue #248 · Исправить food bar</div>
+    <div class="issue-meta"><span>Agent: Coder.Unity</span><span>Status: needs review</span><span>Runtime: B</span></div>
+    <div class="issue-block"><b>Постановка</b><p>Что нужно сделать, какой контекст дан агенту, какие ограничения важны.</p></div>
+    <div class="issue-block"><b>Попытки исполнения</b><p>У одной issue может быть несколько запусков с разными версиями агента или skills.</p></div>
+    <div class="issue-block"><b>Комментарии</b><p>Человек может уточнять задачу, возвращать результат и продолжать обсуждение.</p></div>
+  </div>
+  <div class="panel"><h3>Issue собирает всё вокруг задачи</h3><ul class="plain-list compact"><li>кто исполнял;</li><li>какая версия агента использовалась;</li><li>что было сделано;</li><li>почему задача была принята или возвращена;</li><li>какие артефакты остались после выполнения.</li></ul></div>
+</div>
+        </div>
+      </section>
+      <section class="slide act-2" data-act="2" data-accent="cyan" aria-labelledby="a2-s8">
+        <div class="inner">
+          <span class="kicker">След выполнения</span>
+          <h1 class="title" id="a2-s8">Artifacts и metrics</h1>
+          <p class="lead">После работы агента остаётся не только итоговый код. Остаются материалы, по которым можно понять, что происходило и сколько это стоило.</p>
+          <div class="grid two mt">
+  <div class="panel"><h3>Artifacts</h3><ul class="plain-list compact"><li>план;</li><li>summary рассуждений;</li><li>изменённые файлы;</li><li>команды и логи;</li><li>скриншоты;</li><li>результаты тестов;</li><li>финальный отчёт.</li></ul></div>
+  <div class="panel"><h3>Metrics</h3><ul class="plain-list compact"><li>время выполнения;</li><li>количество токенов;</li><li>использованная модель;</li><li>runtime;</li><li>количество попыток;</li><li>ошибки и возвраты;</li><li>оценка стоимости результата.</li></ul></div>
+</div>
+<div class="quote-box"><p>Агент оставляет след: можно смотреть не только результат, но и путь к результату.</p></div>
+        </div>
+      </section>
+      <section class="slide act-2" data-act="2" data-accent="purple" aria-labelledby="a2-s9">
+        <div class="inner">
+          <span class="kicker">Взаимодействие</span>
+          <h1 class="title" id="a2-s9">Chat</h1>
+          <p class="lead">Issue не обязана быть one-shot. С агентом можно продолжать разговор в контексте конкретной задачи и её истории.</p>
+          <div class="chat mt">
+  <div class="bubble human"><b>QA:</b> Какие регрессионные риски есть у этого изменения?</div>
+  <div class="bubble agent"><b>Coder.Unity:</b> Я изменял только FoodBar.prefab. Проверены экраны A и B. InventoryFoodBar не затронут.</div>
+  <div class="bubble human"><b>Разработчик:</b> Объясни, почему выбрал именно этот prefab.</div>
+  <div class="bubble agent"><b>Coder.Unity:</b> Он соответствует screen id из задачи и найден через текущий layout skill.</div>
+</div>
+<div class="quote-box"><p>Агент становится цифровой личностью процесса: с ним можно взаимодействовать как с исполнителем, без посредника в виде владельца локальной сессии.</p></div>
+        </div>
+      </section>
+      <section class="slide act-2" data-act="2" data-accent="amber" aria-labelledby="a2-s10">
+        <div class="inner">
+          <span class="kicker">Развитие</span>
+          <h1 class="title" id="a2-s10">Версионирование agent stack</h1>
+          <p class="lead">Если agent pipeline влияет на production-код, его нужно развивать как инженерную систему: с версиями, владельцами и историей изменений.</p>
+          <div class="version mt">
+  <div class="version-card"><h3>Coder.Unity v17</h3><ul><li>ui-layout@3</li><li>basic screenshot check</li><li>model A</li><li>MCP tools set 1</li></ul></div>
+  <div class="version-arrow">→</div>
+  <div class="version-card current"><h3>Coder.Unity v18</h3><ul><li>ui-layout@4</li><li>prefab identification rule</li><li>visual verification</li><li>MCP tools set 2</li></ul></div>
+</div>
+<div class="grid three mt">
+  <article class="card"><h3>Что изменилось</h3><p>Skill, prompt, tools, MCP environment, permissions или runtime policy.</p></article>
+  <article class="card"><h3>Где применимо</h3><p>Для каких типов задач и проектов эта версия рекомендована.</p></article>
+  <article class="card"><h3>Как проверить</h3><p>На каких issues и метриках новая версия показала себя лучше.</p></article>
+</div>
+        </div>
+      </section>
+      <section class="slide act-2" data-act="2" data-accent="green" aria-labelledby="a2-s11">
+        <div class="inner">
+          <span class="kicker">Итог второго акта</span>
+          <h1 class="title" id="a2-s11">Agent execution становится объектом системы</h1>
+          <p class="lead">Теперь работа агентов описана не как набор локальных чатов, а как набор управляемых сущностей.</p>
+          <div class="verb-grid mt">
+  <div>описывать</div><div>запускать</div><div>наблюдать</div><div>обновлять</div><div>измерять</div><div>обсуждать</div>
+</div>
+<div class="quote-box"><p>Multica даёт язык и инфраструктуру для агентской работы: runtime, agents, skills, issues, artifacts, metrics и версии.</p></div>
+<p class="lead final-lead">Следующий вопрос: как встроить это в реальный процесс команды, которая уже живёт в Jira?</p>
+        </div>
+      </section>
+
+<section id="act-3" class="slide hero act-3 act-opener" data-act="3" data-accent="green" aria-labelledby="a3-s1">
+    <div class="inner act-opener-inner">
+      <div class="act-map" aria-label="Структура презентации">
+      <div class="act-map-row past">
+        <span class="act-map-index">01</span>
+        <div class="act-map-copy">
+          <span class="act-map-label">Акт 1</span>
+          <span class="act-map-title">Диагностика</span>
+        </div>
+      </div>
+      <div class="act-map-row past">
+        <span class="act-map-index">02</span>
+        <div class="act-map-copy">
+          <span class="act-map-label">Акт 2</span>
+          <span class="act-map-title">Multica</span>
+        </div>
+      </div>
+      <div class="act-map-row current">
+        <span class="act-map-index">03</span>
+        <div class="act-map-copy">
+          <span class="act-map-label" id="a3-s1">Акт 3</span>
+          <span class="act-map-title">Внедрение</span>
+        </div>
+      </div>
+      </div>
+      <p class="act-opener-note">От личной магии к инженерному процессу</p>
+    </div>
+    </section>
+
+      <section class="slide act-3" data-act="3" data-accent="blue" aria-labelledby="a3-s2"><div class="inner"><span class="kicker">Эволюция Jira</span><h1 class="title" id="a3-s2">В Jira появляются цифровые исполнители</h1><p class="lead">В текущий task flow добавляются аккаунты агентов. Эти аккаунты видны как исполнители задач, а их фактической работой управляет Multica.</p><div class="identity-grid mt"><div class="profile"><b>Reviewer.Agent</b><span>анализирует diff и пишет structured review</span></div><div class="profile"><b>Planner.Agent</b><span>исследует задачу и предлагает план</span></div><div class="profile"><b>Coder.Agent</b><span>берёт задачу в execution и возвращает результат</span></div><div class="profile"><b>QA.Agent</b><span>проверяет сценарии, screenshots и regression risks</span></div></div><div class="quote-box"><p>Назначение задачи агенту становится управляемым событием, а не ручным копированием текста в чат.</p></div></div></section>
+
+      <section class="slide act-3" data-act="3" data-accent="purple" aria-labelledby="a3-s3"><div class="inner"><span class="kicker">Agent identity</span><h1 class="title" id="a3-s3">У агентов разные роли и уровни</h1><p class="lead">Цифровой исполнитель связан с конкретным agent stack в Multica: model, harness, skills, tools, permissions и runtime policy.</p><div class="grid three mt"><div class="card top"><h3>Coder Junior</h3><p>дешёвый профиль для простых багов, типовых правок и низкого риска.</p></div><div class="card top"><h3>Coder Senior</h3><p>более сильный профиль для сложных задач и архитектурного контекста.</p></div><div class="card top"><h3>Coder Super</h3><p>дорогой режим для важных задач, где цена ошибки выше compute.</p></div></div><div class="owner-line"><div class="panel"><h3>Человек отвечает за результат</h3><p>Разработчик выбирает подходящий уровень агента под задачу и принимает outcome.</p></div><div class="arrow">→</div><div class="panel"><h3>Multica запускает исполнителя</h3><p>Платформа выбирает конфигурацию, runtime, tools и ограничения доступа.</p></div></div></div></section>
+
+      <section class="slide act-3" data-act="3" data-accent="green" aria-labelledby="a3-s4"><div class="inner"><span class="kicker">Jira hook</span><h1 class="title" id="a3-s4">Назначение задачи запускает execution</h1><p class="lead">Когда issue назначается на агентский аккаунт, Jira hook создаёт связанную Multica issue и запускает агента на доступном runtime.</p><div class="sequence"><div class="flow-card"><b>1</b><h3>Assign</h3><p>Задачу назначают на Coder.Agent, Reviewer.Agent или другой agent account.</p></div><div class="flow-card"><b>2</b><h3>Hook</h3><p>Jira event уходит в Multica integration service.</p></div><div class="flow-card"><b>3</b><h3>Issue</h3><p>Создаётся запись исполнения, связанная с Jira-задачей.</p></div><div class="flow-card"><b>4</b><h3>Execute</h3><p>Агент работает в облачном окружении и собирает artifacts.</p></div><div class="flow-card"><b>5</b><h3>Return</h3><p>В Jira приходит summary, ссылки и задача возвращается человеку.</p></div></div><div class="quote-box"><p>Jira issue остаётся входом для команды. Multica становится местом фактического исполнения агентом.</p></div></div></section>
+
+      <section class="slide act-3" data-act="3" data-accent="cyan" aria-labelledby="a3-s5"><div class="inner"><span class="kicker">Что видит команда</span><h1 class="title" id="a3-s5">Jira-задача получает execution summary</h1><p class="lead">В Jira нужен короткий понятный результат. Подробности исполнения, traces, metrics и artifacts открываются по ссылке в Multica.</p><div class="mock mt"><div class="mock-head"><span>GAME-248</span><span>Back to Сергей · human review</span></div><div class="mock-body"><div class="mock-title">Исправить food bar на экране склада</div><div class="meta"><span>Executor: Coder Senior</span><span>Multica Issue #248</span><span>Попытка: 2</span><span>Время: 18m</span><span>Tokens: 42k</span></div><div class="comment"><b>Coder Senior:</b> Исправлен FoodBar.prefab. Приложены diff, screenshots, test log, metrics и execution trace. Требуется review.</div><div class="comment"><b>Multica:</b> предыдущая попытка была возвращена: выбран неправильный prefab. В этой попытке использован обновлённый UI layout skill.</div></div></div><div class="quote-box"><p>Jira показывает производственную историю без превращения issue в dump логов.</p></div></div></section>
+
+      <section class="slide act-3" data-act="3" data-accent="amber" aria-labelledby="a3-s6"><div class="inner"><span class="kicker">Шаг 1</span><h1 class="title" id="a3-s6">Начать с agent code review</h1><p class="lead">Первый безопасный этап: агент не меняет код, а только анализирует diff и оставляет review как участник процесса.</p><div class="grid three mt"><div class="stage top"><div class="stage-num">1</div><h3>Read-only права</h3><p>Reviewer получает diff, требования, conventions и контекст задачи.</p><ul><li>без write-доступа;</li><li>без production-прав;</li><li>с минимальным риском.</li></ul></div><div class="stage top"><div class="stage-num">2</div><h3>Review artifact</h3><p>Агент пишет структурированный комментарий.</p><ul><li>регрессии;</li><li>архитектурные риски;</li><li>что проверить QA;</li><li>что уточнить человеку.</li></ul></div><div class="stage top"><div class="stage-num">3</div><h3>Улучшение Reviewer</h3><p>Можно менять system prompt, skills и контекст review-агента.</p><ul><li>что он нашёл;</li><li>что пропустил;</li><li>какие замечания полезны;</li><li>какие шумят.</li></ul></div></div><div class="quote-box"><p>Code review даёт быстрый эффект и сразу учит команду улучшать не задачу, а agent pipeline.</p></div></div></section>
+
+      <section class="slide act-3" data-act="3" data-accent="blue" aria-labelledby="a3-s7"><div class="inner"><span class="kicker">Шаг 2</span><h1 class="title" id="a3-s7">Перенести локальные agent stacks в Multica</h1><p class="lead">Не надо сразу искать универсального идеального агента. Сначала переносим существующие личные harness, skills и привычные workflows в облачный контур.</p><div class="grid three mt"><div class="card top"><h3>Sergey.Agent</h3><p>мой текущий pipeline: мои skills, system prompt, tools, conventions и способ решать Unity-задачи.</p></div><div class="card top"><h3>Dima.Agent</h3><p>pipeline другого разработчика: другой стиль, другие skills, другие сильные и слабые стороны.</p></div><div class="card top"><h3>Team agents</h3><p>агенты становятся видимыми объектами команды, а не локальными чатами на ноутбуке.</p></div></div><div class="quote-box"><p>Первый шаг — не стандартизировать всех, а сделать личные agent stacks видимыми, запускаемыми и сравнимыми.</p></div></div></section>
+
+      <section class="slide act-3" data-act="3" data-accent="purple" aria-labelledby="a3-s8"><div class="inner"><span class="kicker">Командное развитие</span><h1 class="title" id="a3-s8">Теперь agents и skills можно обсуждать</h1><p class="lead">Когда локальные stacks перенесены в Multica, команда впервые видит, чем они отличаются и что из них стоит переиспользовать.</p><div class="matrix"><div class="matrix-row"><b>1</b><div><h3>Посмотреть чужого агента</h3><p>Какие skills подключены, какие tools доступны, какой context используется.</p></div></div><div class="matrix-row"><b>2</b><div><h3>Понять сильные стороны</h3><p>Какие типы задач он решает лучше, где требует меньше вмешательств.</p></div></div><div class="matrix-row"><b>3</b><div><h3>Забрать skill</h3><p>Не пересылать zip, а подключить версию skill и проверить на своих задачах.</p></div></div><div class="matrix-row"><b>4</b><div><h3>Сравнить результаты</h3><p>Запустить близкие задачи разными agent stacks и обсудить outcome, artifacts и metrics.</p></div></div></div><div class="quote-box"><p>Появляется командная работа над agent pipeline, а не обмен устными советами “попробуй вот так”.</p></div></div></section>
+
+      <section class="slide act-3" data-act="3" data-accent="green" aria-labelledby="a3-s9"><div class="inner"><span class="kicker">Шаг 3</span><h1 class="title" id="a3-s9">После сравнения появляется командный pipeline</h1><p class="lead">Когда agents и skills видны, можно договориться, какие профили использовать для разных классов задач.</p><div class="sequence"><div class="flow-card"><b>1</b><h3>Bugfix</h3><p>простые правки уходят дешёвому Coder Junior.</p></div><div class="flow-card"><b>2</b><h3>Plan</h3><p>сложные задачи сначала получает Planner.Agent.</p></div><div class="flow-card"><b>3</b><h3>Implement</h3><p>утверждённый план передаётся Coder Senior или Super.</p></div><div class="flow-card"><b>4</b><h3>Review</h3><p>Reviewer.Agent делает agent code review до человеческой приёмки.</p></div><div class="flow-card"><b>5</b><h3>QA</h3><p>QA.Agent проверяет screenshots, сценарии и regression risks.</p></div></div><div class="quote-box"><p>Стандартизация появляется не сверху, а из сравнения реально работающих agent stacks.</p></div></div></section>
+
+      <section class="slide act-3" data-act="3" data-accent="cyan" aria-labelledby="a3-s10"><div class="inner"><span class="kicker">Новые сценарии</span><h1 class="title" id="a3-s10">Агенты помогают синхронизироваться людям</h1><p class="lead">Multica полезна не только для “агент пишет код”. Она даёт общий контур для взаимодействия между разработчиками и командами.</p><div class="grid three mt"><div class="card top"><h3>Два клиента</h3><p>Разработчики видят agents, skills, failures и artifacts друг друга; синхронизация становится предметной.</p></div><div class="card top"><h3>Клиент ↔ сервер</h3><p>Клиентский разработчик может запустить серверный прототип или planner execution, чтобы проверить клиент раньше.</p></div><div class="card top"><h3>QA ↔ агент</h3><p>QA задаёт вопрос фактическому исполнителю задачи, а не ждёт пересылки через владельца локальной сессии.</p></div></div><div class="quote-box"><p>Исполняемая экспертиза начинает принадлежать процессу, а не только конкретному человеку.</p></div></div></section>
+
+      <section class="slide act-3" data-act="3" data-accent="purple" aria-labelledby="a3-s11"><div class="inner"><span class="kicker">Параллельность</span><h1 class="title" id="a3-s11">Sprint превращается в очередь execution</h1><p class="lead">Разработчик не запускает две локальные сессии и не ждёт ноутбук. Он отправляет задачи в общий runtime pool и позже принимает результаты.</p><div class="queue mt"><div class="queue-head"><span>Jira</span><span>Executor</span><span>Runtime</span><span>Status</span><span>Next</span></div><div class="queue-row"><span>GAME-101</span><span>Sergey.Agent</span><span>VDS-01</span><b class="status running">running</b><span>ожидать</span></div><div class="queue-row"><span>GAME-102</span><span>Planner.Agent</span><span>VDS-02</span><b class="status review">review</b><span>принять план</span></div><div class="queue-row"><span>GAME-103</span><span>Reviewer.Agent</span><span>VDS-03</span><b class="status wait">waiting</b><span>ответить</span></div><div class="queue-row"><span>GAME-104</span><span>Dima.Agent</span><span>VDS-04</span><b class="status fail">failed</b><span>посмотреть trace</span></div></div><div class="quote-box"><p>Человек работает с очередью решений, которые нужно принять, а не сопровождает десять локальных чатов.</p></div></div></section>
+
+      <section class="slide act-3" data-act="3" data-accent="amber" aria-labelledby="a3-s12"><div class="inner"><span class="kicker">Доступы</span><h1 class="title" id="a3-s12">Агенты не должны наследовать права разработчика</h1><p class="lead">Junior с мощным агентом не должен случайно получить доступ к тому, что опасно менять автоматически: production admin, publish tools, секреты, платежи.</p><div class="grid two mt"><div class="panel"><h3>Сейчас риск размыт</h3><ul class="plain-list"><li>локальные credentials;</li><li>write-права “как у человека”;</li><li>опасные действия через prompt;</li><li>нет audit trail;</li><li>непонятно, кто что разрешил.</li></ul></div><div class="panel"><h3>Нужен формальный контур</h3><ul class="plain-list"><li>agent identity;</li><li>scoped permissions;</li><li>read/write separation;</li><li>approval gates;</li><li>sandbox runtimes;</li><li>лог действий и решений.</li></ul></div></div><div class="quote-box"><p>Доступ агента должен задаваться платформой, а не случайной комбинацией локальных токенов и промпта.</p></div></div></section>
+
+      <section class="slide act-3" data-act="3" data-accent="green" aria-labelledby="a3-s13"><div class="inner"><span class="kicker">Инфраструктура</span><h1 class="title" id="a3-s13">Что нужно поставить</h1><p class="lead">Минимальная инсталляция — это Multica-сервер, Jira integration и набор VDS/workers, на которых будут запускаться agent executions.</p><div class="infra-grid mt"><div class="metric"><b>Multica</b><span>agents, issues, artifacts, metrics, skills и UI мониторинга работы агентов.</span></div><div class="metric"><b>Jira hooks</b><span>события assignment, комментарии, статусы, ссылки на Multica issues.</span></div><div class="metric"><b>VDS / workers</b><span>взаимозаменяемые runtime machines для запуска agent executions.</span></div><div class="metric"><b>Agent accounts</b><span>цифровые исполнители в Jira, управляемые Multica.</span></div><div class="metric"><b>Repo access</b><span>scoped credentials, worktrees, branches, правила записи и review.</span></div><div class="metric"><b>Storage</b><span>skills, versions, plans, logs, screenshots, diffs, traces и cost metrics.</span></div></div></div></section>
+
+      <section class="slide act-3" data-act="3" data-accent="blue" aria-labelledby="a3-s14"><div class="inner"><span class="kicker">Rollout</span><h1 class="title" id="a3-s14">Внедрять без революции</h1><p class="lead">Сначала переносим существующее, потом начинаем сравнивать, затем вырабатываем общий pipeline.</p><div class="matrix"><div class="matrix-row"><b>1</b><div><h3>Reviewer</h3><p>Read-only agent review для PR/diff. Минимальные права, быстрый feedback.</p></div></div><div class="matrix-row"><b>2</b><div><h3>Локальные stacks в облако</h3><p>Sergey.Agent, Dima.Agent и другие текущие workflows становятся видимыми и запускаемыми через Multica.</p></div></div><div class="matrix-row"><b>3</b><div><h3>Сравнение и shared skills</h3><p>Команда обсуждает agents, подключает удачные skills, проверяет конфигурации на задачах.</p></div></div><div class="matrix-row"><b>4</b><div><h3>Planner / Coder / QA</h3><p>Постепенно добавляются plan stage, реализация, прототипы и автоматизированные проверки.</p></div></div></div><div class="quote-box"><p>Мы не навязываем новый процесс сразу. Мы делаем текущие agent workflows общими, а затем улучшаем их на данных.</p></div></div></section>
+
+      <section class="slide hero act-3" data-act="3" data-accent="green" aria-labelledby="a3-s15"><div class="inner"><span class="kicker">Итог третьего акта</span><h1 class="title" id="a3-s15">Agent execution становится частью командного процесса</h1><p class="lead">В Jira появляются цифровые исполнители, Multica управляет их выполнением, а команда получает общий способ запускать, наблюдать, сравнивать и развивать agent workflows.</p><div class="quote-box"><p>Сначала мы переносим личные agent stacks в общий контур. Потом превращаем их в командную инженерную практику.</p></div></div></section>
+    </main>
+  </div>
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const counter = document.querySelector('.counter');
+    const progress = document.querySelector('.progress span');
+    const subtitle = document.querySelector('.brand-subtitle');
+    const actButtons = Array.from(document.querySelectorAll('[data-act-jump]'));
+    const actTitles = { 1: 'Диагностика', 2: 'Multica', 3: 'Внедрение' };
+    const actStarts = Object.fromEntries([1, 2, 3].map((act) => [act, slides.findIndex((slide) => Number(slide.dataset.act) === act)]));
+    let index = 0;
+
+    function show(next, updateHash = true) {
+      index = (next + slides.length) % slides.length;
+      slides.forEach((slide, slideIndex) => slide.classList.toggle('active', slideIndex === index));
+      const currentAct = Number(slides[index].dataset.act);
+      counter.textContent = `${index + 1} / ${slides.length}`;
+      progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+      subtitle.textContent = currentAct === 0
+        ? 'Сергей Морозов · Nord Studio · MY.GAMES'
+        : `Акт ${currentAct} · ${actTitles[currentAct]}`;
+      actButtons.forEach((button) => button.setAttribute('aria-current', String(Number(button.dataset.actJump) === currentAct)));
+      if (updateHash) history.replaceState(null, '', `#slide-${index + 1}`);
+    }
+
+    document.querySelector('[data-action="prev"]').addEventListener('click', () => show(index - 1));
+    document.querySelector('[data-action="next"]').addEventListener('click', () => show(index + 1));
+    actButtons.forEach((button) => button.addEventListener('click', () => show(actStarts[Number(button.dataset.actJump)])));
+    document.querySelector('[data-action="fullscreen"]').addEventListener('click', async () => {
+      if (!document.fullscreenElement) await document.documentElement.requestFullscreen?.().catch(() => {});
+      else await document.exitFullscreen?.().catch(() => {});
+    });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.target && ['INPUT', 'TEXTAREA', 'BUTTON'].includes(event.target.tagName)) return;
+      if (['ArrowRight', 'PageDown', ' '].includes(event.key)) { event.preventDefault(); show(index + 1); }
+      if (['ArrowLeft', 'PageUp'].includes(event.key)) { event.preventDefault(); show(index - 1); }
+      if (event.key === 'Home') { event.preventDefault(); show(0); }
+      if (event.key === 'End') { event.preventDefault(); show(slides.length - 1); }
+      if (['1', '2', '3'].includes(event.key)) { event.preventDefault(); show(actStarts[Number(event.key)]); }
+    });
+
+    let touchX = null;
+    window.addEventListener('touchstart', (event) => { touchX = event.changedTouches[0].clientX; }, { passive:true });
+    window.addEventListener('touchend', (event) => {
+      if (touchX === null) return;
+      const dx = event.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 52) show(index + (dx < 0 ? 1 : -1));
+      touchX = null;
+    }, { passive:true });
+
+    const slideHash = location.hash.match(/^#slide-(\d+)$/);
+    const actHash = location.hash.match(/^#act-(\d)$/);
+    if (slideHash) index = Math.min(slides.length - 1, Math.max(0, Number(slideHash[1]) - 1));
+    else if (actHash && actStarts[Number(actHash[1])] >= 0) index = actStarts[Number(actHash[1])];
+    show(index, false);
+  </script>
+</body>
+</html>
