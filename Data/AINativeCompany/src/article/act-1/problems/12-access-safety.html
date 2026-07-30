@@ -1,0 +1,27 @@
+<article class="problem reveal has-visual" id="problem-12">
+<span class="problem-no">12</span>
+<h4>Доступ, безопасность и ответственность не формализованы</h4>
+<p class="core">Пока агентские пайплайны живут в персональных конфигурациях, компания не видит границы их доступа и не может формально распределить ответственность.</p>
+<p>Один агент только читает diff, другой имеет shell, write‑доступ к репозиторию, сборке или публикации. Без общего контура эти различия остаются локальными настройками, а единая политика существует только на словах.</p>
+<div class="compare">
+<div class="compare-card">
+<h5>Размытый локальный риск</h5>
+<p>Права наследуются от человека, а действия и точки подтверждения не образуют общего журнала.</p>
+</div>
+<div class="compare-card good">
+<h5>Формальный контур</h5>
+<p>Идентичность агента, ограниченные права, разделение чтения и записи, точки подтверждения, изолированные среды выполнения, журнал действий и решений.</p>
+</div>
+</div>
+<div aria-label="Матрица прав трёх агентов показывает разные разрешения на чтение, запись, shell и production, а каждое действие попадает в журнал" class="problem-visual visual-card visual-permissions" role="img">
+<div class="visual-label">Права должны принадлежать цифровой роли</div>
+<div class="permission-grid">
+<span></span><b>Read</b><b>Write</b><b>Shell</b><b>Prod</b>
+<strong>Reviewer</strong><i class="yes">✓</i><i>—</i><i>—</i><i>—</i>
+<strong>Coder</strong><i class="yes">✓</i><i class="yes">✓</i><i class="confirm">!</i><i>—</i>
+<strong>Deploy</strong><i class="yes">✓</i><i>—</i><i class="yes">✓</i><i class="confirm">!</i>
+</div>
+<div class="permission-legend"><span><i class="yes">✓</i> разрешено</span><span><i class="confirm">!</i> подтверждение</span><span><i>—</i> запрещено</span></div>
+<div class="audit-strip"><b>audit log</b><span>Reviewer read diff</span><span>Coder requested shell</span><span>Deploy awaiting approval</span></div>
+</div>
+</article>

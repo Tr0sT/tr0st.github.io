@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="Визуальное эссе о том, почему персональные ИИ-агенты ещё не образуют агентный процесс компании — и как превратить локальную магию в наблюдаемую инженерную систему." name="description"/>
 <meta content="#0c0f14" name="theme-color"/>
-<title>От личной магии к инженерному процессу — версия 2</title>
+<title>От личной магии к инженерному процессу</title>
 <script>document.documentElement.classList.add('js');</script>
 <style>
     :root {
@@ -601,32 +601,6 @@
     .capacity-row.idle .capacity-bar i { background: var(--mint); }
     .capacity-row small { color: var(--muted); text-align: right; }
 
-    .timeline { display: grid; gap: 10px; }
-    .timeline-row {
-      display: grid;
-      grid-template-columns: 48px 140px 1fr;
-      align-items: center;
-      gap: 14px;
-      padding: 12px 14px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: #fff;
-      font-size: .77rem;
-    }
-    .timeline-row .tno { color: var(--orange); font-weight: 850; }
-    .timeline-row b { font-size: .8rem; }
-    .timeline-row span { color: var(--muted); }
-    .timeline-mask {
-      margin-top: 16px;
-      padding: 14px;
-      border-radius: 13px;
-      background: var(--orange);
-      color: #111;
-      text-align: center;
-      font-size: .77rem;
-      font-weight: 850;
-    }
-
     .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .compare-card { padding: 22px; border-radius: 18px; border: 1px solid var(--line); background: #fff; }
     .compare-card h4 { margin-bottom: 10px; font-size: 1rem; }
@@ -870,19 +844,57 @@
     .rollout-step h3 { margin-bottom: 8px; font-size: 1.25rem; }
     .rollout-step p { margin: 0; color: var(--muted); font-size: .84rem; }
 
-    .sprint-board { display: grid; gap: 10px; }
-    .sprint-row {
-      display: grid;
-      grid-template-columns: 110px 1.2fr 1fr .75fr 1fr;
-      gap: 10px;
-      align-items: center;
-      padding: 12px 14px;
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      background: #fff;
-      font-size: .69rem;
+    .sprint-board-hint { display: none; }
+    .sprint-board-scroll {
+      overflow-x: auto;
+      padding: 2px 2px 8px;
+      overscroll-behavior-inline: contain;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(21,23,27,.32) transparent;
     }
-    .sprint-row.head { color: var(--muted); background: transparent; border-color: transparent; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+    .sprint-board-scroll:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+    .sprint-board {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: separate;
+      border-spacing: 0 10px;
+      font-size: .75rem;
+    }
+    .sprint-board caption {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .sprint-board th,
+    .sprint-board td {
+      padding: 12px 14px;
+      border-block: 1px solid var(--line);
+      background: #fff;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .sprint-board thead th {
+      padding-block: 0 4px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .sprint-board tbody tr > :first-child {
+      border-left: 1px solid var(--line);
+      border-radius: 13px 0 0 13px;
+    }
+    .sprint-board tbody tr > :last-child {
+      border-right: 1px solid var(--line);
+      border-radius: 0 13px 13px 0;
+    }
     .status { display: inline-block; width: fit-content; padding: 5px 8px; border-radius: 999px; background: var(--mint-soft); font-weight: 780; }
     .status.wait { background: #fff0bd; }
     .status.fail { background: var(--orange-soft); }
@@ -931,8 +943,6 @@
       .pipeline-grid, .architecture { grid-template-columns: 1fr; }
       .hook-flow { grid-template-columns: 1fr; }
       .hook-step:not(:last-child)::after { content: "↓"; right: 50%; top: auto; bottom: -24px; transform: translateX(50%); }
-      .sprint-row { grid-template-columns: 95px 1.2fr 1fr .8fr; }
-      .sprint-row > :last-child { display: none; }
     }
     @media (max-width: 680px) {
       body { font-size: 17px; }
@@ -948,11 +958,9 @@
       .cost-equation { grid-template-columns: 1fr; }
       .cost-equation .op { transform: rotate(90deg); }
       .capacity-row { grid-template-columns: 108px 1fr 42px; }
-      .timeline-row { grid-template-columns: 38px 1fr; }
-      .timeline-row span { grid-column: 2; }
+      .truth-bridge { grid-template-columns: 1fr; }
       .rollout-step { grid-template-columns: 1fr; gap: 14px; }
-      .sprint-row { grid-template-columns: 90px 1fr; }
-      .sprint-row > :nth-child(n+3) { display: none; }
+      .sprint-board-hint { display: block; margin: -8px 0 10px; color: var(--muted); font-size: .75rem; line-height: 1.45; }
       .footer-inner { flex-direction: column; }
     }
 
@@ -1211,12 +1219,12 @@
     .visual-label { margin-bottom: 20px; font-size: .67rem; }
     .visual-verdict { font-size: .78rem; line-height: 1.5; }
     .visual-caption { font-size: .74rem; }
-    .lab-task small, .lab-option small, .worker-head small, .metric-row, .tank > small, .resource-meter, .jira-ticket span,
-    .lifecycle-fold span, .chat-top span, .bubble, .version-split span, .version-split small, .audit-strip span, .missing-plugs span,
-    .permission-grid, .permission-legend, .artifact-drawer, .timeline-row span, .timeline-mask, .doc small, .book small { font-size: .62rem; }
+    .lab-task small, .lab-option small, .worker-head small, .metric-row, .tank > small, .resource-meter,
+    .chat-top span, .bubble, .version-split span, .version-split small, .audit-strip span, .missing-plugs span,
+    .permission-grid, .permission-legend, .artifact-drawer, .doc small, .book small { font-size: .62rem; }
     .zip { font-size: .61rem; }
     .bubble b, .audit-strip b, .doc b, .book span { font-size: .68rem; }
-    .version-split b, .jira-ticket b, .lab-task b { font-size: .86rem; }
+    .version-split b, .lab-task b { font-size: .86rem; }
 
     /* 03 · Static cost comparison instead of calculator */
     .visual-cost { min-height: 500px; }
@@ -1321,51 +1329,6 @@
     .transition-bridge-copy { max-width: 760px; margin: 0 auto; color: rgba(255,255,255,.72); font-size: clamp(1rem,1.6vw,1.26rem); line-height: 1.55; }
     .transition-operation { background: linear-gradient(180deg, rgba(var(--mint-rgb),.15), rgba(255,255,255,.92) 34%, rgba(var(--orange-rgb),.14)); }
     .transition-operation > p { display: none; }
-
-    /* Opening map */
-    .trajectory-preview {
-      position: relative;
-      width: min(1240px, 100%);
-      margin: 82px 0 12px;
-      padding: clamp(34px, 5vw, 62px);
-      overflow: hidden;
-      border: 1px solid rgba(21,23,27,.13);
-      border-radius: 30px;
-      background:
-        radial-gradient(circle at 8% 90%, rgba(var(--orange-rgb),.15), transparent 34%),
-        radial-gradient(circle at 92% 12%, rgba(var(--mint-rgb),.18), transparent 34%),
-        rgba(255,255,255,.48);
-      box-shadow: 0 26px 70px rgba(13,16,22,.075);
-    }
-    .trajectory-preview::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      opacity: .22;
-      pointer-events: none;
-      background-image: linear-gradient(rgba(21,23,27,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(21,23,27,.07) 1px, transparent 1px);
-      background-size: 46px 46px;
-      mask-image: linear-gradient(90deg, transparent, #000 28%, #000 72%, transparent);
-    }
-    .trajectory-copy, .trajectory-map { position: relative; z-index: 1; }
-    .trajectory-copy { max-width: 920px; }
-    .trajectory-copy h2 { margin-bottom: 18px; font-size: clamp(2rem, 4vw, 4rem); line-height: 1.02; letter-spacing: -.05em; }
-    .trajectory-copy p { max-width: 780px; color: var(--muted); }
-    .trajectory-map { display: grid; grid-template-columns: minmax(290px,.9fr) 110px minmax(430px,1.25fr); gap: 18px; align-items: center; margin-top: 38px; }
-    .trajectory-gaps { display: grid; gap: 8px; }
-    .trajectory-gaps span { display: grid; grid-template-columns: 30px 1fr; gap: 8px; align-items: center; padding: 10px 12px; border: 1px solid rgba(var(--orange-rgb),.2); border-radius: 12px; background: rgba(255,255,255,.65); font-size: .7rem; line-height: 1.28; }
-    .trajectory-gaps b { color: var(--orange); font-size: .61rem; }
-    .trajectory-converge { position: relative; min-height: 190px; display: grid; place-items: center; }
-    .trajectory-converge i { position: absolute; left: 0; width: 72%; height: 1px; background: linear-gradient(90deg, rgba(var(--orange-rgb),.7), rgba(var(--mint-rgb),.55)); transform-origin: right center; }
-    .trajectory-converge i:nth-child(1) { top: 12%; transform: rotate(26deg); }
-    .trajectory-converge i:nth-child(2) { top: 30%; transform: rotate(13deg); }
-    .trajectory-converge i:nth-child(3) { top: 50%; }
-    .trajectory-converge i:nth-child(4) { top: 70%; transform: rotate(-13deg); }
-    .trajectory-converge i:nth-child(5) { top: 88%; transform: rotate(-26deg); }
-    .trajectory-converge b { position: relative; z-index: 2; margin-left: 58px; color: var(--mint); font-size: 1.6rem; }
-    .trajectory-system { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; padding: 25px; border: 1px solid rgba(var(--mint-rgb),.45); border-radius: 20px; background: var(--night); color: #fff; }
-    .trajectory-system span { padding: 8px 10px; border: 1px solid rgba(255,255,255,.15); border-radius: 10px; background: rgba(255,255,255,.06); font-size: .68rem; font-weight: 800; }
-    .trajectory-system b { color: var(--mint); }
 
     /* Wide two-column problem scenes */
     .problem.has-visual {
@@ -1539,21 +1502,59 @@
     .local-queue i { width: 20px; height: 13px; border: 1px solid var(--line); border-radius: 4px; background: #fff; }
     .local-queue b { color: var(--orange); }
 
-    /* 06 · Lifecycle fold */
-    .jira-ticket { position: relative; z-index: 3; padding: 18px; border: 1px solid var(--line); border-radius: 17px; background: #fff; box-shadow: 0 16px 30px rgba(13,16,22,.1); }
-    .jira-ticket span, .jira-ticket b, .jira-ticket em { display: block; }
-    .jira-ticket span { color: var(--muted); font-size: .55rem; }
-    .jira-ticket b { margin: 5px 0 12px; font-size: .8rem; line-height: 1.3; }
-    .jira-ticket em { width: fit-content; padding: 5px 8px; border-radius: 999px; background: #fff0bd; font-size: .53rem; font-style: normal; font-weight: 800; }
-    .lifecycle-fold { position: relative; display: grid; gap: 6px; margin: -10px 14px 100px; }
-    .lifecycle-fold span { display: grid; grid-template-columns: 28px 1fr; gap: 8px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 11px; background: rgba(255,255,255,.8); font-size: .58rem; opacity: 0; transform: translateY(-22px) scale(.96); transition: opacity .45s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
-    .lifecycle-fold b { color: var(--orange); }
-    .visible .lifecycle-fold span { opacity: 1; transform: none; }
-    .visible .lifecycle-fold span:nth-child(2) { transition-delay: .08s; }
-    .visible .lifecycle-fold span:nth-child(3) { transition-delay: .16s; }
-    .visible .lifecycle-fold span:nth-child(4) { transition-delay: .24s; }
-    .visible .lifecycle-fold span:nth-child(5) { transition-delay: .32s; }
-    .visible .lifecycle-fold span:nth-child(6) { transition-delay: .40s; }
+    /* 06 · Obligation and execution remain separate, but linked. */
+    .visual-handoff { min-height: 560px; background: linear-gradient(155deg, rgba(255,255,255,.88), rgba(234,231,222,.76) 48%, rgba(198,244,233,.5)); }
+    .truth-stack { display: grid; gap: 13px; margin-top: 30px; }
+    .truth-card {
+      padding: 19px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 14px 30px rgba(13,16,22,.06);
+    }
+    .truth-card span,
+    .truth-card b,
+    .truth-card small { display: block; }
+    .truth-card span {
+      color: var(--orange-text, var(--orange));
+      font-size: .75rem;
+      font-weight: 850;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .truth-card b { margin: 6px 0 7px; font-size: 1.25rem; letter-spacing: -.025em; }
+    .truth-card small { color: var(--muted); font-size: .75rem; line-height: 1.45; }
+    .truth-card.execution-truth { border-color: rgba(102,223,200,.3); background: var(--night); color: #fff; }
+    .truth-card.execution-truth span { color: var(--mint); }
+    .truth-card.execution-truth small { color: rgba(255,255,255,.66); }
+    .truth-bridge {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 12px;
+      padding: 0 12px;
+      text-align: center;
+    }
+    .truth-bridge span,
+    .truth-bridge b {
+      padding: 6px 8px;
+      border-radius: 999px;
+      background: rgba(21,23,27,.07);
+      color: #454a52;
+      font-size: .75rem;
+      line-height: 1.25;
+    }
+    .truth-bridge i { color: var(--mint-text, #0d7568); font-size: 1.4rem; font-style: normal; }
+    .handoff-signals { display: flex; flex-wrap: wrap; gap: 7px; margin: 22px 0 100px; }
+    .handoff-signals span {
+      padding: 6px 9px;
+      border: 1px solid rgba(21,23,27,.12);
+      border-radius: 999px;
+      background: rgba(255,255,255,.65);
+      color: var(--muted);
+      font-size: .75rem;
+      font-weight: 760;
+    }
 
     /* 07 · Artifact loss */
     .artifact-source { display: flex; justify-content: space-between; padding: 12px 14px; border-radius: 12px; background: var(--night); color: #fff; font-size: .62rem; font-weight: 800; }
@@ -1575,26 +1576,6 @@
     .artifact-drawer b { font-size: .59rem; }
     .artifact-drawer span { margin-top: 8px; color: var(--mint); font-size: .63rem; }
     .artifact-drawer small { margin-top: 3px; color: rgba(255,255,255,.45); font-size: .48rem; }
-
-    /* 08 · Books */
-    .visual-books { min-height: 650px; background: linear-gradient(155deg, #e9e2d4, #f8f5ed 48%, #dff7f1); }
-    .unread-note { position: absolute; z-index: 4; right: 20px; top: 60px; padding: 12px 14px; transform: rotate(4deg); background: var(--yellow); color: #27220d; font: 700 .64rem/1.25 ui-monospace, monospace; box-shadow: 0 9px 20px rgba(80,66,12,.17); }
-    .unread-note::after { content: ""; position: absolute; inset: 0; border: 1px solid rgba(45,35,0,.09); }
-    .book-stack { position: relative; min-height: 390px; margin-top: 70px; perspective: 900px; }
-    .book { position: absolute; left: 50%; display: flex; flex-direction: column; justify-content: center; width: 88%; height: 58px; padding: 9px 18px; border-radius: 4px 8px 8px 4px; color: #fff; text-decoration: none; box-shadow: -7px 14px 22px rgba(35,28,20,.18); transform-origin: center; transition: transform .35s ease, filter .35s ease; }
-    .book:hover { color: #fff; filter: brightness(1.09); transform: translateX(-50%) translateY(-5px) rotate(0deg) !important; }
-    .book::before { content: ""; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,.2); }
-    .book span { font-family: Georgia, serif; font-size: .7rem; font-weight: 800; line-height: 1.05; }
-    .book small { margin-top: 4px; color: rgba(255,255,255,.68); font-size: .46rem; letter-spacing: .04em; }
-    .book-1 { top: 0; background: #222a38; transform: translateX(-50%) rotate(-3deg); }
-    .book-2 { top: 64px; background: #b2442e; transform: translateX(-49%) rotate(2deg); }
-    .book-3 { top: 128px; background: #264f4c; transform: translateX(-51%) rotate(-1deg); }
-    .book-4 { top: 192px; background: #8d6e2f; transform: translateX(-49%) rotate(3deg); }
-    .book-5 { top: 256px; background: #4e3f78; transform: translateX(-50%) rotate(-2deg); }
-    .book-stack::after { content: ""; position: absolute; left: 4%; right: 4%; bottom: 50px; height: 17px; border-radius: 50%; background: rgba(50,37,25,.18); filter: blur(9px); }
-    .agent-management-counter { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; margin-top: -8px; }
-    .agent-management-counter span { padding: 10px 7px; border: 1px solid rgba(21,23,27,.12); border-radius: 12px; background: rgba(255,255,255,.55); color: var(--muted); font-size: .49rem; line-height: 1.25; text-align: center; }
-    .agent-management-counter b { display: block; color: var(--ink); font-size: .9rem; }
 
     /* 09 · Iceberg */
     .visual-iceberg { min-height: 590px; background: linear-gradient(to bottom, #f7f4ed 0 39%, #d9f3f0 39% 40%, #183845 40% 100%); color: #fff; }
@@ -1883,23 +1864,12 @@
       .problem.has-visual { display: block; max-width: var(--prose); }
       .case-thread { grid-template-columns: 1fr; gap: 8px; }
       .problem.has-visual > .problem-visual { position: relative; top: auto; width: min(620px,100%); margin: 44px 0 0; }
-      .trajectory-map { grid-template-columns: 1fr; }
-      .trajectory-converge { min-height: 70px; transform: rotate(90deg); }
-      .trajectory-converge i { width: 55%; }
       .workspace-surface { width: 100%; }
       main::before, body.toc-collapsed main::after { display: none; }
     }
 
     @media (max-width: 680px) {
-      .trajectory-preview { margin-top: 56px; padding: 28px 22px; border-radius: 23px; }
-      .trajectory-copy h2 { font-size: 2rem; }
-      .trajectory-system { justify-content: flex-start; padding: 18px; }
-      .trajectory-system span { font-size: .6rem; }
       .visual-card { min-height: 470px; padding: 18px; border-radius: 21px; }
-      .visual-books { min-height: 630px; }
-      .unread-note { top: 56px; right: 10px; }
-      .book { width: 96%; }
-      .agent-management-counter { grid-template-columns: 1fr; }
       .metric-row { grid-template-columns: 105px 1fr 24px; }
       .machine-row { grid-template-columns: 1fr; }
       .transfer-box { grid-template-columns: auto auto; justify-content: center; }
@@ -1989,8 +1959,6 @@
     .runtime-queue-title { margin: 17px 0 8px; color: var(--orange); font-size: .74rem; font-weight: 850; letter-spacing: .06em; text-transform: uppercase; }
     .runtime-queue { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
     .runtime-queue span { display: grid; place-items: center; min-height: 62px; border: 1px dashed rgba(21,23,27,.26); border-radius: 14px; background: rgba(255,255,255,.62); color: var(--ink); font-size: .9rem; font-weight: 850; }
-
-    .jira-ticket b { font-size: 1rem; line-height: 1.18; }
 
     /* 14 · support-chat visual with readable text. */
     .visual-folklore { min-height: 560px; }
@@ -2233,12 +2201,421 @@
       margin-right: 0 !important;
     }
   }
+
+  /* Accessible role colors keep vivid accents for decoration and dark surfaces. */
+  :root {
+    --orange-text: #b33a1e;
+    --mint-text: #0d7568;
+    --meta-text: #565c65;
+    --text-caption: .75rem;
+    --text-detail: .8125rem;
+  }
+
+  main a:hover,
+  footer a:hover,
+  .rail a:hover { color: var(--orange-text); }
+
+  .chapter-head .chapter-kicker,
+  .problem-no,
+  .arch-card .tag,
+  .entity .index,
+  .limits-field article > span,
+  .lab-option em,
+  .iceberg-top b,
+  .gateway-node span,
+  .machine span,
+  .version-split b,
+  .runtime-queue-title,
+  .memory-ledger b,
+  .local-queue b,
+  .missing-tracks em,
+  .memory-arrow,
+  .toc-progress-label b,
+  .toc-tree a.active span,
+  .toc-tree .act-link span { color: var(--orange-text); }
+
+  .toc-tree a span { color: var(--meta-text); }
+  .toc-tree .group-link span { color: var(--mint-text); }
+
+  /* Semantic heading order: h1 → act h2 → chapter h3 → item h4 → comparison h5. */
+  h5 { margin-top: 0; }
+  .glossary h2 { margin-bottom: 14px; font-size: .84rem; letter-spacing: .11em; text-transform: uppercase; }
+  .chapter-head h3 {
+    margin-bottom: 18px;
+    font-size: clamp(2.2rem, 4.5vw, 4.6rem);
+    line-height: 1.02;
+    letter-spacing: -.052em;
+  }
+  .problem > h4 {
+    margin-bottom: 20px;
+    font-size: clamp(1.65rem, 3.2vw, 2.8rem);
+    line-height: 1.1;
+    letter-spacing: -.038em;
+  }
+  .compare-card h5 { margin-bottom: 10px; font-size: 1rem; }
+  .group-conclusion h4 {
+    max-width: 820px;
+    margin-bottom: 18px;
+    font-size: clamp(2rem, 4.5vw, 4rem);
+    line-height: 1.03;
+    letter-spacing: -.05em;
+  }
+  .root-cause h3 { max-width: 900px; color: #fff; }
+  .entity h4 { margin: 10px 0 13px; font-size: 1.5rem; letter-spacing: -.03em; }
+  .system-object > h3 { font-size: clamp(1.8rem, 3.4vw, 3rem); line-height: 1.08; letter-spacing: -.04em; }
+  .review-path h4 {
+    margin: 16px 0 12px;
+    font-size: clamp(1.2rem, 2.3vw, 1.7rem);
+    line-height: 1.12;
+    letter-spacing: -.03em;
+  }
+  .rollout-step h4 { margin-bottom: 8px; font-size: 1.25rem; }
+  .limits-field h4 { margin-bottom: 7px; font-size: 1.18rem; }
+  .finale h3 {
+    max-width: 900px;
+    margin-bottom: 28px;
+    font-size: clamp(2.7rem, 6vw, 6.4rem);
+    line-height: .98;
+    letter-spacing: -.06em;
+  }
+
+  /* Navigation and explanatory copy never render below a readable caption size. */
+  .toc-hide,
+  .toc-show-desktop,
+  .toc-show-desktop b,
+  .toc-progress-label,
+  .toc-tree a span,
+  .toc-tree .group-link,
+  .toc-tree .problem-link,
+  .toc-tree .section-link,
+  .toc-tree .toc-root-link,
+  .toc-tree .toc-intro,
+  .toc-fab,
+  .toc-fab b,
+  .toc-drawer-head span,
+  .toc-drawer .toc-tree a,
+  .toc-drawer .toc-tree .problem-link,
+  .eyebrow,
+  .transform-label,
+  .flow-unit b,
+  .flow-unit small,
+  .imbalance,
+  .transform-bridge,
+  .shared-properties span,
+  .chapter-kicker,
+  .quote small,
+  .diagram-title,
+  .pipeline-card span,
+  .flow,
+  .cost-equation .box small,
+  .arch-card .tag,
+  .entity .index,
+  .chip,
+  .verbs span,
+  .hook-step span,
+  .identity-level p,
+  .review-question b,
+  .review-path .label,
+  .infra-item span,
+  .case-thread span,
+  .visual-label,
+  .visual-caption,
+  .problem-visual small,
+  .lab-task small,
+  .lab-option small,
+  .lab-option b,
+  .lab-option em,
+  .worker-head small,
+  .worker-head em,
+  .metric-row,
+  .metric-row strong,
+  .metric-switch span,
+  .cost-control label,
+  .cost-control.rate,
+  .cost-control output,
+  .cost-control.rate b,
+  .cost-result span,
+  .waiting-time,
+  .tank-shell b,
+  .tank > span,
+  .tank > small,
+  .tank-pipe,
+  .local-window b,
+  .local-window span,
+  .resource-meter,
+  .local-queue,
+  .artifact-source,
+  .doc b,
+  .doc small,
+  .artifact-fog,
+  .artifact-drawer b,
+  .artifact-drawer span,
+  .artifact-drawer small,
+  .waterline span,
+  .iceberg-top b,
+  .iceberg-top span,
+  .iceberg-under span,
+  .gateway-node span,
+  .gateway-node b,
+  .gateway-node.human b,
+  .direct-route,
+  .machine span,
+  .machine b,
+  .machine small,
+  .transfer-box b,
+  .chat-top span,
+  .bubble b,
+  .zip,
+  .version-split span,
+  .version-split small,
+  .audit-strip b,
+  .audit-strip span,
+  .missing-plugs span,
+  .permission-grid > *,
+  .permission-grid > b,
+  .permission-grid > strong,
+  .permission-legend span,
+  .runtime-head span,
+  .runtime-head b,
+  .runtime-load,
+  .runtime-queue-title,
+  .folklore-note,
+  .memory-counters span,
+  .memory-counters small,
+  .memory-ledger span,
+  .cost-total,
+  .memory-card small,
+  .memory-card ul,
+  .workspace-points span,
+  .workspace-panel-head span,
+  .workspace-row small,
+  .workspace-tags span,
+  .replay-screen span,
+  .replay-screen small,
+  .replay-controls em,
+  .missing-tracks span,
+  .memory-island b,
+  .memory-island span,
+  .memory-arrow span,
+  .memory-graph > b,
+  .memory-graph .node,
+  .transition-counts span,
+  .transition-operation-flow span,
+  .proof-points span,
+  .fallback-sidebar,
+  .fallback-sidebar b,
+  .fallback-board b,
+  .product-proof figcaption,
+  .product-detail figcaption,
+  .product-detail figcaption b { font-size: var(--text-caption); }
+
+  .visual-verdict,
+  .bubble,
+  .bubble b,
+  .cost-lines span,
+  .cost-takeaway span,
+  .support-chat-notes span,
+  .memory-feed span,
+  .folklore-note,
+  .visual-folklore .bubble b,
+  .memory-ledger span { font-size: var(--text-detail); }
+
+  .toc-tree a,
+  .toc-drawer .toc-tree a { grid-template-columns: 58px minmax(0, 1fr); }
+
+  a:focus-visible,
+  button:focus-visible,
+  summary:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 3px solid var(--orange-text);
+    outline-offset: 4px;
+  }
+
+  .source-link {
+    color: var(--orange-text);
+    font-weight: 800;
+    text-decoration-thickness: .09em;
+  }
+  .source-link::after { content: " ↗"; font-size: .72em; }
+
+  .license-note {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(13,117,104,.2);
+  }
+  .license-note summary {
+    width: fit-content;
+    cursor: pointer;
+    color: var(--ink);
+    font-weight: 800;
+  }
+  .license-note summary::marker { color: var(--mint-text); }
+  .license-note p {
+    margin: 12px 0 0;
+    color: #3d4645;
+    font-size: .82rem;
+    line-height: 1.55;
+  }
+  .license-note a { color: var(--orange-text); font-weight: 800; }
+
+  .visible .metric-row > i b { min-width: 4px; }
+
+  .visual-cost { min-height: 600px; }
+  .cost-scenario h5 {
+    margin: 0 0 12px;
+    font-size: 1rem;
+    line-height: 1.25;
+  }
+  .cost-scenario.immediate {
+    border-color: rgba(var(--orange-rgb),.34);
+    background: linear-gradient(145deg, rgba(var(--orange-rgb),.12), rgba(255,255,255,.86));
+  }
+  .cost-scenario.deferred {
+    border-color: rgba(var(--mint-rgb),.46);
+    background: linear-gradient(145deg, rgba(var(--mint-rgb),.18), rgba(255,255,255,.86));
+  }
+  .cost-factors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .cost-factors span {
+    padding: 7px 9px;
+    border: 1px solid rgba(21,23,27,.11);
+    border-radius: 999px;
+    background: rgba(255,255,255,.72);
+    color: var(--muted);
+    font-size: var(--text-caption);
+    line-height: 1.25;
+  }
+  .cost-takeaway span b {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+
+  .visual-investment {
+    min-height: 610px;
+    background:
+      radial-gradient(circle at 8% 12%, rgba(var(--orange-rgb),.16), transparent 34%),
+      radial-gradient(circle at 94% 78%, rgba(var(--mint-rgb),.2), transparent 38%),
+      rgba(255,255,255,.7);
+  }
+  .decision-question {
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--night);
+    color: #fff;
+  }
+  .decision-question small,
+  .decision-question b { display: block; }
+  .decision-question small {
+    margin-bottom: 5px;
+    color: var(--mint);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+  }
+  .decision-question b { font-size: 1rem; line-height: 1.3; }
+  .decision-paths {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 10px;
+    align-items: stretch;
+    margin-top: 16px;
+  }
+  .decision-path {
+    padding: 15px;
+    border: 1px solid var(--line);
+    border-radius: 17px;
+    background: rgba(255,255,255,.78);
+  }
+  .decision-path span,
+  .decision-path b,
+  .decision-path small { display: block; }
+  .decision-path span {
+    color: var(--muted);
+    font-size: var(--text-caption);
+    line-height: 1.3;
+  }
+  .decision-path b { margin: 10px 0 7px; font-size: .9rem; line-height: 1.18; }
+  .decision-path small { color: var(--muted); line-height: 1.4; }
+  .decision-path.systemic {
+    border-color: rgba(var(--mint-rgb),.5);
+    background: linear-gradient(145deg, rgba(var(--mint-rgb),.18), rgba(255,255,255,.84));
+  }
+  .decision-paths > i {
+    align-self: center;
+    color: var(--orange-text);
+    font-size: var(--text-caption);
+    font-style: normal;
+    font-weight: 850;
+  }
+  .decision-criteria {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 16px 0 92px;
+  }
+  .decision-criteria span {
+    padding: 7px 9px;
+    border-radius: 999px;
+    background: rgba(21,23,27,.07);
+    color: var(--muted);
+    font-size: var(--text-caption);
+    font-weight: 700;
+  }
+
+  .waterline {
+    z-index: 5;
+    pointer-events: none;
+  }
+  .waterline span {
+    z-index: 6;
+    top: -34px;
+    padding: 5px 9px;
+    border: 1px solid rgba(21,23,27,.1);
+    border-radius: 999px;
+    background: rgba(247,244,237,.96);
+    box-shadow: 0 6px 16px rgba(13,16,22,.08);
+  }
+  .iceberg-top,
+  .iceberg-under {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 1280px) {
+    .toc-fab {
+      right: calc(18px + env(safe-area-inset-right));
+      bottom: calc(18px + env(safe-area-inset-bottom));
+    }
+    .toc-drawer {
+      inset: auto calc(12px + env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) auto;
+      width: min(470px, calc(100% - 24px - env(safe-area-inset-left) - env(safe-area-inset-right)));
+    }
+  }
+
+  @media (max-width: 680px) {
+    h1 {
+      max-width: 100%;
+      font-size: clamp(2.2rem, 11.25vw, 3.65rem);
+    }
+    .decision-paths { grid-template-columns: 1fr; }
+    .decision-paths > i { justify-self: center; }
+    .visual-investment { min-height: 740px; }
+    .toc-fab {
+      right: calc(12px + env(safe-area-inset-right));
+      bottom: calc(12px + env(safe-area-inset-bottom));
+    }
+  }
 </style>
 </head>
 <body class="toc-collapsed">
 <a class="skip-link" href="#article">К статье</a>
 <div aria-hidden="true" class="progress"><span></span></div>
-<button aria-controls="desktop-toc" aria-expanded="true" class="toc-show-desktop" data-toc-desktop-show="" type="button">
+<button aria-controls="desktop-toc" aria-expanded="false" class="toc-show-desktop" data-toc-desktop-show="" type="button">
 <i aria-hidden="true">☰</i>
 <span>Показать содержание</span>
 <b data-fab-progress="">0%</b>
@@ -2293,7 +2670,7 @@
 </div>
 </header>
 <div class="article-shell">
-<aside aria-label="Навигация по статье" class="rail toc-panel" id="desktop-toc">
+<aside aria-hidden="true" aria-label="Навигация по статье" class="rail toc-panel" id="desktop-toc" inert>
 <div class="toc-header">
 <div>
 <div class="rail-title">Содержание</div>
@@ -2312,7 +2689,7 @@
 <a class="group-link" href="#pipeline-development"><span>Группа 1</span><b>Пайплайн развивается вслепую</b></a>
 <a class="problem-link" href="#problem-1"><span>01</span><b>Нельзя свободно экспериментировать с агентскими пайплайнами</b></a>
 <a class="problem-link" href="#problem-2"><span>02</span><b>Инженерные процессы нельзя честно сравнить</b></a>
-<a class="problem-link" href="#problem-3"><span>03</span><b>Нельзя определить реальную стоимость принятого результата</b></a>
+<a class="problem-link" href="#problem-3"><span>03</span><b>Нельзя оценить реальную стоимость принятого результата</b></a>
 </div>
 <div class="toc-group-block">
 <a class="group-link" href="#compute-distribution"><span>Группа 2</span><b>Мощность привязана к людям и ноутбукам</b></a>
@@ -2320,11 +2697,11 @@
 <a class="problem-link" href="#problem-5"><span>05</span><b>Параллельность упирается в локальную среду выполнения</b></a>
 </div>
 <div class="toc-group-block">
-<a class="group-link" href="#human-work"><span>Группа 3</span><b>Трекер перестал видеть работу</b></a>
-<a class="problem-link" href="#problem-6"><span>06</span><b>Трекер задач больше не отражает жизненный цикл задачи</b></a>
+<a class="group-link" href="#human-work"><span>Группа 3</span><b>Задача не связана с исполнением</b></a>
+<a class="problem-link" href="#problem-6"><span>06</span><b>Статус Jira не связан с состоянием агентного запуска</b></a>
 <a class="problem-link" href="#problem-7"><span>07</span><b>Промежуточные результаты не становятся артефактами задачи</b></a>
-<a class="problem-link" href="#problem-8"><span>08</span><b>Разработчики стали менеджерами агентов — без менеджерской дисциплины</b></a>
-<a class="problem-link" href="#problem-9"><span>09</span><b>Реальная человеческая работа не отражается в задачах</b></a>
+<a class="problem-link" href="#problem-8"><span>08</span><b>Работа с агентами стала отдельной инженерной компетенцией</b></a>
+<a class="problem-link" href="#problem-9"><span>09</span><b>Развитие harness не связано с задачами, на которых оно возникло</b></a>
 </div>
 <div class="toc-group-block">
 <a class="group-link" href="#isolation"><span>Группа 4</span><b>Исполнитель и harness изолированы</b></a>
@@ -2359,54 +2736,33 @@
 </aside>
 <main id="article">
 <section class="opening reveal">
-<p class="lead">Для одиночного разработчика локальная работа с агентом может оставаться личным ремеслом. Для команды та же схема превращается в системную проблему: компания больше не видит, как на самом деле производится результат.</p>
-<p>Раньше большая часть инженерной работы происходила внутри задач, коммитов и проверки кода. Теперь между постановкой и итоговым кодом возникает отдельное производство: агент исследует проект, строит план, пишет реализацию, запускает проверки; человек возвращает результат, меняет навыки, переключает модель, правит harness и принимает решения. Но трекер задач продолжает показывать одну строку: «задача у разработчика».</p>
-<p>Из-за этого агентная разработка пока масштабируется странно. У каждого человека появляется всё более сильный персональный заводик, но команда не получает общего производства. Она видит продукт, не видит способ его изготовления — и поэтому не может этот способ измерять, сравнивать, передавать и улучшать. Компания не станет AI‑native, пока эта работа остаётся невидимой и развивается на ощущениях.</p>
+<p class="lead">Для одиночного разработчика локальная сессия агента может оставаться личным инструментом. Для команды она становится отдельным исполняемым контуром, который нужно связать с задачей, результатом и моментами, когда снова требуется человек.</p>
+<p>Раньше автоматизированная часть разработки в основном проходила через уже формализованные системы: репозиторий, CI и проверку кода. Теперь между постановкой задачи и итоговым кодом появляется ещё один самостоятельный контур — агентное исполнение. Агент исследует проект, строит план, пишет реализацию и запускает проверки; человек ставит задачу, принимает решения и проверяет результат.</p>
+<p>Но этот контур обычно остаётся локальной сессией, не связанной ни с задачей, ни с общими журналами исполнения. Команда видит исходное обязательство и итоговый код, но не видит состояния делегированной работы и моментов, когда снова требуется человек.</p>
 <div class="glossary">
-<h3>Что нужно понимать перед чтением</h3>
+<h2>Что нужно понимать перед чтением</h2>
 <div class="glossary-grid">
 <div class="term"><b>Агентский стек</b>Полная рабочая среда агента: модель, harness и интерфейс. Harness, в свою очередь, задаёт инструкции, контекст, навыки, инструменты, права и правила выполнения.</div>
 <div class="term"><b>Harness (упряжка)</b>Программа и правила вокруг модели: они собирают контекст, дают доступ к инструментам, управляют циклом работы и точками подтверждения. Дальше в статье используется термин harness.</div>
 <div class="term"><b>Skill / навык</b>Переиспользуемая инструкция, знание или процедура для конкретного класса задач, которую harness подключает к агенту.</div>
-<div class="term"><b>Token cost / стоимость токенов</b>Цена входных и выходных токенов модели. Для расчёта полной стоимости результата её — или долю подписки — складывают со стоимостью активного участия разработчика.</div>
+<div class="term"><b>Token cost / стоимость токенов</b>Цена входных и выходных токенов модели. Для приблизительной оценки затрат её — или долю подписки — учитывают вместе с активным временем человека, циклами QA и возвратами. Качество и отложенные последствия результата измеряются отдельно.</div>
 </div>
 </div>
-<section aria-labelledby="trajectory-title" class="trajectory-preview reveal">
-<div class="trajectory-copy">
-<span class="chapter-kicker">Куда идёт статья</span>
-<h2 id="trajectory-title">Пять системных разрывов. Пятнадцать наблюдаемых симптомов. Один общий контур.</h2>
-<p>Диагностика занимает много места, но направление решения можно увидеть сразу: задача должна перестать исчезать в локальной сессии и пройти через именованного исполнителя, общую среду, trace, артефакты, метрики и память проекта.</p>
-</div>
-<div aria-label="Пять системных разрывов сходятся в общий наблюдаемый процесс" class="trajectory-map" role="img">
-<div class="trajectory-gaps">
-<span><b>01</b>Нельзя сравнивать пайплайны</span>
-<span><b>02</b>Нельзя распределять мощность</span>
-<span><b>03</b>Не видна работа человека</span>
-<span><b>04</b>Harness заперт у владельца</span>
-<span><b>05</b>Опыт не накапливается</span>
-</div>
-<div aria-hidden="true" class="trajectory-converge"><i></i><i></i><i></i><i></i><i></i><b>→</b></div>
-<div class="trajectory-system">
-<span>Issue</span><b>→</b><span>Agent</span><b>→</b><span>Runtime</span><b>→</b><span>Trace</span><b>→</b><span>Artifacts</span><b>→</b><span>Memory</span>
-</div>
-</div>
-</section>
 </section>
 <section class="act" id="diagnosis">
 <header class="act-head reveal" data-act="01">
 <div class="eyebrow">Акт I · Диагностика</div>
-<h2>Пять системных разрывов — пятнадцать конкретных проблем</h2>
-<p>Пятнадцать проблем ниже — не пятнадцать независимых случайностей, а проявления пяти системных разрывов: сравнение процессов, распределение мощности, наблюдаемость работы, доступ к harness и накопление опыта.</p>
+<h2>Типичные проблемы использования агентов в командах</h2>
 </header>
 <section class="chapter" id="pipeline-development">
 <header class="chapter-head reveal">
 <span class="chapter-kicker">Группа 1</span>
-<h2>Агентский пайплайн развивается вслепую</h2>
-<p>Команда не может свободно проверять альтернативы, сравнивать их в одинаковых условиях и считать полную стоимость принятого результата.</p>
+<h3>Агентский пайплайн развивается вслепую</h3>
+<p>Команда не может свободно проверять альтернативы, сравнивать их в одинаковых условиях и связывать затраты на запуск с качеством результата.</p>
 </header>
 <article class="problem reveal has-visual" id="problem-1">
 <span class="problem-no">01</span>
-<h3>Нельзя свободно экспериментировать с агентскими пайплайнами</h3>
+<h4>Нельзя свободно экспериментировать с агентскими пайплайнами</h4>
 <p class="core">Разработчик получает не вычислительный бюджет компании, а конкретную подписку. Поэтому он исследует не лучший способ решить задачу, а лучший способ уложиться в уже выданный ему инструмент.</p>
 <p>Чтобы попробовать Claude вместо Codex, нужно запросить новую подписку, дождаться одобрения и объяснить, зачем она нужна. Если эксперимент не сработал, обратный переход столь же неудобен. Даже внутри одной подписки лимит приходится беречь для текущей работы: задача должна быть сделана сегодня, а поиск лучшего процесса конкурирует с ней за те же токены.</p>
 <div class="diagram">
@@ -2442,81 +2798,77 @@
 </article>
 <article class="problem reveal has-visual" id="problem-2">
 <span class="problem-no">02</span>
-<h3>Инженерные процессы нельзя честно сравнить</h3>
+<h4>Инженерные процессы нельзя честно сравнить</h4>
 <p class="core">Итоговый результат задачи виден. Способ его производства — нет.</p>
 <p>Один разработчик говорит, что one-shot’ит задачи. Другой отвечает, что его задачи принципиально сложнее, не one-shot’ятся, а агент только добавляет постановку, ожидание и исправления — то есть удлиняет работу. Проверить ни одну позицию нельзя: люди решают разные задачи, в разных окружениях и с разным количеством ручной доводки. Общего набора контрольных задач нет.</p>
 <p>Даже цена подписки ничего не объясняет. Пользователь тарифа за 20 долларов мог построить очень экономный пайплайн — или просто писать половину кода руками, расходуя дорогое человеческое время. Пользователь тарифа за 200 долларов мог добиться высокой автономности — или тратить лимиты на личные проекты и каскад из десяти проверок, который не улучшает результат.</p>
-<div class="quote">Мы сравниваем рассказы о производстве, а не само производство.<small>Пока стадии, попытки, вмешательства человека и стоимость принятия скрыты, любое сравнение остаётся фольклором.</small></div>
+<div class="quote">Мы сравниваем рассказы о производстве, а не само производство.<small>Пока стадии, попытки, вмешательства человека и затраты на запуск и приёмку скрыты, любое сравнение остаётся фольклором.</small></div>
 <div aria-label="Петя заканчивает задачу за сто минут, но тратит пять минут собственного времени; Вася заканчивает за пятьдесят минут, но работает все пятьдесят минут сам" class="problem-visual visual-card visual-workers" role="img">
-<div class="visual-label">Две метрики — два противоположных вывода</div>
+<div class="visual-label">Единая шкала · 100 минут</div>
 <div class="worker-card petya">
 <div class="worker-head"><span class="worker-avatar">П</span><div><b>Петя</b><small>агент · тариф $200</small></div><em>100 мин</em></div>
 <div class="metric-row"><span>Календарное время</span><i><b style="--w:100%"></b></i><strong>100</strong></div>
-<div class="metric-row attention"><span>Человеческое внимание</span><i><b style="--w:10%"></b></i><strong>5</strong></div>
+<div class="metric-row attention"><span>Человеческое внимание</span><i><b style="--w:5%"></b></i><strong>5</strong></div>
 </div>
 <div class="worker-card vasya">
 <div class="worker-head"><span class="worker-avatar">В</span><div><b>Вася</b><small>без агента</small></div><em>50 мин</em></div>
 <div class="metric-row"><span>Календарное время</span><i><b style="--w:50%"></b></i><strong>50</strong></div>
-<div class="metric-row attention"><span>Человеческое внимание</span><i><b style="--w:100%"></b></i><strong>50</strong></div>
+<div class="metric-row attention"><span>Человеческое внимание</span><i><b style="--w:50%"></b></i><strong>50</strong></div>
 </div>
 <div class="metric-switch"><span>По календарю: <b>Вася быстрее ×2</b></span><span>По экспертизе: <b>Вася дороже ×10</b></span></div>
 </div>
 </article>
 <article class="problem reveal has-visual" id="problem-3">
 <span class="problem-no">03</span>
-<h3>Нельзя определить реальную стоимость принятого результата</h3>
-<p class="core">Стоимость принятого результата складывается из двух частей: расходов на агента и времени, когда разработчик активно добавлял свою экспертизу.</p>
-<p>Если задача находилась у разработчика шесть часов, это больше не означает шесть часов его работы. Агент мог пять часов выполнять реализацию, а человек — десять минут уточнять постановку и ещё двадцать минут проверять результат. Для расчёта важны стоимость агентной работы и эти полчаса экспертного участия; остальное время было ожиданием.</p>
-<div class="diagram">
-<div class="diagram-title">Полная стоимость принятого результата</div>
-<div class="cost-equation">
-<div class="box"><b>агент</b><small>токены · API · подписка</small></div>
-<div class="op">+</div>
-<div class="box"><b>экспертиза разработчика</b><small>постановка · решения · review</small></div>
-</div>
-</div>
-<p>Результат, сделанный дешёвой моделью, может в итоге оказаться дорогим, если требует перезапусков, микроменеджмента, ручных исправлений и нескольких циклов review. Результат дорогой модели, наоборот, может стоить меньше, если one-shot принимается после короткой проверки. Видимая цена подписки не равна стоимости результата.</p>
-<p>Нужно учитывать расход токенов или долю подписки и отдельно фиксировать только активное участие разработчика: постановку, экспертные решения, возвраты, review и ручные правки. Календарное время задачи и ожидание агента не заменяют этот расчёт.</p>
-<div aria-label="Статичное сравнение показывает, что цена подписки не равна полной цене принятого результата: дешёвый агент с большим ручным участием может быть дороже дорогого агента с короткой проверкой." class="problem-visual visual-card visual-cost" role="img">
-<div class="visual-label">Считать нужно не цену модели, а цену принятого результата</div>
+<h4>Нельзя оценить реальную стоимость принятого результата</h4>
+<p class="core">Цена подписки сама по себе не показывает, окупается ли агентный процесс. Для хотя бы приблизительной оценки нужны расходы на запуск, активное время разработчика и затраты на проверку результата.</p>
+<p>Если задача находилась у разработчика шесть часов, это больше не означает шесть часов его работы. Агент мог пять часов выполнять реализацию автономно, а человек — уточнить постановку, принять несколько решений и проверить результат. Ожидание агента и активное экспертное участие должны учитываться раздельно.</p>
+<p>Дешёвая модель может потребовать больше перезапусков, ручных исправлений и циклов review. Более дорогая модель или сложный пайплайн могут сократить человеческое внимание и в итоге оказаться выгоднее. Сравнение на похожих задачах позволяет хотя бы приблизительно оценить окупаемость подписки и выбранного процесса.</p>
+<p>Такая оценка описывает затраты до текущей точки приёмки. Дефекты после merge, сопровождение, архитектурный долг, риск инцидента, инфраструктура, координация, влияние на lead time и бизнес‑ценность проявляются позже и должны дополнять её отдельными метриками качества и последствий.</p>
+<p>One-shot rate здесь остаётся одним из сигналов, а не самостоятельным критерием успеха. Полезный уточняющий вопрос может предотвратить неверную реализацию, тогда как принятый с первой попытки результат ещё должен пройти те же критерии качества.</p>
+<p>Агентная платформа может собирать эти данные по сопоставимым классам задач и показывать диапазон затрат, долю человеческого участия и качество результата во времени. Это даёт финансовую оценку, достаточную для решения об окупаемости, даже если она не превращается в одну универсальную цифру.</p>
+<div aria-label="Для оценки окупаемости агентного процесса прямые затраты до приёмки сопоставляются на похожих задачах и дополняются качеством и последствиями результата." class="problem-visual visual-card visual-cost" role="img">
+<div class="visual-label">Что нужно для приблизительной оценки окупаемости</div>
 <div class="cost-story">
-<div class="cost-scenario bad">
-<h4>Дешёвый агент · дорогой результат</h4>
-<div class="cost-lines">
-<span><span>Агентная работа</span><strong>8 у.е.</strong></span>
-<span><span>60 мин активной экспертизы разработчика</span><strong>90 у.е.</strong></span>
+<div class="cost-scenario immediate">
+<h5>Затраты до приёмки</h5>
+<div class="cost-factors">
+<span>токены или доля подписки</span>
+<span>runtime и инфраструктура</span>
+<span>активное время разработчика</span>
+<span>review, QA и возвраты</span>
 </div>
-<div class="cost-total"><span>Итоговая стоимость</span><strong>98 у.е.</strong></div>
 </div>
-<div class="cost-scenario good">
-<h4>Дорогой агент · дешёвый результат</h4>
-<div class="cost-lines">
-<span><span>Агентная работа</span><strong>35 у.е.</strong></span>
-<span><span>12 мин активной экспертизы разработчика</span><strong>18 у.е.</strong></span>
+<div class="cost-scenario deferred">
+<h5>Качество и последствия</h5>
+<div class="cost-factors">
+<span>критерии приёмки</span>
+<span>дефекты после merge</span>
+<span>сопровождение и долг</span>
+<span>инциденты, lead time и бизнес‑эффект</span>
 </div>
-<div class="cost-total"><span>Итоговая стоимость</span><strong>53 у.е.</strong></div>
 </div>
-<div class="cost-takeaway"><span>По подписке первый сценарий кажется дешевле.</span><i>→</i><span>По полной цене результата второй сценарий почти вдвое выгоднее.</span></div>
+<div class="cost-takeaway"><span><b>Сравнить</b>Сопоставимые классы задач и одинаковые критерии качества</span><i>→</i><span><b>Оценить</b>Окупается ли подписка и выбранный агентный процесс</span></div>
 </div>
-<div class="visual-verdict">Главная переменная — не только токены, а объём человеческой экспертизы, который пришлось добавить до принятия результата.</div>
+<div class="visual-verdict">Приблизительная финансовая оценка появляется, когда цена агента связана с человеческим временем и качеством результата.</div>
 </div>
 </article>
 <div class="group-conclusion reveal">
 <span class="chapter-kicker">Вывод группы 1</span>
-<h3>Пайплайн развивается без обратной связи</h3>
-<p>Нет свободного пространства для экспериментов, общего набора контрольных задач и полной цены результата. Поэтому процессы развиваются на ощущениях и личных привычках, а не как измеримая инженерная система.</p>
+<h4>Пайплайн развивается без обратной связи</h4>
+<p>Нет свободного пространства для экспериментов, общего набора контрольных задач и связи между метриками запуска и качеством результата. Поэтому процессы развиваются на ощущениях и личных привычках, а не как измеримая инженерная система.</p>
 <div class="case-thread"><span>Сквозной пример · AI‑review</span><p>Сравнивать нужно не «есть бот или нет», а версии reviewer‑пайплайна на одном наборе pull request: по полезности замечаний, шуму, токенам и времени человеческой проверки.</p></div>
 </div>
 </section>
 <section class="chapter" id="compute-distribution">
 <header class="chapter-head reveal">
 <span class="chapter-kicker">Группа 2</span>
-<h2>Вычислительная мощность привязана к людям и ноутбукам</h2>
+<h3>Вычислительная мощность привязана к людям и ноутбукам</h3>
 <p>Компания покупает ресурс отдельным сотрудникам, но не может перераспределить простой, закрыть локальный дефицит или масштабировать очередь задач.</p>
 </header>
 <article class="problem reveal has-visual" id="problem-4">
 <span class="problem-no">04</span>
-<h3>Вычислительная мощность фрагментирована по людям</h3>
+<h4>Вычислительная мощность фрагментирована по людям</h4>
 <p class="core">У компании одновременно есть оплаченная неиспользуемая мощность и задачи, которые ждут обновления чужой квоты.</p>
 <div class="diagram">
 <div class="diagram-title">Одна команда, две противоположные проблемы</div>
@@ -2555,7 +2907,7 @@
 </article>
 <article class="problem reveal has-visual" id="problem-5">
 <span class="problem-no">05</span>
-<h3>Параллельность упирается в локальную среду выполнения</h3>
+<h4>Параллельность упирается в локальную среду выполнения</h4>
 <p class="core">Пока агенты работают без участия человека, разработчик мог бы вести несколько независимых задач. Но фактический предел задаёт его компьютер: обычно именно он выдерживает лишь одну‑две тяжёлые сессии.</p>
 <p>Каждая параллельная задача требует отдельной рабочей копии или worktree, своей ветки и изолированного состояния проекта. Несколько экземпляров Unity или редактора быстро съедают RAM и CPU. Сборка, тесты и автоматический QA конкурируют за тот же ресурс. Кэши, зависимости, скриншоты и артефакты множатся на диске.</p>
 <p>Даже когда агенту не требуется внимание, человеку приходится следить за локальными процессами, переключаться между окнами и ждать тяжёлую компиляцию. Проверка занимает несколько минут с большими паузами между ними, но паузы нельзя заполнить другими запусками: ноутбук уже занят.</p>
@@ -2576,7 +2928,7 @@
 </article>
 <div class="group-conclusion reveal">
 <span class="chapter-kicker">Вывод группы 2</span>
-<h3>Мощность нельзя направить туда, где она нужна</h3>
+<h4>Мощность нельзя направить туда, где она нужна</h4>
 <p>Личный дефицит соседствует с оплаченным простоем, а параллельность ограничена отдельными ноутбуками. Ресурс распределён по владельцам подписок и машин, а не по очереди задач компании.</p>
 <div class="case-thread"><span>Сквозной пример · AI‑review</span><p>Review‑запуски должны брать мощность из общей очереди: тяжёлую независимую проверку можно отправить на свободный runtime, а не ждать обновления личной квоты автора pull request.</p></div>
 </div>
@@ -2584,116 +2936,101 @@
 <section class="chapter" id="human-work">
 <header class="chapter-head reveal">
 <span class="chapter-kicker">Группа 3</span>
-<h2>Трекер задач видит задачу, но перестал видеть работу</h2>
-<p>Агентное исполнение добавило в производство новые стадии и новую роль человека. Jira продолжает описывать старый мир.</p>
+<h3>Между задачей и результатом появился отдельный исполняемый контур</h3>
+<p>Трекер по‑прежнему показывает обязательство команды: что нужно сделать, кто отвечает и в каком состоянии находится задача. Но теперь часть работы выполняется во внешнем агентном контуре, с которым карточка задачи никак не связана.</p>
 </header>
 <article class="problem reveal has-visual" id="problem-6">
 <span class="problem-no">06</span>
-<h3>Трекер задач больше не отражает жизненный цикл задачи</h3>
-<p class="core">Статус «задача у разработчика» теперь скрывает целый производственный пайплайн.</p>
-<div class="diagram">
-<div class="diagram-title">Что реально происходит внутри одного Jira‑статуса</div>
-<div class="timeline">
-<div class="timeline-row"><span class="tno">01</span><b>Постановка</b><span>Человек формулирует задачу, ограничения и контекст.</span></div>
-<div class="timeline-row"><span class="tno">02</span><b>Ожидание</b><span>Запуск стоит в очереди, ждёт мощности или работает.</span></div>
-<div class="timeline-row"><span class="tno">03</span><b>План</b><span>Агент исследует проект и предлагает решение.</span></div>
-<div class="timeline-row"><span class="tno">04</span><b>Проверка плана</b><span>Человек утверждает, меняет или возвращает план.</span></div>
-<div class="timeline-row"><span class="tno">05</span><b>Реализация</b><span>Агент пишет код и запускает проверки.</span></div>
-<div class="timeline-row"><span class="tno">06</span><b>Проверка / QA</b><span>Человек принимает, дорабатывает или возвращает результат.</span></div>
+<h4>Статус Jira не связан с состоянием агентного запуска</h4>
+<p class="core">В Jira задача остаётся «В работе», хотя связанный запуск может стоять в очереди, выполнять реализацию, ждать решения разработчика, быть готовым к приёмке или уже завершиться ошибкой.</p>
+<p>Карточка по‑прежнему фиксирует обязательство команды, владельца и общий статус. Но без связи с конкретным запуском она не показывает, от кого или от чего сейчас зависит следующий шаг. Поэтому разработчики проверяют локальные сессии вручную, а запросы на решение и готовые результаты замечают с опозданием.</p>
+<p>Для координации в Jira достаточно возвращать значимые переходы: <strong>агент запущен, требуется решение, результат готов к проверке, запуск завершился неуспешно</strong>. Trace, попытки, промежуточные стадии и загрузка runtime остаются в агентной платформе.</p>
+<div aria-label="Карточка Jira со статусом В работе связана с конкретным запуском Multica, который ждёт решения разработчика; Jira показывает следующий значимый шаг, а Multica хранит детали исполнения." class="problem-visual visual-card visual-handoff" role="img">
+<div class="visual-label">Карточка Jira · связанный агентный запуск</div>
+<div class="truth-stack">
+<div class="truth-card tracker-truth"><span>Jira · GAME‑482</span><b>В работе</b><small>что сделать · кто отвечает · следующий шаг</small></div>
+<div class="truth-bridge"><span>run #1842</span><i aria-hidden="true">↕</i><b>требуется решение</b></div>
+<div class="truth-card execution-truth"><span>Multica · run #1842</span><b>Ждёт разработчика</b><small>agent · runtime · attempt · trace · result</small></div>
 </div>
-<div class="timeline-mask">В Jira: «Новая фича — клановая 4x‑война · В работе»</div>
-</div>
-<p>Лид больше не может понять реальную загрузку человека. Он занят и его нельзя отвлекать — или свободен и лишь ждёт завершения долгой агентной реализации, которая может идти пять‑шесть часов подряд? Можно дать ему вторую задачу — или локальный runtime уже забит? Делегирования невидимы, поэтому трекер задач не отвечает на базовый управленческий вопрос: где сейчас находится работа.</p>
-<div aria-label="Одна карточка Jira со статусом В работе раскрывается в шесть скрытых стадий агентного производства" class="problem-visual visual-card visual-lifecycle" role="img">
-<div class="visual-label">Снаружи: новая клановая 4x‑война · В работе</div>
-<div class="jira-ticket"><span>HC‑4XWAR‑17</span><b>Новая фича: клановая 4x‑война</b><em>В работе</em></div>
-<div class="lifecycle-fold">
-<span><b>01</b>Постановка</span>
-<span><b>02</b>Очередь / выполнение</span>
-<span><b>03</b>План</span>
-<span><b>04</b>Проверка плана</span>
-<span><b>05</b>Реализация</span>
-<span><b>06</b>Приёмка / QA</span>
-</div>
-<div class="visual-verdict">Jira сообщает владельца карточки, но не местоположение самой работы.</div>
+<div class="handoff-signals"><span>работает</span><span>нужно решение</span><span>готово</span><span>ошибка</span></div>
+<div class="visual-verdict">Jira показывает обязательство и следующий handoff; Multica хранит состояние и историю исполнения.</div>
 </div>
 </article>
 <article class="problem reveal" id="problem-7">
 <span class="problem-no">07</span>
-<h3>Промежуточные результаты не становятся артефактами задачи</h3>
+<h4>Промежуточные результаты не становятся артефактами задачи</h4>
 <p class="core">Код сохраняется в pull request. Исследование, план, альтернативы, проверка плана и причины внутренних возвратов часто исчезают вместе с персональной историей сессии.</p>
 <p>Обычная проверка кода слишком поздно обнаруживает крупную архитектурную ошибку: решение уже реализовано, и требование переделать всё выглядит как провал процесса. Архитектуру нужно обсуждать до реализации, чтобы на проверке кода оставались локальные риски и качество исполнения.</p>
 <p>В агентном пайплайне стадия планирования часто ценнее самой реализации. Именно здесь выбирается архитектура, фиксируются ограничения и отбрасываются альтернативы. Этот план должен быть доступен лиду и команде. Иначе после регрессии невозможно понять, где возник дефект: в самом решении или в реализации правильного решения.</p>
 <div class="compare">
 <div class="compare-card">
-<h4>Формально сохраняется</h4>
+<h5>Формально сохраняется</h5>
 <p>Код, PR, комментарии проверки, финальный статус и иногда краткий отчёт.</p>
 </div>
 <div class="compare-card good">
-<h4>Тоже должно сохраняться</h4>
-<p>Исследование, план, отвергнутые подходы, проверка плана, агентный QA, причины возврата и точки человеческого вмешательства.</p>
+<h5>Должно сохраняться в execution‑системе</h5>
+<p>Исследование, план, отвергнутые подходы, агентный QA, причины возврата и значимые решения связываются с конкретным запуском и доступны из задачи по ссылке.</p>
 </div>
 </div>
 </article>
 <article class="problem reveal has-visual" id="problem-8">
 <span class="problem-no">08</span>
-<h3>Разработчики стали менеджерами агентов — без менеджерской дисциплины</h3>
-<p class="core">С агентом программист всё чаще не производит код, а ставит работу исполнителю, контролирует её и принимает результат. Это уже делегирование, а не просто использование инструмента.</p>
-<p>Если воспринимать ИИ как инструмент, постоянные подсказки, микроконтроль и ручная доводка кажутся естественными. Если воспринимать его как исполнителя, те же действия означают слабое делегирование: задача плохо поставлена, исполнитель недостаточно автономен, пайплайн требует слишком много внимания.</p>
-<p>Подлинное делегирование заканчивается проверкой и принятием результата. Менеджер, который каждый раз доделывает работу за исполнителем, не построил работающую систему. Но разработчики редко считают число возвратов, вмешательств и сорванных one-shot’ов; не измеряют собственное внимание и не развивают навыки постановки, контроля и приёмки.</p>
-<p>Руководство тоже не может оценить эти компетенции: Jira не показывает, кто выстроил автономный процесс, а кто весь день микроменеджерил агента. Новая управленческая работа появилась, но организационно её как будто нет.</p>
-<div aria-label="Стопка сильных книг по менеджменту, которые программист считает не относящимися к своей профессии, хотя уже управляет агентами" class="problem-visual visual-card visual-books" role="img">
-<div class="visual-label">Новая работа · старое предубеждение</div>
-<div class="unread-note">«Я же программист.<br/>Зачем мне менеджмент?»</div>
-<div aria-label="Подборка книг по менеджменту" class="book-stack">
-<a class="book book-1" href="https://www.penguinrandomhouse.com/books/72467/high-output-management-by-andrew-s-grove-former-chairman-and-ceo-of-intel/" rel="noreferrer" target="_blank"><span>High Output Management</span><small>Andrew S. Grove</small></a>
-<a class="book book-2" href="https://www.oreilly.com/library/view/the-managers-path/9781491973882/" rel="noreferrer" target="_blank"><span>The Manager’s Path</span><small>Camille Fournier</small></a>
-<a class="book book-3" href="https://www.penguinrandomhouse.com/books/314163/turn-the-ship-around-by-l-david-marquet/" rel="noreferrer" target="_blank"><span>Turn the Ship Around!</span><small>L. David Marquet</small></a>
-<a class="book book-4" href="https://www.harpercollins.com/products/the-effective-executive-peter-f-drucker" rel="noreferrer" target="_blank"><span>The Effective Executive</span><small>Peter F. Drucker</small></a>
-<a class="book book-5" href="https://www.stripe.press/an-elegant-puzzle" rel="noreferrer" target="_blank"><span>An Elegant Puzzle</span><small>Will Larson</small></a>
+<h4>Работа с агентами стала отдельной инженерной компетенцией</h4>
+<p class="core">Разработчик теперь не только пишет код: он формулирует задачу для агента, выбирает способ исполнения, задаёт контрольные точки и принимает результат.</p>
+<p>Качество этой работы влияет на автономность запуска и объём человеческого внимания. Ясные ограничения, достаточный контекст, подходящие инструменты и проверяемые критерии приёмки сокращают лишние возвраты и ручную доводку. Практики делегирования здесь полезны как ориентир, но работа с вероятностной моделью остаётся инженерным процессом, а не управлением человеком один в один.</p>
+<p>Часть компетенции — выбрать разумную глубину систематизации. Для одноразовой задачи короткая ручная правка может быть выгоднее универсального skill и regression dataset. Для повторяемого или рискованного класса задач инвестиция в harness, тесты и общий навык начинает окупаться.</p>
+<p>Команда развивает эту практику, когда постановки, возвраты, вмешательства и приёмка сохраняются вместе с запуском. Эти данные показывают, где процесс требует человеческой экспертизы и какие улучшения действительно повышают автономность, не превращая one-shot rate в самоцель.</p>
+<div aria-label="Рабочий цикл разработчика с агентом включает постановку, исполнение, контроль и приёмку, после которых инженер выбирает между локальной правкой и системным улучшением пайплайна." class="problem-visual visual-card visual-investment" role="img">
+<div class="visual-label">Новая инженерная компетенция</div>
+<div class="decision-question"><small>Рабочий цикл</small><b>Постановка → исполнение → контроль → приёмка</b></div>
+<div class="decision-paths">
+<div class="decision-path local"><span>Разовая задача · низкий риск</span><b>Локально исправить</b><small>Закончить задачу без лишнего инфраструктурного проекта.</small></div>
+<i aria-hidden="true">или</i>
+<div class="decision-path systemic"><span>Повторяемый класс · высокий риск</span><b>Развить пайплайн</b><small>Версионировать skill, harness и regression dataset.</small></div>
 </div>
-<div class="agent-management-counter"><span><b>4</b> цифровых исполнителя</span><span><b>11</b> возвратов за день</span><span><b>0</b> прочитанных книг</span></div>
-<p class="visual-caption">Стопка знаний, которую легко считать «чужой профессией», пока сам не начинаешь ставить задачи, делегировать, контролировать и принимать результат.</p>
+<div class="decision-criteria"><span>повторяемость</span><span>цена ошибки</span><span>стоимость улучшения</span><span>переиспользование</span></div>
+<div class="visual-verdict">Компетенция состоит в качественной постановке, разумном контроле и выборе окупаемого уровня системности.</div>
 </div>
 </article>
 <article class="problem reveal has-visual" id="problem-9">
 <span class="problem-no">09</span>
-<h3>Реальная человеческая работа не отражается в задачах</h3>
-<p class="core">Конкретная Jira‑задача всё чаще становится контрольным примером работы, которую разработчик сделал заранее: настроил harness, написал навык, выбрал инструменты и формализовал проектные соглашения.</p>
-<p>Когда задача one-shot’ится, невозможно понять роль человека. Он просто скопировал заголовок задачи — или до этого неделями превращал проектную экспертизу в исполняемые инструкции? Если one-shot не произошёл, сильный разработчик обычно не начинает вручную дописывать задачу. Он отлаживает пайплайн: почему агент двадцать раз вызвал один инструмент, почему выбрал неверный prefab, какого контекста не хватило навыку.</p>
-<p>В Jira при этом записано, что человек «верстал prefab по макету», хотя он мог не открыть макет ни разу. Его реальная работа — улучшение навыка вёрстки интерфейсов и harness, который должен решать весь класс подобных задач. Трекер фиксирует конечный экземпляр, но теряет создание производственного метода.</p>
-<div class="quote">То, что видно в Jira, всё чаще выполняет агент. То, что реально делает человек, всё чаще находится вне Jira.</div>
-<div aria-label="Над водой видна одна Jira-задача, под водой скрыты настройка harness, навыки, инструменты, правила проекта и отладка пайплайна" class="problem-visual visual-card visual-iceberg" role="img">
-<div class="visual-label">Видимый экземпляр · невидимый производственный метод</div>
-<div class="waterline"><span>то, что видит Jira</span></div>
+<h4>Развитие harness не связано с задачами, на которых оно возникло</h4>
+<p class="core">Конкретная задача всё чаще не только создаёт продуктовый результат, но и проверяет производственный метод: версию agent, skill, инструменты и правила выполнения.</p>
+<p>По итогам запуска инженер выбирает между локальной правкой результата и развитием harness. Повторяемая проблема, высокий риск или возможность переиспользовать решение становятся основанием улучшить контекст, инструмент, правило или навык.</p>
+<p>Такое системное изменение должно иметь собственную версию, проверку, владельца и связь с задачей и запуском, на которых возникла проблема. Иначе следующая похожая задача снова выглядит первым случаем, а развитие производственного метода растворяется между локальной сессией и итоговым кодом.</p>
+<p>В Jira исходное обязательство связывается с запуском, значимым решением и отдельным изменением harness. Детальная история эволюции метода исполнения остаётся в агентной платформе.</p>
+<div class="quote">Задача проверяет производственный метод. Исполнительный контур должен показывать, какой именно.</div>
+<div aria-label="Jira-задача связана с конкретным запуском, версией агента и последующим изменением harness" class="problem-visual visual-card visual-iceberg" role="img">
+<div class="visual-label">Одно обязательство · связанные объекты исполнения</div>
+<div class="waterline"><span>обязательство в Jira</span></div>
 <div class="iceberg-top"><b>HC-517</b><span>Сверстать prefab по макету</span></div>
 <div class="iceberg-under">
-<span>настроить harness</span>
-<span>написать UI skill</span>
-<span>формализовать project rules</span>
-<span>научить искать prefab</span>
-<span>добавить visual verification</span>
-<span>отладить 20 неверных tool calls</span>
+<span>execution #1842</span>
+<span>Coder.Unity v18</span>
+<span>UI skill v7</span>
+<span>решение разработчика</span>
+<span>артефакты проверки</span>
+<span>harness change #92</span>
 </div>
-<div class="visual-verdict">В задаче записан результат агента. Работа человека находится под водой.</div>
+<div class="visual-verdict">Трекер хранит обязательство; execution layer связывает его с запуском и развитием метода.</div>
 </div>
 </article>
 <div class="group-conclusion reveal">
 <span class="chapter-kicker">Вывод группы 3</span>
-<h3>Работа человека не наблюдается от начала до конца</h3>
-<p>Не видно, где человек создал ценность: в постановке, выборе пайплайна, проверке плана, возврате, ручной правке или развитии harness. Не видна и управленческая нагрузка. Jira перестаёт быть источником правды, потому что производственный процесс превращается в чёрный ящик.</p>
-<div class="case-thread"><span>Сквозной пример · AI‑review</span><p>Видимыми становятся diff, контекст, версия Reviewer.Agent, его замечания, ответы разработчика, повторный запуск и человеческое решение принять или отклонить вывод.</p></div>
+<h4>Трекер и агентное исполнение существуют как два несвязанных процесса</h4>
+<p>Jira фиксирует задачу и её владельца, агентная сессия — фактическое исполнение, а решения человека остаются между ними. В результате команда видит конечный статус, но теряет точки передачи управления: когда запуск начался, когда потребовалось экспертное решение и когда результат стал готов к приёмке. Общий контур связывает задачу, конкретный запуск, его результат и значимые человеческие решения; полный trace остаётся в агентной платформе. Jira становится источником правды об обязательстве, а агентная платформа — источником правды об исполнении.</p>
+<div class="case-thread"><span>Сквозной пример · AI‑review</span><p>Jira показывает, что проверка запущена, требует ответа или готова к приёмке. Multica хранит diff, версию Reviewer.Agent, замечания, ответы, повторный запуск и артефакты решения.</p></div>
 </div>
 </section>
 <section class="chapter" id="isolation">
 <header class="chapter-head reveal">
 <span class="chapter-kicker">Группа 4</span>
-<h2>Исполнитель и его harness заперты за границей одного человека</h2>
+<h3>Исполнитель и его harness заперты за границей одного человека</h3>
 <p>Агент может знать задачу лучше всех участников процесса, но взаимодействовать с ним способен только владелец локальной сессии.</p>
 </header>
 <article class="problem reveal has-visual" id="problem-10">
 <span class="problem-no">10</span>
-<h3>Фактический исполнитель недоступен остальной команде</h3>
+<h4>Фактический исполнитель недоступен остальной команде</h4>
 <p class="core">Агент исследовал код, написал реализацию и сохранил контекст задачи. Но QA, лид и другой разработчик не могут задать ему вопрос напрямую.</p>
 <p>QA спрашивает о риске регрессии или просит сделать rebase ветки. Разработчик читает сообщение, копирует его в локальную сессию агента, получает ответ и пересылает обратно. Часто он не добавляет собственной экспертизы: отдельный навык уже умеет сформулировать ответ для QA.</p>
 <div class="diagram">
@@ -2724,7 +3061,7 @@
 </article>
 <article class="problem reveal has-visual" id="problem-11">
 <span class="problem-no">11</span>
-<h3>Harness недоступен другим людям и другим командам</h3>
+<h4>Harness недоступен другим людям и другим командам</h4>
 <p class="core">Даже хороший пайплайн нельзя просто «передать» гейм‑дизайнеру или соседнему разработчику: он постоянно меняется и зависит от операционной системы, инструментов, секретов и локального окружения.</p>
 <p>Можно один раз настроить гейм‑дизайнеру агентный пайплайн для прототипов, но через неделю исходный harness уже эволюционирует, а его копия останется старой. Правильное разделение ролей должно быть другим: инженер, отвечающий за harness, развивает агентский пайплайн, а пользователь запускает его, не воспроизводя всю инфраструктуру у себя.</p>
 <p>Изоляция мешает и обычной командной работе. Клиентскому разработчику не обязательно ждать, пока освободится серверный: он мог бы попросить серверного агента собрать временную заглушку и начать интеграцию. Серверный программист, в свою очередь, мог бы уточнить у клиентского агента детали имплементации поддержки серверного контракта. Сегодня каждый агент замкнут внутри владельца и его runtime.</p>
@@ -2746,16 +3083,16 @@
 </article>
 <article class="problem reveal has-visual" id="problem-12">
 <span class="problem-no">12</span>
-<h3>Доступ, безопасность и ответственность не формализованы</h3>
+<h4>Доступ, безопасность и ответственность не формализованы</h4>
 <p class="core">Пока агентские пайплайны живут в персональных конфигурациях, компания не видит границы их доступа и не может формально распределить ответственность.</p>
 <p>Один агент только читает diff, другой имеет shell, write‑доступ к репозиторию, сборке или публикации. Без общего контура эти различия остаются локальными настройками, а единая политика существует только на словах.</p>
 <div class="compare">
 <div class="compare-card">
-<h4>Размытый локальный риск</h4>
+<h5>Размытый локальный риск</h5>
 <p>Права наследуются от человека, а действия и точки подтверждения не образуют общего журнала.</p>
 </div>
 <div class="compare-card good">
-<h4>Формальный контур</h4>
+<h5>Формальный контур</h5>
 <p>Идентичность агента, ограниченные права, разделение чтения и записи, точки подтверждения, изолированные среды выполнения, журнал действий и решений.</p>
 </div>
 </div>
@@ -2773,7 +3110,7 @@
 </article>
 <div class="group-conclusion reveal">
 <span class="chapter-kicker">Вывод группы 4</span>
-<h3>Harness изолирован границей разработчика</h3>
+<h4>Harness изолирован границей разработчика</h4>
 <p>Контекст, инструменты, сессии, исполнители и права не являются формальной частью процесса. Команда не может продолжить чужую работу, напрямую обратиться к фактическому исполнителю или безопасно открыть harness наружу.</p>
 <div class="case-thread"><span>Сквозной пример · AI‑review</span><p>Reviewer.Agent получает read‑only права и общую идентичность; QA или автор pull request могут задать ему уточнение напрямую, не используя владельца локальной сессии как прокси.</p></div>
 </div>
@@ -2781,12 +3118,12 @@
 <section class="chapter" id="memory">
 <header class="chapter-head reveal">
 <span class="chapter-kicker">Группа 5</span>
-<h2>Проект сохраняет код, но теряет опыт его производства</h2>
+<h3>Проект сохраняет код, но теряет опыт его производства</h3>
 <p>Локальные навыки и сессии эволюционируют, однако их опыт почти не превращается в общий актив команды.</p>
 </header>
 <article class="problem reveal has-visual" id="problem-13">
 <span class="problem-no">13</span>
-<h3>Навыки не являются общим управляемым активом</h3>
+<h4>Навыки не являются общим управляемым активом</h4>
 <p class="core">Навык нельзя отделить от пайплайна так же легко, как библиотеку от приложения. Он зависит от среды выполнения, модели, инструментов, зрения, способов запуска и хранения секретов.</p>
 <p>QA‑навык, построенный на Linux Computer Use, может быть бесполезен разработчику на Windows. Чтобы запустить его, недостаточно скопировать папку: нужно воспроизвести окружение, инструменты и права. Для разных моделей даже формулировка одной и той же инструкции может требовать разных акцентов.</p>
 <p>Zip‑архив расходится по версиям сразу после передачи. Отдельный репозиторий, подключённый как submodule, добавляет синхронизацию всем участникам проекта, даже тем, кому навык локально не нужен и кто всё равно не может его исполнить. Плагин не решает проблему несовпадающих сред выполнения.</p>
@@ -2809,10 +3146,10 @@
 </article>
 <article class="problem reveal has-visual" id="problem-14">
 <span class="problem-no">14</span>
-<h3>Неудачную сессию агента нельзя воспроизвести и проверить</h3>
+<h4>Неудачную сессию агента нельзя воспроизвести и проверить</h4>
 <p class="core">Фраза «агенты тупые, у меня не получилось» не диагностируема без исходной постановки, контекста, версии навыка, инструментов, модели, следа выполнения и точек ручного вмешательства.</p>
-<p>Раньше можно было открыть код, показать ошибочный подход и объяснить, как сделать лучше. Теперь нужно проверять сам процесс делегирования. Но история сессии остаётся локальной, окружение меняется, контекст устаревает, а повторная демонстрация происходит уже на другой задаче и ничего не доказывает.</p>
-<p>Из-за этого команда не учится на реальных провалах. Нельзя точно увидеть, где разработчик ошибся: плохо поставил задачу, дал недостаточный контекст, выбрал неподходящий инструмент, пропустил план или вмешался слишком рано.</p>
+<p>Раньше можно было открыть код, показать ошибочный подход и объяснить, как сделать лучше. Теперь нужно проверять и процесс работы с агентом. Но история сессии остаётся локальной, окружение меняется, контекст устаревает, а повторная демонстрация происходит уже на другой задаче и ничего не доказывает.</p>
+<p>Из-за этого команда не учится на реальных провалах. Нельзя локализовать причину: неоднозначную постановку, недостаточный контекст, поведение модели, неподходящий инструмент, изменение окружения или слишком раннее вмешательство.</p>
 <p>Онбординг деградирует до фольклора: «поставь какую‑нибудь модель, настрой какой‑нибудь harness, попробуй такой промпт». Старая инженерная культура меняется, но новая не возникает, потому что опыт не закреплён в воспроизводимых артефактах.</p>
 <div aria-label="Диалог о неудачной агентной сессии заканчивается предложением зайти в Discord и посмотреть шаринг экрана, потому что воспроизводимого trace нет" class="problem-visual visual-card visual-folklore" role="img">
 <div class="visual-label">Когда trace заменяется устным рассказом</div>
@@ -2828,7 +3165,7 @@
 </article>
 <article class="problem reveal has-visual" id="problem-15">
 <span class="problem-no">15</span>
-<h3>Память агента формируется на личном наборе задач</h3>
+<h4>Память агента формируется на личном наборе задач</h4>
 <p class="core">Каждый разработчик развивает своего агента на небольшом фрагменте проектной истории, хотя настоящий источник опыта — все задачи проекта.</p>
 <p>Один человек выполнил несколько задач по профилированию, написал навык и накопил понимание типичных ловушек. Через месяц похожую задачу получает другой разработчик и начинает с нуля. Для него это первая такая задача; для проекта — далеко не первая. Миллионы кусочков контекста существуют, но разбросаны по локальным агентам и персональным историям.</p>
 <p>Проекту нужна не «моя память», а общая память: успешные подходы, провалы, комментарии проверки, замечания QA, принятые решения и следы того, как агент к ним пришёл. Иначе несколько уменьшенных копий одного пайплайна развиваются медленнее, чем общий исполнитель, обучающийся на опыте всей команды.</p>
@@ -2850,14 +3187,14 @@
 </article>
 <div class="group-conclusion reveal">
 <span class="chapter-kicker">Вывод группы 5</span>
-<h3>Опыт решения задач не становится памятью проекта</h3>
+<h4>Опыт решения задач не становится памятью проекта</h4>
 <p>Сохраняется итоговый код. Не сохраняется производственный след: какие подходы сработали, какие провалились, что заметили проверка и QA, какие изменения в harness привели к улучшению.</p>
 <div class="case-thread"><span>Сквозной пример · AI‑review</span><p>Каждое подтверждённое замечание и каждое ложное срабатывание пополняют общий набор примеров, на котором следующая версия review‑пайплайна проверяется на регрессии.</p></div>
 </div>
 </section>
 <section class="root-cause reveal" id="root-cause">
 <span class="chapter-kicker">Общая причина</span>
-<h2>ИИ стал участником производства — процессы должны измениться</h2>
+<h3>ИИ стал участником производства — процессы должны измениться</h3>
 <p>ИИ уже не просто персональный инструмент, а самостоятельный участник производства. Поэтому вместе с технологией должны меняться процессы, роли, права и способы накопления опыта.</p>
 <p class="root-intro">Общая причина описанных проблем — три характеристики, которые сегодня определяют большинство агентских пайплайнов:</p>
 <div class="root-words">
@@ -2868,7 +3205,7 @@
 <div class="root-line">У компании уже есть множество персональных агентских стеков. Но общего инженерного процесса работы с агентами у неё нет.</div>
 </section>
 </section>
-<section aria-label="Длинный градиентный переход от диагностики к решению" class="act-gradient-wash reveal"></section>
+<div aria-hidden="true" class="act-gradient-wash reveal"></div>
 <section class="act" id="multica">
 <header class="act-head reveal" data-act="02">
 <div class="eyebrow">Акт II · Multica</div>
@@ -2878,12 +3215,18 @@
 <section class="chapter" id="platform">
 <header class="chapter-head reveal">
 <span class="chapter-kicker">Определение</span>
-<h2>Multica — это TeamCity для работы агентов</h2>
-<p>Multica — практический способ сделать этот переход: она выносит агентов, пайплайны, запуски и артефакты во внешний по отношению к ноутбуку разработчика, но управляемый компанией контур. Это не новая модель и не ещё один UI для чата, а платформа управления цифровыми исполнителями и их работой.</p>
+<h3>Multica — это TeamCity для работы агентов</h3>
+<p><a aria-label="Репозиторий Multica на GitHub, откроется в новой вкладке" class="source-link" href="https://github.com/multica-ai/multica" rel="noreferrer" target="_blank">Multica</a> — практический способ сделать этот переход: она выносит агентов, пайплайны, запуски и артефакты во внешний по отношению к ноутбуку разработчика, но управляемый компанией контур. Это не новая модель и не ещё один UI для чата, а платформа управления цифровыми исполнителями и их работой.</p>
 </header>
 <div class="problem reveal">
 <p class="core">TeamCity отделяет CI‑задачу от ноутбука разработчика: есть сервер, исполнители, очереди, статусы и артефакты. Multica делает то же самое с агентными запусками.</p>
-<div class="note"><strong>Порог для локального пилота низкий.</strong> Multica распространяется бесплатно по лицензии Apache 2.0 и полностью разворачивается внутри контура компании. Это не подключение нового внешнего SaaS: код и данные остаются в своём окружении. Отдельно контролируются только модели и инструменты, к которым обращаются сами агенты.</div>
+<div class="note">
+<strong>Порог для локального пилота низкий.</strong> Multica можно развернуть внутри контура компании; для внутреннего использования одной организацией коммерческая лицензия не требуется. Это не подключение нового внешнего SaaS: код и данные остаются в своём окружении. Отдельно контролируются только модели и инструменты, к которым обращаются сами агенты.
+<details class="license-note">
+<summary>Уточнение о лицензии</summary>
+<p>В репозитории используется не неизменённая Apache 2.0, а её модифицированная версия с дополнительными условиями. Размещение Multica как сервиса для третьих лиц и встраивание в коммерчески распространяемый продукт требуют коммерческой лицензии; удаление брендинга из интерфейса требует отдельного письменного разрешения. При использовании только backend, daemon или CLI без интерфейса нужно сохранить уведомления об авторстве и указать, что продукт построен на Multica. Это краткое изложение; юридически действует текст <a aria-label="Лицензия Multica на GitHub, откроется в новой вкладке" href="https://github.com/multica-ai/multica/blob/main/LICENSE" rel="noreferrer" target="_blank">LICENSE</a>.</p>
+</details>
+</div>
 <p>На техническом уровне платформа состоит из frontend на TypeScript, backend на Go и daemon на Go, который работает на runtime‑машинах — аналогах workers или runners. На этих машинах установлены Codex, Claude, Hermes, Qwen и другие harness, через которые запускаются агенты.</p>
 <div class="diagram">
 <div class="diagram-title">Три технических слоя</div>
@@ -2899,39 +3242,39 @@
 <section class="chapter" id="entities">
 <header class="chapter-head reveal">
 <span class="chapter-kicker">Язык системы</span>
-<h2>Runtime, Agent, Skill, Issue и Artifacts</h2>
+<h3>Runtime, Agent, Skill, Issue и Artifacts</h3>
 <p>Общий процесс появляется тогда, когда у команды есть общие сущности, на которые можно ссылаться, выдавать права, назначать задачи и собирать метрики.</p>
 </header>
 <div class="entity-grid reveal">
 <article class="entity">
 <span class="index">ENTITY 01</span>
-<h3>Runtime</h3>
+<h4>Runtime</h4>
 <p>Машина, где реально выполняются агенты. Аналог исполнителя TeamCity или GitHub runner. Платформа видит доступность, текущую загрузку, запущенные процессы и связанные артефакты.</p>
 <div class="chips"><span class="chip">load</span><span class="chip">queue</span><span class="chip">agents</span><span class="chip">environment</span></div>
 </article>
 <article class="entity">
 <span class="index">ENTITY 02</span>
-<h3>Agent</h3>
+<h4>Agent</h4>
 <p>Именованный цифровой исполнитель с моделью, harness, инструкциями, навыками, инструментами, правами и контекстом проекта. На продвинутом уровне за одним Agent можно скрыть целый пайплайн — например, планировщика, разработчика и проверяющего — а снаружи он останется одним исполнителем задачи. В текущей реализации конфигурация закреплена за runtime.</p>
 <div class="chips"><span class="chip">Planner</span><span class="chip">Coder</span><span class="chip">Reviewer</span><span class="chip">QA</span></div>
 </article>
 <article class="entity">
 <span class="index">ENTITY 03</span>
-<h3>Skill</h3>
+<h4>Skill</h4>
 <p>Логическая переиспользуемая способность. Например: найти правильный Unity prefab, визуально проверить результат, провести проверку кода или соблюдать соглашения проекта. Несколько агентов могут использовать одну версию навыка.</p>
 <div class="chips"><span class="chip">shared</span><span class="chip">versioned</span><span class="chip">reusable</span><span class="chip">owned</span></div>
 </article>
 <article class="entity">
 <span class="index">ENTITY 04</span>
-<h3>Issue</h3>
+<h4>Issue</h4>
 <p>Единица агентской работы. В ней живут постановка, исполнитель, статус, комментарии, очередь, несколько попыток исполнения и материалы, по которым результат был принят или возвращён.</p>
 <div class="chips"><span class="chip">queued</span><span class="chip">running</span><span class="chip">waiting</span><span class="chip">failed</span><span class="chip">done</span></div>
 </article>
 </div>
 <article class="problem reveal">
-<h3>Runtime, Agent, Skill и Issue связываются в execution</h3>
+<h4>Runtime, Agent, Skill и Issue связываются в execution</h4>
 <p class="core">Runtime даёт среду выполнения, Agent определяет цифрового исполнителя и его пайплайн, Skills добавляют переиспользуемые способности, а Issue хранит постановку и состояние работы. Конкретный execution связывает эти сущности и создаёт общую историю.</p>
-<p>Поэтому после запуска остаётся не только код. Issue собирает план, сводку, изменённые файлы, команды и логи, скриншоты, результаты тестов, финальный отчёт и trace выполнения. Рядом находятся метрики: время, токены, модель, runtime, число попыток, ошибки, возвраты и оценка стоимости принятого результата.</p>
+<p>Поэтому после запуска остаётся не только код. Issue собирает план, сводку, изменённые файлы, команды и логи, скриншоты, результаты тестов, финальный отчёт и trace выполнения. Рядом находятся метрики: время, токены, модель, runtime, число попыток, ошибки, возвраты и активное участие человека. К ним добавляются показатели качества результата после приёмки.</p>
 <p>Если одного запуска не хватило, разговор продолжается в контексте Issue. QA может спросить о риске регрессии, разработчик — о выборе prefab, лид — о решении из плана. Агент отвечает как фактический исполнитель, а не как скрытая функция за разработчиком‑посредником.</p>
 <p>Для быстрых вопросов остаётся обычный чат: он позволяет обратиться к агенту по проекту без полного процесса Issue и обязательной генерации всех артефактов.</p>
 </article>
@@ -2939,11 +3282,11 @@
 <section class="chapter" id="versioning">
 <header class="chapter-head reveal">
 <span class="chapter-kicker">Авторское расширение</span>
-<h2>Агентский стек нужно описывать и версионировать</h2>
-<p>В ядре Multica этого слоя пока нет. Ниже — принцип моего декларативного расширения: если пайплайн влияет на код, его изменения должны быть сравнимы, обратимы и проверяемы на данных.</p>
+<h3>Агентский стек нужно описывать и версионировать</h3>
+<p>В ядре Multica этого слоя пока нет. Ниже — принцип моего декларативного расширения <a aria-label="Репозиторий multica-declarative на GitHub, откроется в новой вкладке" class="source-link" href="https://github.com/Tr0sT/multica-declarative" rel="noreferrer" target="_blank">multica-declarative</a>: если пайплайн влияет на код, его изменения должны быть сравнимы, обратимы и проверяемы на данных.</p>
 </header>
 <article class="problem reveal">
-<p>В моём расширении агенты, навыки, инструменты, MCP‑окружение, права и политика выполнения описываются декларативно и версионируются с помощью Git. Поэтому конфигурация получает diff, историю и возможность отката, а не остаётся неявным состоянием конкретной машины.</p>
+<p>В multica-declarative агенты, навыки, инструменты, MCP‑окружение, права и политика выполнения описываются декларативно и версионируются с помощью Git. Поэтому конфигурация получает diff, историю и возможность отката, а не остаётся неявным состоянием конкретной машины.</p>
 <div class="compare">
 <div class="compare-card">
 <h4>Coder.Unity v17</h4>
@@ -2958,8 +3301,8 @@
 </article>
 <div class="system-object reveal">
 <span class="chapter-kicker">Итог второго акта</span>
-<h2>Агентное исполнение становится объектом системы</h2>
-<p>Локальный заводик превращается в общий производственный контур. Команда получает общую опору: можно обсуждать конкретного агента, конкретную версию навыка, конкретный след выполнения и конкретную цену результата.</p>
+<h3>Агентное исполнение становится объектом системы</h3>
+<p>Локальный заводик превращается в общий производственный контур. Команда получает общую опору: можно обсуждать конкретного агента, конкретную версию навыка, конкретный след выполнения, наблюдаемые затраты и качество результата.</p>
 <div class="verbs"><span>описывать</span><span>запускать</span><span>наблюдать</span><span>обновлять</span><span>измерять</span><span>обсуждать</span></div>
 </div>
 </section>
@@ -2967,13 +3310,13 @@
 <section class="act" id="implementation">
 <header class="act-head reveal" data-act="03">
 <div class="eyebrow">Акт III · Внедрение</div>
-<h2>Не менять инструменты. Сделать делегирование видимым</h2>
+<h2>Не менять инструменты. Связать задачу с исполнением</h2>
 <p>Multica остаётся рабочим местом инженеров, развивающих harness. Разработчики, QA и гейм‑дизайнеры продолжают жить в привычных Jira и GitLab — но в них появляются цифровые исполнители.</p>
 </header>
 <section class="chapter" id="jira">
 <header class="chapter-head reveal">
-<span class="chapter-kicker">Эволюция Jira</span>
-<h2>В потоке задач появляются аккаунты агентов</h2>
+<span class="chapter-kicker">Связь с Jira</span>
+<h3>В потоке задач появляются аккаунты агентов</h3>
 <p>Назначение задачи агенту становится управляемым событием, а не ручным копированием заголовка в локальный чат.</p>
 </header>
 <article class="problem reveal">
@@ -2990,7 +3333,7 @@
 <p>Профиль описывает тип работы и стратегию исполнения, а не человеческий грейд. Названия выше иллюстративны: человек выбирает профиль под задачу и остаётся ответственным за приёмку, а Multica связывает выбор с конкретными конфигурацией, runtime, инструментами и ограничениями доступа.</p>
 </article>
 <article class="problem reveal">
-<h3>Назначение в Jira запускает исполнение</h3>
+<h4>Назначение в Jira запускает исполнение</h4>
 <div class="diagram">
 <div class="diagram-title">Назначение → Hook → Запись → Исполнение → Возврат</div>
 <div class="hook-flow">
@@ -2998,17 +3341,17 @@
 <div class="hook-step"><b>2 · Hook</b><span>Событие Jira уходит в интеграционный сервис Multica.</span></div>
 <div class="hook-step"><b>3 · Связь</b><span>Создаётся связанная запись исполнения.</span></div>
 <div class="hook-step"><b>4 · Запуск</b><span>Агент работает на свободном runtime и собирает артефакты.</span></div>
-<div class="hook-step"><b>5 · Возврат</b><span>В Jira приходят сводка, ссылки и следующий исполнитель.</span></div>
+<div class="hook-step"><b>5 · Возврат</b><span>В Jira приходят результат, ссылка на запуск и следующий значимый шаг.</span></div>
 </div>
 </div>
-<p>Jira остаётся входом и источником продуктового контекста. Multica становится местом фактического исполнения. В Jira не нужно вываливать полный дамп логов: достаточно сводки — исполнитель, версия, попытка, время, токены, что сделано, почему предыдущий запуск был возвращён и какие артефакты доступны по ссылке.</p>
-<p>Так можно видеть не только время агента, но и человеческую экспертизу: кто утвердил план, сколько длилась проверка, где возник возврат и какое изменение в harness помогло следующей попытке.</p>
+<p><strong>Jira — источник правды об обязательстве. Multica — источник правды об исполнении.</strong> В карточке достаточно показать текущую точку передачи управления, краткий результат и ссылку на связанный запуск. Версия агента, runtime, попытки, время, токены, логи и полный набор артефактов остаются в Multica.</p>
+<p>Значимые человеческие решения — утверждение плана, возврат результата или изменение harness — сохраняются как часть запуска и связываются с задачей. В Jira возвращается только то, что меняет координацию: требуется ответ, результат готов к проверке или исполнение завершилось неуспешно.</p>
 </article>
 </section>
 <section class="chapter" id="ai-review">
 <header class="chapter-head reveal">
 <span class="chapter-kicker">Первый практический сценарий</span>
-<h2>AI‑review — это система, а не скрипт</h2>
+<h3>AI‑review — это система, а не скрипт</h3>
 <p>Проверка кода без права записи выглядит как небольшой и безопасный первый шаг. Но уже первый пилот требует не просто запустить модель, а спроектировать, измерять и развивать целый агентский пайплайн.</p>
 </header>
 <div class="review-system reveal">
@@ -3024,12 +3367,12 @@
 <div class="review-paths">
 <article class="review-path legacy">
 <span class="label">Локальный shortcut</span>
-<h3>Python → Codex → комментарий в Jira</h3>
+<h4>Python → Codex → комментарий в Jira</h4>
 <p>Такой скрипт быстро демонстрирует идею, но сразу фиксирует одну модель, один harness, один промпт, один объём контекста и один маршрут ответа. Любой эксперимент становится изменением интеграционного кода; сравнивать версии и обосновывать выбор нечем. Это legacy с первой минуты создания.</p>
 </article>
 <article class="review-path platform">
 <span class="label">Общий контур</span>
-<h3>Issue → Reviewer.Agent → execution → artifacts → Jira</h3>
+<h4>Issue → Reviewer.Agent → execution → artifacts → Jira</h4>
 <p>В Multica агент, harness, навыки, доступ, политика контекста и маршрут возврата становятся конфигурацией и сущностями системы. У каждой попытки остаются версия, trace и метрики: варианты можно сравнивать, а разговор с исполнителем — продолжать в контексте задачи.</p>
 </article>
 </div>
@@ -3039,52 +3382,52 @@
 <section class="chapter limits-chapter" id="limits">
 <header class="chapter-head reveal">
 <span class="chapter-kicker">Границы решения</span>
-<h2>Что общий контур не решает автоматически</h2>
+<h3>Что общий контур не решает автоматически</h3>
 <p>Наблюдаемость и воспроизводимость создают условия для инженерного улучшения, но не заменяют хорошую постановку, безопасность и человеческое решение.</p>
 </header>
 <div class="limits-field reveal">
-<article><span>01</span><div><h3>Плохая задача останется плохой</h3><p>Платформа сохранит слабую постановку и trace ошибки, но сама по себе не превратит расплывчатую цель в проверяемый контракт.</p></div></article>
-<article><span>02</span><div><h3>Переносимость harness требует инженерии</h3><p>Операционные системы, инструменты, лицензии и project-specific dependencies всё равно нужно описывать и поддерживать.</p></div></article>
-<article><span>03</span><div><h3>Общий runtime создаёт инфраструктурную цену</h3><p>Изоляция, секреты, кэши, наблюдение, хранение артефактов и обновления становятся отдельной зоной ответственности.</p></div></article>
-<article><span>04</span><div><h3>Метрики можно оптимизировать неправильно</h3><p>Минимум токенов, минимум elapsed time и максимум one-shot’ов не равны качеству, если система научилась скрывать возвраты и риски.</p></div></article>
-<article><span>05</span><div><h3>Не каждой задаче нужен полный церемониал</h3><p>Для короткого вопроса достаточно чата; Issue, trace и полный набор артефактов оправданы там, где важны передача, повторяемость и цена ошибки.</p></div></article>
-<article><span>06</span><div><h3>Человеческая ответственность не исчезает</h3><p>Агент получает идентичность и права, но принятие архитектурного, продуктового и production-риска остаётся человеческим решением.</p></div></article>
+<article><span>01</span><div><h4>Плохая задача останется плохой</h4><p>Платформа сохранит слабую постановку и trace ошибки, но сама по себе не превратит расплывчатую цель в проверяемый контракт.</p></div></article>
+<article><span>02</span><div><h4>Переносимость harness требует инженерии</h4><p>Операционные системы, инструменты, лицензии и project-specific dependencies всё равно нужно описывать и поддерживать.</p></div></article>
+<article><span>03</span><div><h4>Общий runtime создаёт инфраструктурную цену</h4><p>Изоляция, секреты, кэши, наблюдение, хранение артефактов и обновления становятся отдельной зоной ответственности.</p></div></article>
+<article><span>04</span><div><h4>Метрики можно оптимизировать неправильно</h4><p>Минимум токенов, минимум elapsed time и максимум one-shot’ов не равны качеству, если система научилась скрывать возвраты и риски.</p></div></article>
+<article><span>05</span><div><h4>Не каждой задаче нужен полный церемониал</h4><p>Для короткого вопроса достаточно чата; Issue, trace и полный набор артефактов оправданы там, где важны передача, повторяемость и цена ошибки.</p></div></article>
+<article><span>06</span><div><h4>Человеческая ответственность не исчезает</h4><p>Агент получает идентичность и права, но принятие архитектурного, продуктового и production-риска остаётся человеческим решением.</p></div></article>
 </div>
 </section>
 <section class="chapter" id="rollout">
 <header class="chapter-head reveal">
 <span class="chapter-kicker">Поэтапное внедрение</span>
-<h2>Внедрять без революции</h2>
+<h3>Внедрять без революции</h3>
 <p>Не нужно сначала проектировать идеального универсального агента. Нужно сделать существующие процессы видимыми, а затем улучшать их на данных.</p>
 </header>
 <div class="rollout reveal">
 <article class="rollout-step">
 <div>
-<h3>Начать с проверки кода без права записи</h3>
+<h4>Начать с проверки кода без права записи</h4>
 <p>Reviewer.Agent получает diff, требования и соглашения, но не имеет прав на запись или production. Он создаёт структурированный артефакт: регрессии, архитектурные риски, что проверить QA и что уточнить человеку. Команда сразу может измерять, что агент нашёл, что пропустил и какие замечания создают шум.</p>
 </div>
 </article>
 <article class="rollout-step">
 <div>
-<h3>Перенести личные агентские стеки в Multica</h3>
+<h4>Перенести личные агентские стеки в Multica</h4>
 <p>Sergey.Agent, Dima.Agent и другие текущие конфигурации harness не унифицируются насильно. Они просто перестают жить только на ноутбуках: становятся видимыми, запускаемыми и сравнимыми объектами команды.</p>
 </div>
 </article>
 <article class="rollout-step">
 <div>
-<h3>Сделать развитие harness отдельной работой</h3>
-<p>Если задача не one-shot’нулась и разработчик меняет навык, создаётся отдельная задача на изменение harness. Появляются история, проверка на регрессии, откат, владелец и командный пайплайн развития агентского стека — вместо устных советов «попробуй вот так».</p>
+<h4>Сделать развитие harness отдельной работой</h4>
+<p>Если сбой указывает на повторяемую или рискованную проблему и разработчик меняет навык, создаётся отдельная задача на изменение harness. Появляются история, проверка на регрессии, откат, владелец и командный пайплайн развития агентского стека — вместо устных советов «попробуй вот так».</p>
 </div>
 </article>
 <article class="rollout-step">
 <div>
-<h3>Выработать общий пайплайн из результатов</h3>
+<h4>Выработать общий пайплайн из результатов</h4>
 <p>Команда сравнивает близкие задачи, попытки, вмешательства человека и метрики. Более сильные профили получают коллективное развитие, слабые отмирают. Вероятно, одного агента на всё не будет, но число профилей сократится и закрепится за классами задач.</p>
 </div>
 </article>
 </div>
 <article class="problem reveal">
-<h3>Рабочий пайплайн формируется по результатам измерений</h3>
+<h4>Рабочий пайплайн формируется по результатам измерений</h4>
 <p>Например, easy bugs можно направлять в Fast Fixer, сложные задачи — сначала в Planner.Agent, а затем в Deep Coder, редкие задачи с высокой ценой ошибки — в Ultra Think. Reviewer.Agent может проверять код до человеческой приёмки, а QA.Agent — скриншоты, сценарии и риски регрессий. Все эти названия — примеры, а не предписанный каталог ролей.</p>
 <p>Это не директива «все работают одинаково». Сначала команда наблюдает реально работающие стеки, подключает удачные навыки и проверяет конфигурации на задачах. Только затем договаривается, какой профиль лучше для какого класса работы.</p>
 <p>По мере зрелости конкретная Jira‑задача всё чаще становится лишь тестом производственной системы. Основная инженерная работа смещается к развитию harness: сделать так, чтобы следующий экземпляр класса задач решался автономнее, дешевле и надёжнее.</p>
@@ -3093,55 +3436,63 @@
 <section class="chapter" id="new-scenarios">
 <header class="chapter-head reveal">
 <span class="chapter-kicker">Новые сценарии</span>
-<h2>Общий контур меняет не только написание кода</h2>
+<h3>Общий контур меняет не только написание кода</h3>
 <p>Когда исполняемая экспертиза принадлежит процессу, агенты начинают соединять людей и команды, а не изолировать их.</p>
 </header>
 <article class="problem reveal">
-<h3>Сила агента — не в имитации узкой роли</h3>
+<h4>Сила агента — не в имитации узкой роли</h4>
 <p>Два клиентских разработчика видят агентов, навыки, сбои и артефакты друг друга. Клиентский разработчик может запустить серверный прототип или планировщика, не ожидая свободного коллегу. QA обращается к фактическому исполнителю и сразу получает контекст изменения.</p>
 <p class="core">Распространённая ошибка — проектировать агентов как цифровые копии существующих узких ролей: отдельный клиентский разработчик, отдельный серверный разработчик, отдельный QA. Такой подход переносит в новую систему старые организационные границы и сохраняет потери контекста на каждой передаче.</p>
 <p>Человек вынужденно специализируется: глубокое знание клиента, сервера, сборки и QA одновременно слишком дорого поддерживать в одной голове. Агент при хорошем контексте может держать эти области вместе — читать оба кодовых основания, протокол, логи, тесты и проектные соглашения, а затем прослеживать одно изменение от серверной модели до клиентского интерфейса и проверки.</p>
 <p>Поэтому особенно ценен общий междисциплинарный агент. Он готовит единый план, видит контракт целиком и замечает связи, которые узкие специалисты обнаруживают только после нескольких передач и созвонов. Это не отменяет владельцев областей: они по‑прежнему принимают решения и риски. Но обсуждают уже один сквозной артефакт, а не переводят задачу между несколькими изолированными исполнителями.</p>
 </article>
 <article class="problem reveal">
-<h3>Спринт превращается в очередь запусков и решений</h3>
+<h4>Спринт превращается в очередь запусков и решений</h4>
 <p>Разработчик больше не сопровождает десять локальных чатов и не ждёт ноутбук. Он отправляет задачи в общий пул сред выполнения, а затем работает с очередью проверок плана, подтверждений и принятых результатов.</p>
 <div class="diagram">
-<div class="diagram-title">Видимый спринт</div>
-<div class="sprint-board">
-<div class="sprint-row head"><span>Задача</span><span>Исполнитель</span><span>Среда</span><span>Статус</span><span>Дальше</span></div>
-<div class="sprint-row"><b>GAME‑101</b><span>Sergey.Agent</span><span>VDS‑01</span><span class="status">работает</span><span>ожидать</span></div>
-<div class="sprint-row"><b>GAME‑102</b><span>Planner.Agent</span><span>VDS‑02</span><span class="status wait">проверка</span><span>принять план</span></div>
-<div class="sprint-row"><b>GAME‑103</b><span>Reviewer.Agent</span><span>VDS‑03</span><span class="status wait">ожидает</span><span>ответить</span></div>
-<div class="sprint-row"><b>GAME‑104</b><span>Dima.Agent</span><span>VDS‑04</span><span class="status fail">ошибка</span><span>открыть след</span></div>
+<div class="diagram-title" id="sprint-board-title">Видимый спринт</div>
+<p class="sprint-board-hint">Прокрутите таблицу по горизонтали, чтобы увидеть все столбцы.</p>
+<div aria-labelledby="sprint-board-title" class="sprint-board-scroll" role="region" tabindex="0">
+<table class="sprint-board">
+<caption class="visually-hidden">Задачи спринта, их исполнители, среды выполнения, статусы и следующие действия</caption>
+<thead>
+<tr><th scope="col">Задача</th><th scope="col">Исполнитель</th><th scope="col">Среда</th><th scope="col">Статус</th><th scope="col">Дальше</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">GAME‑101</th><td>Sergey.Agent</td><td>VDS‑01</td><td><span class="status">работает</span></td><td>ожидать</td></tr>
+<tr><th scope="row">GAME‑102</th><td>Planner.Agent</td><td>VDS‑02</td><td><span class="status wait">проверка</span></td><td>принять план</td></tr>
+<tr><th scope="row">GAME‑103</th><td>Reviewer.Agent</td><td>VDS‑03</td><td><span class="status wait">ожидает</span></td><td>ответить</td></tr>
+<tr><th scope="row">GAME‑104</th><td>Dima.Agent</td><td>VDS‑04</td><td><span class="status fail">ошибка</span></td><td>открыть след</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>Становятся видны ожидание, простой и узкие места. Можно проверить, действительно ли программист тормозит задачу, или запуск давно завершён и ждёт гейм‑дизайнера; где заканчивается вычислительная мощность и где не хватает человеческой проверки. Параллельность перестаёт означать когнитивно тяжёлое переключение между чатами: человек последовательно принимает решения, пока агенты работают параллельно.</p>
 </article>
 <article class="problem reveal">
-<h3>Общий пул сред выполнения отделяет мощность компании от рабочего места</h3>
-<p>Минимальная инфраструктура — сервер Multica, интеграция с Jira и набор VDS или рабочих машин для запусков. К ним добавляются аккаунты агентов, ограниченный доступ к репозиториям, worktrees, правила веток и хранилище навыков, версий, планов, логов, скриншотов, diff, следов выполнения и метрик стоимости.</p>
+<h4>Общий пул сред выполнения отделяет мощность компании от рабочего места</h4>
+<p>Минимальная инфраструктура — сервер Multica, интеграция с Jira и набор VDS или рабочих машин для запусков. К ним добавляются аккаунты агентов, ограниченный доступ к репозиториям, worktrees, правила веток и хранилище навыков, версий, планов, логов, скриншотов, diff, следов выполнения и операционных метрик.</p>
 <div class="infra-grid">
 <div class="infra-item"><b>Multica</b><span>Агенты, задачи, артефакты, метрики, навыки и интерфейс наблюдения.</span></div>
 <div class="infra-item"><b>Hooks Jira</b><span>Назначения, комментарии, статусы и ссылки на связанные запуски.</span></div>
 <div class="infra-item"><b>VDS / рабочие машины</b><span>Взаимозаменяемые среды выполнения для очереди агентных задач.</span></div>
 <div class="infra-item"><b>Идентичность и доступ</b><span>Аккаунты агентов, ограниченные учётные данные, подтверждения и журнал аудита.</span></div>
 <div class="infra-item"><b>Слой репозитория</b><span>Изолированные worktrees, ветки, правила записи и человеческая проверка.</span></div>
-<div class="infra-item"><b>Хранилище</b><span>Версии стеков, артефакты, скриншоты, логи, следы и стоимость.</span></div>
+<div class="infra-item"><b>Хранилище</b><span>Версии стеков, артефакты, скриншоты, логи, следы и метрики запусков.</span></div>
 </div>
 <p>Часть общего пула могут составить освободившиеся рабочие машины разработчиков: когда тяжёлые сессии и компиляции больше не привязаны к интерактивному рабочему столу, принадлежащее компании железо может стать общей вычислительной мощностью.</p>
 </article>
 <article class="problem reveal">
-<h3>Безопасность становится свойством платформы</h3>
+<h4>Безопасность становится свойством платформы</h4>
 <p>Теперь видно, какой агент что читает, меняет и запускает. Доступ не наследуется от владельца сессии: он выдаётся цифровой роли, ограничивается проектом и типом операции, проходит точки подтверждения и фиксируется в журнале. Именно общий процесс делает правила проверяемыми, а не декларативными.</p>
 </article>
 </section>
 <section class="finale reveal" id="outcome">
 <span class="chapter-kicker">Итог</span>
-<h2>От магии — к производству</h2>
-<p>Внедрение не требует отказаться от Jira, GitLab или привычных конфигураций harness. Оно требует оцифровать делегирование: дать агентам идентичность, вынести исполнение в общую среду выполнения, сохранить планы и следы, посчитать вычисления и человеческое внимание, формализовать права и сделать развитие навыков командной работой.</p>
+<h3>От магии — к производству</h3>
+<p>Внедрение не требует отказаться от Jira, GitLab или привычных конфигураций harness. Оно требует связать задачу с агентным исполнением: дать агентам идентичность, вынести запуски в общую среду выполнения, сохранить планы и следы, посчитать вычисления и человеческое внимание, формализовать права и сделать развитие навыков командной работой.</p>
 <p>Тогда спринт перестаёт быть набором задач, внутри которых скрыты персональные сессии. Он становится наблюдаемым потоком запусков, проверок, ожиданий и решений. Команда может обращаться к фактическим исполнителям, сравнивать профили, воспроизводить сбои и накапливать память проекта.</p>
-<p><strong>Путь к AI‑native компании начинается с data‑driven агентного производства.</strong> Сначала организация учится видеть запуски, попытки, стоимость, человеческое участие и качество результата. Только после этого она может аргументированно развивать пайплайны, перераспределять работу между людьми и агентами и менять сам производственный процесс.</p>
+<p><strong>Путь к AI‑native компании начинается с data‑driven агентного производства.</strong> Сначала организация учится видеть запуски, попытки, наблюдаемые затраты, человеческое участие и качество результата. Только после этого она может аргументированно развивать пайплайны, перераспределять работу между людьми и агентами и менять сам производственный процесс.</p>
 <p class="last-line">Агентное исполнение становится частью командного процесса — а не личной магией разработчика.</p>
 </section>
 </section>
@@ -3193,7 +3544,9 @@
       const closeButton = document.querySelector('[data-toc-close]');
       const desktopHide = document.querySelector('[data-toc-desktop-hide]');
       const desktopShow = document.querySelector('[data-toc-desktop-show]');
+      const desktopToc = document.getElementById('desktop-toc');
       const desktopBreakpoint = window.matchMedia('(max-width: 1280px)');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
       if (sourceNav && destination) {
         const clone = sourceNav.cloneNode(true);
@@ -3203,23 +3556,30 @@
 
       const openDrawer = () => {
         if (!drawer) return;
-        if (typeof drawer.showModal === 'function') drawer.showModal();
+        if (typeof drawer.showModal === 'function' && !drawer.open) drawer.showModal();
         else drawer.setAttribute('open', '');
         fab?.setAttribute('aria-expanded', 'true');
       };
       const closeDrawer = () => {
         if (!drawer) return;
-        if (typeof drawer.close === 'function') drawer.close();
+        if (typeof drawer.close === 'function' && drawer.open) drawer.close();
         else drawer.removeAttribute('open');
         fab?.setAttribute('aria-expanded', 'false');
       };
       fab?.addEventListener('click', openDrawer);
       closeButton?.addEventListener('click', closeDrawer);
+      drawer?.addEventListener('close', () => fab?.setAttribute('aria-expanded', 'false'));
 
       const syncDesktopTocState = collapsed => {
         document.body.classList.toggle('toc-collapsed', collapsed && !desktopBreakpoint.matches);
-        desktopHide?.setAttribute('aria-expanded', String(!collapsed));
-        desktopShow?.setAttribute('aria-expanded', String(!collapsed));
+        const panelHidden = collapsed || desktopBreakpoint.matches;
+        if (panelHidden && desktopToc?.contains(document.activeElement)) {
+          (desktopBreakpoint.matches ? fab : desktopShow)?.focus();
+        }
+        desktopToc?.toggleAttribute('inert', panelHidden);
+        desktopToc?.setAttribute('aria-hidden', String(panelHidden));
+        desktopHide?.setAttribute('aria-expanded', String(!panelHidden));
+        desktopShow?.setAttribute('aria-expanded', String(!panelHidden));
       };
       const readDesktopTocState = () => {
         try { const saved = localStorage.getItem('ai-company-toc-collapsed'); return saved === null ? true : saved === '1'; }
@@ -3236,7 +3596,10 @@
         syncDesktopTocState(collapsed);
       };
       desktopHide?.addEventListener('click', () => setDesktopToc(true));
-      desktopShow?.addEventListener('click', () => setDesktopToc(false));
+      desktopShow?.addEventListener('click', () => {
+        setDesktopToc(false);
+        desktopHide?.focus();
+      });
       const syncForViewport = () => syncDesktopTocState(tocCollapsed);
       if (typeof desktopBreakpoint.addEventListener === 'function') desktopBreakpoint.addEventListener('change', syncForViewport);
       else if (typeof desktopBreakpoint.addListener === 'function') desktopBreakpoint.addListener(syncForViewport);
@@ -3260,6 +3623,8 @@
         const previousBehavior = root.style.scrollBehavior;
         root.style.scrollBehavior = 'auto';
         target.scrollIntoView({ block: 'start' });
+        if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
         requestAnimationFrame(() => { root.style.scrollBehavior = previousBehavior; });
         history.pushState(null, '', hash);
       });
@@ -3277,6 +3642,8 @@
         links.forEach(link => {
           const active = link.getAttribute('href') === `#${id}`;
           link.classList.toggle('active', active);
+          if (active) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
           if (active) {
             activeText = link.querySelector('b')?.textContent?.trim() || link.textContent.trim();
             const railTree = link.closest('.rail .toc-tree');
@@ -3288,7 +3655,7 @@
               if (linkTop < visibleTop + 18 || linkBottom > visibleBottom - 18) {
                 railTree.scrollTo({
                   top: Math.max(0, linkTop - railTree.clientHeight * 0.42),
-                  behavior: 'smooth'
+                  behavior: reducedMotion.matches ? 'auto' : 'smooth'
                 });
               }
             }

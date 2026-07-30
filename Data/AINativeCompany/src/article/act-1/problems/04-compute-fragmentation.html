@@ -1,0 +1,39 @@
+<article class="problem reveal has-visual" id="problem-4">
+<span class="problem-no">04</span>
+<h4>Вычислительная мощность фрагментирована по людям</h4>
+<p class="core">У компании одновременно есть оплаченная неиспользуемая мощность и задачи, которые ждут обновления чужой квоты.</p>
+<div class="diagram">
+<div class="diagram-title">Одна команда, две противоположные проблемы</div>
+<div class="capacity">
+<div class="capacity-row">
+<b>Разработчик A</b>
+<div class="capacity-bar"><i style="width:100%"></i></div>
+<small>лимит</small>
+</div>
+<div class="capacity-row idle">
+<b>Разработчик B</b>
+<div class="capacity-bar"><i style="width:36%"></i></div>
+<small>простой</small>
+</div>
+<div class="capacity-row idle">
+<b>Художник</b>
+<div class="capacity-bar"><i style="width:18%"></i></div>
+<small>не тот сервис</small>
+</div>
+</div>
+</div>
+<p>Персональная подписка часто представляет собой пакет несовпадающих возможностей. Программист использует Codex, но почти не трогает сильную веб‑модель или генерацию изображений. Художнику нужна именно генерация изображений, но не агент для кода. Один человек упирается в недельный лимит, другой не расходует и половины оплаченной ёмкости.</p>
+<p>Централизованный пул изменил бы саму единицу планирования: вычислительная мощность выдавалась бы задаче на нужное время. Чтобы раз в неделю прогнать контрольный набор на Kimi, не пришлось бы покупать месячную подписку конкретному сотруднику. Команда могла бы увидеть общий дефицит и простой, а затем покупать ресурс под реальную нагрузку.</p>
+<div class="note orange"><strong>Общий вычислительный бюджет меняет масштаб допустимого эксперимента.</strong> Команда может проверять большие технические гипотезы не потому, что заранее уверена в результате, а потому, что стоимость проверки стала приемлемой. Например, временно переписать Java‑сервер на C# не ради немедленного релиза, а чтобы измерить скорость, память и сложность сопровождения. Часто такой эксперимент блокирует не инженерная сложность, а нежелание сжечь личную квоту.</div>
+<div aria-label="Оплаченная вычислительная мощность разлита по изолированным резервуарам: у одного разработчика лимит исчерпан, у других ресурс простаивает" class="problem-visual visual-card visual-tanks" role="img">
+<div class="visual-label">Оплачено компанией · недоступно задаче</div>
+<div class="tank-grid">
+<div class="tank critical"><div class="tank-shell"><i style="--level:100%"></i><b>лимит</b></div><span>Dev A</span><small>100%</small></div>
+<div aria-hidden="true" class="tank-wall"></div>
+<div class="tank idle"><div class="tank-shell"><i style="--level:34%"></i><b>простой</b></div><span>Dev B</span><small>34%</small></div>
+<div aria-hidden="true" class="tank-wall"></div>
+<div class="tank idle"><div class="tank-shell"><i style="--level:18%"></i><b>не тот сервис</b></div><span>Artist</span><small>18%</small></div>
+</div>
+<div class="tank-pipe"><span>задача ждёт</span><i></i><b>ресурс не переливается</b></div>
+</div>
+</article>

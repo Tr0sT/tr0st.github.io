@@ -1,0 +1,22 @@
+<article class="problem reveal has-visual" id="problem-11">
+<span class="problem-no">11</span>
+<h4>Harness недоступен другим людям и другим командам</h4>
+<p class="core">Даже хороший пайплайн нельзя просто «передать» гейм‑дизайнеру или соседнему разработчику: он постоянно меняется и зависит от операционной системы, инструментов, секретов и локального окружения.</p>
+<p>Можно один раз настроить гейм‑дизайнеру агентный пайплайн для прототипов, но через неделю исходный harness уже эволюционирует, а его копия останется старой. Правильное разделение ролей должно быть другим: инженер, отвечающий за harness, развивает агентский пайплайн, а пользователь запускает его, не воспроизводя всю инфраструктуру у себя.</p>
+<p>Изоляция мешает и обычной командной работе. Клиентскому разработчику не обязательно ждать, пока освободится серверный: он мог бы попросить серверного агента собрать временную заглушку и начать интеграцию. Серверный программист, в свою очередь, мог бы уточнить у клиентского агента детали имплементации поддержки серверного контракта. Сегодня каждый агент замкнут внутри владельца и его runtime.</p>
+<div aria-label="Архив с навыком передаётся с одной машины на другую, но не переносит операционную систему, инструменты, секреты и runtime" class="problem-visual visual-card visual-transfer" role="img">
+<div class="visual-label">Передать файл ≠ передать исполняемый пайплайн</div>
+<div class="machine-row">
+<div class="machine source"><span>Linux</span><b>working harness</b><small>Codex · MCP · secrets</small></div>
+<div class="transfer-box"><b>skill.zip</b><span>→</span></div>
+<div class="machine target"><span>Windows</span><b>copied folder</b><small>cannot execute</small></div>
+</div>
+<div class="missing-plugs">
+<span><i></i>OS / dependencies</span>
+<span><i></i>tools / MCP</span>
+<span><i></i>secrets / permissions</span>
+<span><i></i>runtime / model</span>
+</div>
+<div class="visual-verdict">Передавать нужно не папку, а адресуемую среду выполнения вместе с конфигурацией.</div>
+</div>
+</article>

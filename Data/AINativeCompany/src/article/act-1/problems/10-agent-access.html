@@ -1,0 +1,31 @@
+<article class="problem reveal has-visual" id="problem-10">
+<span class="problem-no">10</span>
+<h4>Фактический исполнитель недоступен остальной команде</h4>
+<p class="core">Агент исследовал код, написал реализацию и сохранил контекст задачи. Но QA, лид и другой разработчик не могут задать ему вопрос напрямую.</p>
+<p>QA спрашивает о риске регрессии или просит сделать rebase ветки. Разработчик читает сообщение, копирует его в локальную сессию агента, получает ответ и пересылает обратно. Часто он не добавляет собственной экспертизы: отдельный навык уже умеет сформулировать ответ для QA.</p>
+<div class="diagram">
+<div class="diagram-title">Сегодняшний маршрут одного вопроса</div>
+<div class="flow">
+<span class="step">QA / лид / разработчик</span><span class="arrow">→</span>
+<span class="step">разработчик</span><span class="arrow">→</span>
+<span class="step">локальная сессия</span><span class="arrow">→</span>
+<span class="step">разработчик</span><span class="arrow">→</span>
+<span class="step">ответ</span>
+</div>
+</div>
+<p>Разработчик превращается в ручной API‑шлюз к собственному агенту. Его посредничество добавляет ожидание, но не добавляет ценность. Фактический исполнитель должен быть цифровой личностью процесса, доступной тем, кому нужен его контекст.</p>
+<div aria-label="Вопрос QA проходит к агенту через разработчика и возвращается тем же путём, хотя разработчик не добавляет информации" class="problem-visual visual-card visual-gateway" role="img">
+<div class="visual-label">Разработчик как ручной API-шлюз</div>
+<div class="gateway-stage">
+<div class="gateway-node qa"><span>QA</span><b>Есть риск регрессии?</b></div>
+<div class="gateway-node human"><span>DEV</span><b>copy<br/>paste</b></div>
+<div class="gateway-node agent"><span>AGENT</span><b>контекст задачи</b></div>
+<div aria-hidden="true" class="message-dot outbound"></div>
+<div aria-hidden="true" class="message-dot inbound"></div>
+<div aria-hidden="true" class="gateway-path p1"></div>
+<div aria-hidden="true" class="gateway-path p2"></div>
+</div>
+<div class="direct-route"><span>прямой маршрут</span><i></i><b>QA ↔ фактический исполнитель</b></div>
+<div class="visual-verdict">Посредник добавляет ожидание, но не добавляет экспертизу.</div>
+</div>
+</article>

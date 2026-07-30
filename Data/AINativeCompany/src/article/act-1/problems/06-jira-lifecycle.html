@@ -1,0 +1,17 @@
+<article class="problem reveal has-visual" id="problem-6">
+<span class="problem-no">06</span>
+<h4>Статус Jira не связан с состоянием агентного запуска</h4>
+<p class="core">В Jira задача остаётся «В работе», хотя связанный запуск может стоять в очереди, выполнять реализацию, ждать решения разработчика, быть готовым к приёмке или уже завершиться ошибкой.</p>
+<p>Карточка по‑прежнему фиксирует обязательство команды, владельца и общий статус. Но без связи с конкретным запуском она не показывает, от кого или от чего сейчас зависит следующий шаг. Поэтому разработчики проверяют локальные сессии вручную, а запросы на решение и готовые результаты замечают с опозданием.</p>
+<p>Для координации в Jira достаточно возвращать значимые переходы: <strong>агент запущен, требуется решение, результат готов к проверке, запуск завершился неуспешно</strong>. Trace, попытки, промежуточные стадии и загрузка runtime остаются в агентной платформе.</p>
+<div aria-label="Карточка Jira со статусом В работе связана с конкретным запуском Multica, который ждёт решения разработчика; Jira показывает следующий значимый шаг, а Multica хранит детали исполнения." class="problem-visual visual-card visual-handoff" role="img">
+<div class="visual-label">Карточка Jira · связанный агентный запуск</div>
+<div class="truth-stack">
+<div class="truth-card tracker-truth"><span>Jira · GAME‑482</span><b>В работе</b><small>что сделать · кто отвечает · следующий шаг</small></div>
+<div class="truth-bridge"><span>run #1842</span><i aria-hidden="true">↕</i><b>требуется решение</b></div>
+<div class="truth-card execution-truth"><span>Multica · run #1842</span><b>Ждёт разработчика</b><small>agent · runtime · attempt · trace · result</small></div>
+</div>
+<div class="handoff-signals"><span>работает</span><span>нужно решение</span><span>готово</span><span>ошибка</span></div>
+<div class="visual-verdict">Jira показывает обязательство и следующий handoff; Multica хранит состояние и историю исполнения.</div>
+</div>
+</article>

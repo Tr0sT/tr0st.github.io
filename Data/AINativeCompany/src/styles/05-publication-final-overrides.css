@@ -1,0 +1,37 @@
+
+  /* Public reading mode: text never fades in. Explanatory motion inside visuals remains. */
+  .js .reveal,
+  .js .reveal.visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* One stable editorial rule: copy on the left, explanatory visual on the right. */
+  @media (min-width: 1081px) {
+    .problem.has-visual,
+    body.toc-collapsed .problem.has-visual {
+      display: grid !important;
+      grid-template-columns: minmax(0, var(--prose)) minmax(360px, var(--visual)) !important;
+      column-gap: var(--main-gap) !important;
+      align-items: start !important;
+    }
+
+    .problem.has-visual::before,
+    body.toc-collapsed .problem.has-visual::before {
+      grid-column: 1 / -1 !important;
+    }
+
+    .problem.has-visual > :not(.problem-visual),
+    body.toc-collapsed .problem.has-visual > :not(.problem-visual) {
+      grid-column: 1 !important;
+    }
+
+    .problem.has-visual > .problem-visual,
+    body.toc-collapsed .problem.has-visual > .problem-visual {
+      grid-column: 2 !important;
+      grid-row: 2 / span 100 !important;
+      justify-self: stretch !important;
+      align-self: start !important;
+    }
+  }

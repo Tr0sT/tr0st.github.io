@@ -1,0 +1,448 @@
+
+  /* Article copy is immediately readable. Scroll-triggered motion remains only inside explanatory visuals. */
+  .js .reveal,
+  .js .reveal.visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* On wide screens every side illustration follows the same editorial rule: text left, visual right. */
+  @media (min-width: 1081px) {
+    .problem.has-visual,
+    body.toc-collapsed .problem.has-visual {
+      display: grid !important;
+      grid-template-columns: minmax(0, var(--prose)) minmax(360px, var(--visual)) !important;
+      column-gap: var(--main-gap) !important;
+      align-items: start !important;
+      direction: ltr !important;
+    }
+
+    .problem.has-visual::before,
+    body.toc-collapsed .problem.has-visual::before {
+      grid-column: 1 / -1 !important;
+    }
+
+    .problem.has-visual > :not(.problem-visual),
+    body.toc-collapsed .problem.has-visual > :not(.problem-visual) {
+      grid-column: 1 !important;
+    }
+
+    .problem.has-visual > .problem-visual,
+    body.toc-collapsed .problem.has-visual > .problem-visual {
+      grid-column: 2 !important;
+      grid-row: 2 / span 100 !important;
+      justify-self: stretch !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  }
+
+  /* Accessible role colors keep vivid accents for decoration and dark surfaces. */
+  :root {
+    --orange-text: #b33a1e;
+    --mint-text: #0d7568;
+    --meta-text: #565c65;
+    --text-caption: .75rem;
+    --text-detail: .8125rem;
+  }
+
+  main a:hover,
+  footer a:hover,
+  .rail a:hover { color: var(--orange-text); }
+
+  .chapter-head .chapter-kicker,
+  .problem-no,
+  .arch-card .tag,
+  .entity .index,
+  .limits-field article > span,
+  .lab-option em,
+  .iceberg-top b,
+  .gateway-node span,
+  .machine span,
+  .version-split b,
+  .runtime-queue-title,
+  .memory-ledger b,
+  .local-queue b,
+  .missing-tracks em,
+  .memory-arrow,
+  .toc-progress-label b,
+  .toc-tree a.active span,
+  .toc-tree .act-link span { color: var(--orange-text); }
+
+  .toc-tree a span { color: var(--meta-text); }
+  .toc-tree .group-link span { color: var(--mint-text); }
+
+  /* Semantic heading order: h1 → act h2 → chapter h3 → item h4 → comparison h5. */
+  h5 { margin-top: 0; }
+  .glossary h2 { margin-bottom: 14px; font-size: .84rem; letter-spacing: .11em; text-transform: uppercase; }
+  .chapter-head h3 {
+    margin-bottom: 18px;
+    font-size: clamp(2.2rem, 4.5vw, 4.6rem);
+    line-height: 1.02;
+    letter-spacing: -.052em;
+  }
+  .problem > h4 {
+    margin-bottom: 20px;
+    font-size: clamp(1.65rem, 3.2vw, 2.8rem);
+    line-height: 1.1;
+    letter-spacing: -.038em;
+  }
+  .compare-card h5 { margin-bottom: 10px; font-size: 1rem; }
+  .group-conclusion h4 {
+    max-width: 820px;
+    margin-bottom: 18px;
+    font-size: clamp(2rem, 4.5vw, 4rem);
+    line-height: 1.03;
+    letter-spacing: -.05em;
+  }
+  .root-cause h3 { max-width: 900px; color: #fff; }
+  .entity h4 { margin: 10px 0 13px; font-size: 1.5rem; letter-spacing: -.03em; }
+  .system-object > h3 { font-size: clamp(1.8rem, 3.4vw, 3rem); line-height: 1.08; letter-spacing: -.04em; }
+  .review-path h4 {
+    margin: 16px 0 12px;
+    font-size: clamp(1.2rem, 2.3vw, 1.7rem);
+    line-height: 1.12;
+    letter-spacing: -.03em;
+  }
+  .rollout-step h4 { margin-bottom: 8px; font-size: 1.25rem; }
+  .limits-field h4 { margin-bottom: 7px; font-size: 1.18rem; }
+  .finale h3 {
+    max-width: 900px;
+    margin-bottom: 28px;
+    font-size: clamp(2.7rem, 6vw, 6.4rem);
+    line-height: .98;
+    letter-spacing: -.06em;
+  }
+
+  /* Navigation and explanatory copy never render below a readable caption size. */
+  .toc-hide,
+  .toc-show-desktop,
+  .toc-show-desktop b,
+  .toc-progress-label,
+  .toc-tree a span,
+  .toc-tree .group-link,
+  .toc-tree .problem-link,
+  .toc-tree .section-link,
+  .toc-tree .toc-root-link,
+  .toc-tree .toc-intro,
+  .toc-fab,
+  .toc-fab b,
+  .toc-drawer-head span,
+  .toc-drawer .toc-tree a,
+  .toc-drawer .toc-tree .problem-link,
+  .eyebrow,
+  .transform-label,
+  .flow-unit b,
+  .flow-unit small,
+  .imbalance,
+  .transform-bridge,
+  .shared-properties span,
+  .chapter-kicker,
+  .quote small,
+  .diagram-title,
+  .pipeline-card span,
+  .flow,
+  .cost-equation .box small,
+  .arch-card .tag,
+  .entity .index,
+  .chip,
+  .verbs span,
+  .hook-step span,
+  .identity-level p,
+  .review-question b,
+  .review-path .label,
+  .infra-item span,
+  .case-thread span,
+  .visual-label,
+  .visual-caption,
+  .problem-visual small,
+  .lab-task small,
+  .lab-option small,
+  .lab-option b,
+  .lab-option em,
+  .worker-head small,
+  .worker-head em,
+  .metric-row,
+  .metric-row strong,
+  .metric-switch span,
+  .cost-control label,
+  .cost-control.rate,
+  .cost-control output,
+  .cost-control.rate b,
+  .cost-result span,
+  .waiting-time,
+  .tank-shell b,
+  .tank > span,
+  .tank > small,
+  .tank-pipe,
+  .local-window b,
+  .local-window span,
+  .resource-meter,
+  .local-queue,
+  .artifact-source,
+  .doc b,
+  .doc small,
+  .artifact-fog,
+  .artifact-drawer b,
+  .artifact-drawer span,
+  .artifact-drawer small,
+  .waterline span,
+  .iceberg-top b,
+  .iceberg-top span,
+  .iceberg-under span,
+  .gateway-node span,
+  .gateway-node b,
+  .gateway-node.human b,
+  .direct-route,
+  .machine span,
+  .machine b,
+  .machine small,
+  .transfer-box b,
+  .chat-top span,
+  .bubble b,
+  .zip,
+  .version-split span,
+  .version-split small,
+  .audit-strip b,
+  .audit-strip span,
+  .missing-plugs span,
+  .permission-grid > *,
+  .permission-grid > b,
+  .permission-grid > strong,
+  .permission-legend span,
+  .runtime-head span,
+  .runtime-head b,
+  .runtime-load,
+  .runtime-queue-title,
+  .folklore-note,
+  .memory-counters span,
+  .memory-counters small,
+  .memory-ledger span,
+  .cost-total,
+  .memory-card small,
+  .memory-card ul,
+  .workspace-points span,
+  .workspace-panel-head span,
+  .workspace-row small,
+  .workspace-tags span,
+  .replay-screen span,
+  .replay-screen small,
+  .replay-controls em,
+  .missing-tracks span,
+  .memory-island b,
+  .memory-island span,
+  .memory-arrow span,
+  .memory-graph > b,
+  .memory-graph .node,
+  .transition-counts span,
+  .transition-operation-flow span,
+  .proof-points span,
+  .fallback-sidebar,
+  .fallback-sidebar b,
+  .fallback-board b,
+  .product-proof figcaption,
+  .product-detail figcaption,
+  .product-detail figcaption b { font-size: var(--text-caption); }
+
+  .visual-verdict,
+  .bubble,
+  .bubble b,
+  .cost-lines span,
+  .cost-takeaway span,
+  .support-chat-notes span,
+  .memory-feed span,
+  .folklore-note,
+  .visual-folklore .bubble b,
+  .memory-ledger span { font-size: var(--text-detail); }
+
+  .toc-tree a,
+  .toc-drawer .toc-tree a { grid-template-columns: 58px minmax(0, 1fr); }
+
+  a:focus-visible,
+  button:focus-visible,
+  summary:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 3px solid var(--orange-text);
+    outline-offset: 4px;
+  }
+
+  .source-link {
+    color: var(--orange-text);
+    font-weight: 800;
+    text-decoration-thickness: .09em;
+  }
+  .source-link::after { content: " ↗"; font-size: .72em; }
+
+  .license-note {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(13,117,104,.2);
+  }
+  .license-note summary {
+    width: fit-content;
+    cursor: pointer;
+    color: var(--ink);
+    font-weight: 800;
+  }
+  .license-note summary::marker { color: var(--mint-text); }
+  .license-note p {
+    margin: 12px 0 0;
+    color: #3d4645;
+    font-size: .82rem;
+    line-height: 1.55;
+  }
+  .license-note a { color: var(--orange-text); font-weight: 800; }
+
+  .visible .metric-row > i b { min-width: 4px; }
+
+  .visual-cost { min-height: 600px; }
+  .cost-scenario h5 {
+    margin: 0 0 12px;
+    font-size: 1rem;
+    line-height: 1.25;
+  }
+  .cost-scenario.immediate {
+    border-color: rgba(var(--orange-rgb),.34);
+    background: linear-gradient(145deg, rgba(var(--orange-rgb),.12), rgba(255,255,255,.86));
+  }
+  .cost-scenario.deferred {
+    border-color: rgba(var(--mint-rgb),.46);
+    background: linear-gradient(145deg, rgba(var(--mint-rgb),.18), rgba(255,255,255,.86));
+  }
+  .cost-factors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .cost-factors span {
+    padding: 7px 9px;
+    border: 1px solid rgba(21,23,27,.11);
+    border-radius: 999px;
+    background: rgba(255,255,255,.72);
+    color: var(--muted);
+    font-size: var(--text-caption);
+    line-height: 1.25;
+  }
+  .cost-takeaway span b {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+
+  .visual-investment {
+    min-height: 610px;
+    background:
+      radial-gradient(circle at 8% 12%, rgba(var(--orange-rgb),.16), transparent 34%),
+      radial-gradient(circle at 94% 78%, rgba(var(--mint-rgb),.2), transparent 38%),
+      rgba(255,255,255,.7);
+  }
+  .decision-question {
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--night);
+    color: #fff;
+  }
+  .decision-question small,
+  .decision-question b { display: block; }
+  .decision-question small {
+    margin-bottom: 5px;
+    color: var(--mint);
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+  }
+  .decision-question b { font-size: 1rem; line-height: 1.3; }
+  .decision-paths {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 10px;
+    align-items: stretch;
+    margin-top: 16px;
+  }
+  .decision-path {
+    padding: 15px;
+    border: 1px solid var(--line);
+    border-radius: 17px;
+    background: rgba(255,255,255,.78);
+  }
+  .decision-path span,
+  .decision-path b,
+  .decision-path small { display: block; }
+  .decision-path span {
+    color: var(--muted);
+    font-size: var(--text-caption);
+    line-height: 1.3;
+  }
+  .decision-path b { margin: 10px 0 7px; font-size: .9rem; line-height: 1.18; }
+  .decision-path small { color: var(--muted); line-height: 1.4; }
+  .decision-path.systemic {
+    border-color: rgba(var(--mint-rgb),.5);
+    background: linear-gradient(145deg, rgba(var(--mint-rgb),.18), rgba(255,255,255,.84));
+  }
+  .decision-paths > i {
+    align-self: center;
+    color: var(--orange-text);
+    font-size: var(--text-caption);
+    font-style: normal;
+    font-weight: 850;
+  }
+  .decision-criteria {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 16px 0 92px;
+  }
+  .decision-criteria span {
+    padding: 7px 9px;
+    border-radius: 999px;
+    background: rgba(21,23,27,.07);
+    color: var(--muted);
+    font-size: var(--text-caption);
+    font-weight: 700;
+  }
+
+  .waterline {
+    z-index: 5;
+    pointer-events: none;
+  }
+  .waterline span {
+    z-index: 6;
+    top: -34px;
+    padding: 5px 9px;
+    border: 1px solid rgba(21,23,27,.1);
+    border-radius: 999px;
+    background: rgba(247,244,237,.96);
+    box-shadow: 0 6px 16px rgba(13,16,22,.08);
+  }
+  .iceberg-top,
+  .iceberg-under {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 1280px) {
+    .toc-fab {
+      right: calc(18px + env(safe-area-inset-right));
+      bottom: calc(18px + env(safe-area-inset-bottom));
+    }
+    .toc-drawer {
+      inset: auto calc(12px + env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) auto;
+      width: min(470px, calc(100% - 24px - env(safe-area-inset-left) - env(safe-area-inset-right)));
+    }
+  }
+
+  @media (max-width: 680px) {
+    h1 {
+      max-width: 100%;
+      font-size: clamp(2.2rem, 11.25vw, 3.65rem);
+    }
+    .decision-paths { grid-template-columns: 1fr; }
+    .decision-paths > i { justify-self: center; }
+    .visual-investment { min-height: 740px; }
+    .toc-fab {
+      right: calc(12px + env(safe-area-inset-right));
+      bottom: calc(12px + env(safe-area-inset-bottom));
+    }
+  }

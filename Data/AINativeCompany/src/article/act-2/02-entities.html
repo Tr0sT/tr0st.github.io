@@ -1,0 +1,40 @@
+<section class="chapter" id="entities">
+<header class="chapter-head reveal">
+<span class="chapter-kicker">Язык системы</span>
+<h3>Runtime, Agent, Skill, Issue и Artifacts</h3>
+<p>Общий процесс появляется тогда, когда у команды есть общие сущности, на которые можно ссылаться, выдавать права, назначать задачи и собирать метрики.</p>
+</header>
+<div class="entity-grid reveal">
+<article class="entity">
+<span class="index">ENTITY 01</span>
+<h4>Runtime</h4>
+<p>Машина, где реально выполняются агенты. Аналог исполнителя TeamCity или GitHub runner. Платформа видит доступность, текущую загрузку, запущенные процессы и связанные артефакты.</p>
+<div class="chips"><span class="chip">load</span><span class="chip">queue</span><span class="chip">agents</span><span class="chip">environment</span></div>
+</article>
+<article class="entity">
+<span class="index">ENTITY 02</span>
+<h4>Agent</h4>
+<p>Именованный цифровой исполнитель с моделью, harness, инструкциями, навыками, инструментами, правами и контекстом проекта. На продвинутом уровне за одним Agent можно скрыть целый пайплайн — например, планировщика, разработчика и проверяющего — а снаружи он останется одним исполнителем задачи. В текущей реализации конфигурация закреплена за runtime.</p>
+<div class="chips"><span class="chip">Planner</span><span class="chip">Coder</span><span class="chip">Reviewer</span><span class="chip">QA</span></div>
+</article>
+<article class="entity">
+<span class="index">ENTITY 03</span>
+<h4>Skill</h4>
+<p>Логическая переиспользуемая способность. Например: найти правильный Unity prefab, визуально проверить результат, провести проверку кода или соблюдать соглашения проекта. Несколько агентов могут использовать одну версию навыка.</p>
+<div class="chips"><span class="chip">shared</span><span class="chip">versioned</span><span class="chip">reusable</span><span class="chip">owned</span></div>
+</article>
+<article class="entity">
+<span class="index">ENTITY 04</span>
+<h4>Issue</h4>
+<p>Единица агентской работы. В ней живут постановка, исполнитель, статус, комментарии, очередь, несколько попыток исполнения и материалы, по которым результат был принят или возвращён.</p>
+<div class="chips"><span class="chip">queued</span><span class="chip">running</span><span class="chip">waiting</span><span class="chip">failed</span><span class="chip">done</span></div>
+</article>
+</div>
+<article class="problem reveal">
+<h4>Runtime, Agent, Skill и Issue связываются в execution</h4>
+<p class="core">Runtime даёт среду выполнения, Agent определяет цифрового исполнителя и его пайплайн, Skills добавляют переиспользуемые способности, а Issue хранит постановку и состояние работы. Конкретный execution связывает эти сущности и создаёт общую историю.</p>
+<p>Поэтому после запуска остаётся не только код. Issue собирает план, сводку, изменённые файлы, команды и логи, скриншоты, результаты тестов, финальный отчёт и trace выполнения. Рядом находятся метрики: время, токены, модель, runtime, число попыток, ошибки, возвраты и активное участие человека. К ним добавляются показатели качества результата после приёмки.</p>
+<p>Если одного запуска не хватило, разговор продолжается в контексте Issue. QA может спросить о риске регрессии, разработчик — о выборе prefab, лид — о решении из плана. Агент отвечает как фактический исполнитель, а не как скрытая функция за разработчиком‑посредником.</p>
+<p>Для быстрых вопросов остаётся обычный чат: он позволяет обратиться к агенту по проекту без полного процесса Issue и обязательной генерации всех артефактов.</p>
+</article>
+</section>
