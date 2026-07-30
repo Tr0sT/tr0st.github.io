@@ -1,17 +1,28 @@
 <article class="problem reveal has-visual" id="problem-6">
 <span class="problem-no">06</span>
-<h4>Статус Jira не связан с состоянием агентного запуска</h4>
-<p class="core">В Jira задача остаётся «В работе», хотя связанный запуск может стоять в очереди, выполнять реализацию, ждать решения разработчика, быть готовым к приёмке или уже завершиться ошибкой.</p>
-<p>Карточка по‑прежнему фиксирует обязательство команды, владельца и общий статус. Но без связи с конкретным запуском она не показывает, от кого или от чего сейчас зависит следующий шаг. Поэтому разработчики проверяют локальные сессии вручную, а запросы на решение и готовые результаты замечают с опозданием.</p>
-<p>Для координации в Jira достаточно возвращать значимые переходы: <strong>агент запущен, требуется решение, результат готов к проверке, запуск завершился неуспешно</strong>. Trace, попытки, промежуточные стадии и загрузка runtime остаются в агентной платформе.</p>
-<div aria-label="Карточка Jira со статусом В работе связана с конкретным запуском Multica, который ждёт решения разработчика; Jira показывает следующий значимый шаг, а Multica хранит детали исполнения." class="problem-visual visual-card visual-handoff" role="img">
-<div class="visual-label">Карточка Jira · связанный агентный запуск</div>
-<div class="truth-stack">
-<div class="truth-card tracker-truth"><span>Jira · GAME‑482</span><b>В работе</b><small>что сделать · кто отвечает · следующий шаг</small></div>
-<div class="truth-bridge"><span>run #1842</span><i aria-hidden="true">↕</i><b>требуется решение</b></div>
-<div class="truth-card execution-truth"><span>Multica · run #1842</span><b>Ждёт разработчика</b><small>agent · runtime · attempt · trace · result</small></div>
+<h4>Трекер задач больше не отражает жизненный цикл задачи</h4>
+<p class="core">Статус «задача у разработчика» теперь скрывает целый производственный пайплайн.</p>
+<div class="diagram">
+<div class="diagram-title">Что реально происходит внутри одного Jira‑статуса</div>
+<div class="timeline">
+<div class="timeline-row"><span class="tno">01</span><b>Постановка</b><span>Человек формулирует задачу, ограничения и контекст.</span></div>
+<div class="timeline-row"><span class="tno">02</span><b>Ожидание</b><span>Запуск стоит в очереди, ждёт мощности или работает.</span></div>
+<div class="timeline-row"><span class="tno">03</span><b>План</b><span>Агент исследует проект и предлагает решение.</span></div>
+<div class="timeline-row"><span class="tno">04</span><b>Проверка плана</b><span>Человек утверждает, меняет или возвращает план.</span></div>
+<div class="timeline-row"><span class="tno">05</span><b>Реализация</b><span>Агент пишет код и запускает проверки.</span></div>
+<div class="timeline-row"><span class="tno">06</span><b>Проверка / QA</b><span>Человек принимает, дорабатывает или возвращает результат.</span></div>
 </div>
-<div class="handoff-signals"><span>работает</span><span>нужно решение</span><span>готово</span><span>ошибка</span></div>
-<div class="visual-verdict">Jira показывает обязательство и следующий handoff; Multica хранит состояние и историю исполнения.</div>
+<div class="timeline-mask">В Jira: «Новая фича — клановая 4x‑война · В работе»</div>
+</div>
+<p>Лид больше не может понять реальную загрузку человека. Он занят и его нельзя отвлекать — или свободен и лишь ждёт завершения долгой агентной реализации, которая может идти пять‑шесть часов подряд? Можно дать ему вторую задачу — или локальный runtime уже забит? Делегирования невидимы, поэтому трекер задач не отвечает на базовый управленческий вопрос: где сейчас находится работа.</p>
+<div aria-label="Одна карточка Jira со статусом В работе скрывает стадии постановки, ожидания, планирования, реализации и приёмки." class="problem-visual visual-card visual-handoff" role="img">
+<div class="visual-label">Один Jira‑статус · полный производственный пайплайн</div>
+<div class="truth-stack">
+<div class="truth-card tracker-truth"><span>Jira · HC‑4XWAR‑17</span><b>В работе</b><small>новая фича · задача у разработчика</small></div>
+<div class="truth-bridge"><span>под одним статусом</span><i aria-hidden="true">↓</i><b>скрыто исполнение</b></div>
+<div class="truth-card execution-truth"><span>Фактическая работа</span><b>Шесть разных стадий</b><small>agent · runtime · plan · implementation · QA</small></div>
+</div>
+<div class="handoff-signals"><span>постановка</span><span>очередь</span><span>план</span><span>реализация</span><span>приёмка</span></div>
+<div class="visual-verdict">Jira сообщает владельца карточки, но не местоположение самой работы.</div>
 </div>
 </article>

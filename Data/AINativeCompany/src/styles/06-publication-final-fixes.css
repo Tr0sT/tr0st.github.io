@@ -330,6 +330,49 @@
     color: var(--ink);
   }
 
+  /* The restored Jira lifecycle keeps its number, stage and explanation in distinct columns. */
+  .timeline {
+    display: grid;
+    gap: 10px;
+  }
+  .timeline-row {
+    display: grid;
+    grid-template-columns: 40px minmax(130px, 150px) minmax(0, 1fr);
+    align-items: start;
+    gap: 14px;
+    padding: 13px 15px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: rgba(255,255,255,.82);
+    font-size: var(--text-detail);
+    line-height: 1.45;
+  }
+  .timeline-row > .tno {
+    color: var(--orange-text);
+    font-weight: 850;
+    font-variant-numeric: tabular-nums;
+  }
+  .timeline-row > b {
+    min-width: 0;
+    color: var(--ink);
+    line-height: 1.35;
+  }
+  .timeline-row > span:last-child {
+    min-width: 0;
+    color: var(--muted);
+  }
+  .timeline-mask {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 13px;
+    background: var(--orange);
+    color: #111;
+    text-align: center;
+    font-size: var(--text-detail);
+    font-weight: 850;
+    line-height: 1.4;
+  }
+
   .visual-investment {
     min-height: 610px;
     background:
@@ -437,6 +480,14 @@
     h1 {
       max-width: 100%;
       font-size: clamp(2.2rem, 11.25vw, 3.65rem);
+    }
+    .timeline-row {
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 4px 10px;
+      padding: 12px;
+    }
+    .timeline-row > span:last-child {
+      grid-column: 2;
     }
     .decision-paths { grid-template-columns: 1fr; }
     .decision-paths > i { justify-self: center; }
