@@ -373,6 +373,49 @@
     line-height: 1.4;
   }
 
+  /* Addenda extend a problem without blending into its original argument. */
+  .problem-note {
+    margin: 30px 0 12px;
+    padding: 22px 24px;
+    border-inline-start: 3px solid var(--mint-text);
+    border-radius: 0 18px 18px 0;
+    background: rgba(var(--mint-rgb),.1);
+    color: var(--ink);
+  }
+  .problem-note-label {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--mint-text);
+    font-size: var(--text-caption);
+    font-weight: 850;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+  }
+  .problem-note p {
+    margin: 0;
+    color: var(--ink);
+    font-size: .9rem;
+    line-height: 1.65;
+  }
+  .problem-note p + p,
+  .problem-note p + ul,
+  .problem-note ul + p {
+    margin-top: 14px;
+  }
+  .problem-note ul {
+    margin-bottom: 0;
+    padding-inline-start: 1.25rem;
+    color: var(--ink);
+    font-size: .88rem;
+    line-height: 1.55;
+  }
+  .problem-note li + li {
+    margin-top: 5px;
+  }
+  .problem-note li::marker {
+    color: var(--orange-text);
+  }
+
   .visual-investment {
     min-height: 610px;
     background:
@@ -488,6 +531,15 @@
     }
     .timeline-row > span:last-child {
       grid-column: 2;
+    }
+    .problem-note {
+      margin-top: 24px;
+      padding: 18px;
+      border-radius: 0 15px 15px 0;
+    }
+    .problem-note p,
+    .problem-note ul {
+      font-size: .86rem;
     }
     .decision-paths { grid-template-columns: 1fr; }
     .decision-paths > i { justify-self: center; }
