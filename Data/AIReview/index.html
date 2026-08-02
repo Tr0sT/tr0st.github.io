@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Review через Jira и Multica — technical proposal</title>
+  <style>
+    :root{
+      --bg:#070b13;
+      --bg2:#0a1020;
+      --surface:#0f1628;
+      --surface2:#111b31;
+      --text:#edf3ff;
+      --muted:#96a7c6;
+      --muted2:#7183a7;
+      --line:rgba(181,202,255,.15);
+      --line2:rgba(181,202,255,.27);
+      --blue:#70a8ff;
+      --blue2:#2d68ff;
+      --cyan:#73eaff;
+      --green:#78efb1;
+      --yellow:#ffd37a;
+      --pink:#ff91ba;
+      --purple:#b09cff;
+      --high:#ff6b78;
+      --medium:#ffbf5c;
+      --low:#78b2ff;
+      --shadow:0 28px 95px rgba(0,0,0,.48);
+      --radius:30px;
+      --radius-sm:20px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--text);
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(900px 520px at -8% -8%, rgba(70,112,255,.24), transparent 62%),
+        radial-gradient(780px 470px at 108% 4%, rgba(91,237,179,.12), transparent 58%),
+        radial-gradient(760px 500px at 48% 104%, rgba(144,102,255,.10), transparent 58%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      overflow-x:hidden;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.021) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.021) 1px, transparent 1px);
+      background-size:34px 34px;
+      opacity:.25;
+      mask-image:linear-gradient(to bottom, #000, rgba(0,0,0,.25));
+    }
+    a{color:var(--cyan); text-decoration:none}
+    a:hover{text-decoration:underline}
+    code{
+      font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color:#dce7ff;
+      background:rgba(110,168,255,.09);
+      border:1px solid rgba(110,168,255,.12);
+      border-radius:7px;
+      padding:.08em .34em;
+      font-size:.91em;
+    }
+    .page{
+      width:min(1540px, calc(100vw - 30px));
+      margin:0 auto;
+      padding:26px 0 48px;
+    }
+    .hero,.section{
+      position:relative;
+      border:1px solid var(--line);
+      border-radius:36px;
+      background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.017));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .hero{padding:38px 40px 34px; margin-bottom:20px}
+    .section{padding:30px 30px 32px; margin-bottom:20px}
+    .hero::after{
+      content:"TECHNICAL PROPOSAL";
+      position:absolute;
+      right:-70px;
+      top:36px;
+      transform:rotate(34deg);
+      padding:8px 100px;
+      border:1px solid rgba(120,239,177,.22);
+      background:rgba(120,239,177,.06);
+      color:var(--green);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.2em;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      color:var(--green);
+      text-transform:uppercase;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.18em;
+    }
+    .eyebrow::before{content:"";width:28px;height:1px;background:currentColor}
+    h1,h2,h3,p{margin:0}
+    h1{
+      margin-top:12px;
+      max-width:1050px;
+      font-size:clamp(44px, 5.2vw, 84px);
+      line-height:.95;
+      letter-spacing:-.057em;
+    }
+    .accent{color:var(--green)}
+    .lead{
+      max-width:1020px;
+      margin-top:17px;
+      color:#d7e2f4;
+      font-size:clamp(17px,1.55vw,23px);
+      line-height:1.48;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.17fr 1fr;
+      gap:18px;
+      margin-top:26px;
+    }
+    .glass{
+      min-width:0;
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:20px 22px;
+      background:linear-gradient(180deg,rgba(255,255,255,.048),rgba(255,255,255,.023));
+    }
+    .glass h3{font-size:23px;letter-spacing:-.03em;margin-bottom:14px}
+    .hero-list{display:grid;gap:12px}
+    .hero-item{
+      display:grid;
+      grid-template-columns:42px 1fr;
+      gap:12px;
+      padding:12px 0;
+      border-bottom:1px dashed rgba(255,255,255,.08);
+    }
+    .hero-item:last-child{border-bottom:none;padding-bottom:0}
+    .hero-num{
+      width:42px;height:42px;border-radius:14px;
+      display:grid;place-items:center;
+      background:rgba(112,168,255,.11);
+      border:1px solid rgba(112,168,255,.18);
+      color:var(--blue);
+      font-weight:900;
+    }
+    .hero-item strong{display:block;font-size:17px;margin-bottom:5px}
+    .hero-item span{display:block;color:var(--muted);font-size:15px;line-height:1.47}
+    .repo-cloud{display:flex;flex-wrap:wrap;gap:10px}
+    .repo-chip{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.032);
+      color:#eef3ff;
+      font:750 14px/1.1 ui-monospace,SFMono-Regular,Menlo,monospace;
+    }
+    .micro-label{margin-top:12px;color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+    .micro-copy{margin-top:13px;padding-top:13px;border-top:1px dashed rgba(255,255,255,.08);color:#d7e2f4;font-size:15px;line-height:1.47}
+
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:22px;
+      margin-bottom:20px;
+    }
+    .section-head h2{font-size:clamp(34px,3.1vw,48px);line-height:1;letter-spacing:-.047em}
+    .section-head .desc{max-width:590px;color:#cfd9eb;font-size:16px;line-height:1.48}
+
+    /* Pilot: exactly two cards */
+    .pilot-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:18px}
+    .card{
+      min-width:0;
+      border:1px solid var(--line);
+      border-radius:27px;
+      padding:20px;
+      background:linear-gradient(180deg,rgba(255,255,255,.042),rgba(255,255,255,.022));
+    }
+    .card.blue{border-color:rgba(112,168,255,.23);background:rgba(112,168,255,.05)}
+    .card.green{border-color:rgba(120,239,177,.23);background:rgba(120,239,177,.05)}
+    .card-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+    .num{
+      width:46px;height:46px;border-radius:50%;display:grid;place-items:center;
+      color:white;font-size:22px;font-weight:900;flex:0 0 auto;
+    }
+    .num.blue{background:var(--blue2)}
+    .num.green{background:#2f8f51}
+    .card-head h3{font-size:30px;line-height:1.04;letter-spacing:-.035em}
+    .runtime-shell{
+      border:1px solid rgba(112,168,255,.18);
+      border-radius:22px;
+      padding:17px;
+      background:rgba(255,255,255,.032);
+    }
+    .runtime-title{display:flex;align-items:center;gap:10px;color:var(--blue);font-size:21px;font-weight:900;margin-bottom:14px}
+    .runtime-branch{margin-left:15px;padding-left:17px;border-left:2px solid rgba(112,168,255,.26);display:grid;gap:12px}
+    .workspace{
+      position:relative;
+      border:1px solid rgba(255,255,255,.075);
+      border-radius:18px;
+      padding:14px 15px;
+      background:rgba(255,255,255,.035);
+    }
+    .workspace::before{content:"";position:absolute;left:-18px;top:25px;width:17px;height:2px;background:rgba(112,168,255,.26)}
+    .workspace strong{display:block;font-size:20px;margin-bottom:6px}
+    .workspace span{display:block;color:var(--muted);font-size:14px;line-height:1.45}
+    .pilot-note{margin-top:14px;padding-top:14px;border-top:1px dashed rgba(255,255,255,.08);color:#d8e3f6;font-size:15px;line-height:1.48}
+    .agent{
+      border:1px solid rgba(120,239,177,.18);
+      border-radius:20px;
+      padding:16px;
+      background:rgba(255,255,255,.034);
+      margin-bottom:12px;
+    }
+    .agent:last-of-type{margin-bottom:0}
+    .agent strong{display:block;font-size:25px;letter-spacing:-.03em;margin-bottom:7px}
+    .agent p{color:var(--muted);font-size:15px;line-height:1.48}
+    .persona-note{
+      margin-top:14px;
+      border:1px solid rgba(120,239,177,.18);
+      border-radius:18px;
+      padding:13px 15px;
+      background:rgba(120,239,177,.055);
+      color:#ddf7e7;
+      font-size:15px;
+      line-height:1.45;
+    }
+
+    /* Jira statuses */
+    .status-rail{
+      display:grid;
+      grid-template-columns:1fr 1.25fr 1fr 1.2fr;
+      gap:10px;
+      margin-bottom:18px;
+    }
+    .status{
+      position:relative;
+      min-height:95px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:15px 16px 15px 52px;
+      background:rgba(255,255,255,.028);
+    }
+    .status::before{
+      content:attr(data-n);
+      position:absolute;
+      left:14px;
+      top:15px;
+      width:27px;height:27px;border-radius:50%;
+      display:grid;place-items:center;
+      background:rgba(112,168,255,.15);
+      color:var(--blue);
+      font-weight:900;
+      font-size:13px;
+    }
+    .status .label{color:var(--muted2);font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px}
+    .status strong{display:block;font-size:17px;line-height:1.26}
+    .status .alt{display:block;margin-top:4px;color:#c4d3ed;font-size:14px}
+    .status.final{border-color:rgba(120,239,177,.23);background:rgba(120,239,177,.045)}
+    .status.final::before{background:rgba(120,239,177,.13);color:var(--green)}
+
+    /* Text-only pipeline */
+    .pipeline-phases{display:grid;gap:15px}
+    .phase{
+      display:grid;
+      grid-template-columns:220px 1fr;
+      gap:16px;
+      border:1px solid var(--line);
+      border-radius:25px;
+      padding:17px;
+      background:rgba(255,255,255,.022);
+    }
+    .phase-label{
+      border-right:1px solid rgba(255,255,255,.08);
+      padding:4px 17px 4px 3px;
+    }
+    .phase-label .phase-n{color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+    .phase-label h3{font-size:27px;line-height:1.05;letter-spacing:-.035em;margin-bottom:9px}
+    .phase-label p{color:var(--muted);font-size:14px;line-height:1.45}
+    .steps{display:grid;gap:10px}
+    .steps.two{grid-template-columns:repeat(2,1fr)}
+    .steps.three{grid-template-columns:repeat(3,1fr)}
+    .step-card{
+      border:1px solid rgba(255,255,255,.075);
+      border-radius:18px;
+      padding:14px;
+      background:rgba(255,255,255,.03);
+    }
+    .step-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:9px}
+    .step-no{color:var(--blue);font-weight:900;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+    .event{
+      border:1px solid rgba(112,168,255,.16);
+      border-radius:999px;
+      padding:4px 8px;
+      color:#a8c7ff;
+      background:rgba(112,168,255,.055);
+      font-size:12px;
+      font-weight:850;
+      white-space:nowrap;
+    }
+    .step-card h4{margin:0 0 8px;font-size:19px;line-height:1.15;color:#f1f5ff;letter-spacing:-.025em}
+    .step-card p{color:#cfdbef;font-size:14px;line-height:1.47}
+    .jira-line{
+      margin-top:12px;
+      padding-top:10px;
+      border-top:1px dashed rgba(255,255,255,.08);
+      display:flex;
+      gap:8px;
+      align-items:flex-start;
+      font-size:12px;
+    }
+    .jira-line b{color:var(--muted2);font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding-top:4px;white-space:nowrap}
+    .jira-value{
+      color:#ddedff;
+      border:1px solid rgba(112,168,255,.14);
+      background:rgba(112,168,255,.055);
+      border-radius:10px;
+      padding:4px 8px;
+      line-height:1.35;
+    }
+    .jira-value.final{border-color:rgba(120,239,177,.17);background:rgba(120,239,177,.055);color:#ddf8e8}
+    .pipeline-note{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns:1.25fr 1fr;
+      gap:14px;
+    }
+    .note-box{
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:16px 17px;
+      background:rgba(255,255,255,.025);
+    }
+    .note-box h3{font-size:22px;margin-bottom:9px;letter-spacing:-.03em}
+    .note-box p,.note-box li{color:#d4dff2;font-size:14px;line-height:1.48}
+    .note-box ul{margin:0;padding-left:20px;display:grid;gap:6px}
+    .note-box li::marker{color:var(--blue)}
+    .note-box.warning{border-color:rgba(255,211,122,.2);background:rgba(255,211,122,.04)}
+    .note-box.warning h3{color:#ffe2a5}
+
+    /* Skills after pipeline */
+    .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .skill{
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:18px;
+      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.021));
+    }
+    .skill-index{color:var(--green);font-size:11px;text-transform:uppercase;letter-spacing:.13em;font-weight:900;margin-bottom:8px}
+    .skill h3{font-size:23px;letter-spacing:-.03em;margin-bottom:11px}
+    .skill dl{margin:0;display:grid;grid-template-columns:82px 1fr;gap:8px 10px;font-size:14px;line-height:1.44}
+    .skill dt{color:var(--muted2);font-weight:800}
+    .skill dd{margin:0;color:#d7e2f5}
+    .reviewer-skill-placeholder{
+      margin-top:14px;
+      border:1px dashed rgba(179,156,255,.25);
+      border-radius:20px;
+      padding:15px 17px;
+      background:rgba(179,156,255,.045);
+      color:#ded7ff;
+      font-size:15px;
+      line-height:1.47;
+    }
+
+    /* Permissions */
+    .permissions{
+      border:1px solid var(--line2);
+      border-radius:25px;
+      overflow:hidden;
+      background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.016));
+    }
+    .permissions-head{
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+      padding:18px 20px 14px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .permissions-head h3{font-size:29px;letter-spacing:-.035em}
+    .permissions-head span{color:var(--muted);font-size:13px}
+    table{width:100%;border-collapse:separate;border-spacing:0}
+    .perm-table th,.perm-table td{
+      padding:17px 14px;
+      text-align:center;
+      border-right:1px solid rgba(255,255,255,.08);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      font-size:14px;
+      vertical-align:middle;
+    }
+    .perm-table th:first-child,.perm-table td:first-child{text-align:left;padding-left:18px}
+    .perm-table th:last-child,.perm-table td:last-child{border-right:none}
+    .perm-table tr:last-child td{border-bottom:none}
+    .perm-table thead th{color:#b8c5dd;font-size:12px;font-weight:850;background:rgba(255,255,255,.012)}
+    .perm-table tbody td:first-child{font-size:15px;color:#f1f5ff;font-weight:850;white-space:nowrap}
+    .ok{color:var(--green);font-weight:900}
+    .limited{color:var(--blue);font-weight:850}
+    .process{color:var(--yellow);font-weight:850}
+    .none{color:var(--muted)}
+    .perm-legend{display:flex;flex-wrap:wrap;gap:14px;padding:13px 20px 17px;border-top:1px solid rgba(255,255,255,.06);color:var(--muted);font-size:13px}
+    .perm-legend span{display:flex;align-items:center;gap:7px}
+    .dot{width:9px;height:9px;border-radius:50%}
+
+    /* Review methodology */
+    .source-note{
+      border:1px solid rgba(112,168,255,.18);
+      border-radius:20px;
+      padding:15px 17px;
+      background:rgba(112,168,255,.045);
+      color:#d8e4f7;
+      font-size:15px;
+      line-height:1.47;
+      margin-bottom:16px;
+    }
+    .review-passes{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+    .pass{
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:15px;
+      background:rgba(255,255,255,.026);
+    }
+    .pass b{display:block;color:var(--blue);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px}
+    .pass strong{display:block;font-size:19px;margin-bottom:7px}
+    .pass span{display:block;color:var(--muted);font-size:13px;line-height:1.45}
+
+    .checklist-section{
+      border:1px solid var(--line);
+      border-radius:24px;
+      overflow:hidden;
+      margin-top:14px;
+      background:rgba(255,255,255,.018);
+    }
+    .checklist-head{
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:16px 18px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.025);
+    }
+    .checklist-head h3{font-size:25px;letter-spacing:-.03em}
+    .layer{color:var(--green);font-size:11px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;white-space:nowrap}
+    .check-table th,.check-table td{
+      padding:14px 14px;
+      border-right:1px solid rgba(255,255,255,.07);
+      border-bottom:1px solid rgba(255,255,255,.07);
+      text-align:left;
+      vertical-align:top;
+      font-size:14px;
+      line-height:1.43;
+    }
+    .check-table th:last-child,.check-table td:last-child{border-right:none}
+    .check-table tr:last-child td{border-bottom:none}
+    .check-table thead th{color:#aebbd3;background:rgba(255,255,255,.01);font-size:12px;font-weight:850}
+    .check-table .boxcol{width:54px;text-align:center}
+    .checkbox{
+      display:inline-grid;place-items:center;
+      width:21px;height:21px;border:1px solid rgba(185,205,255,.35);border-radius:5px;
+      color:transparent;background:rgba(255,255,255,.02);
+    }
+    .check-name{font-weight:800;color:#eef3ff;width:31%}
+    .check-detail{color:#cedaef}
+
+    .severity-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+    .severity{
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:15px;
+      background:rgba(255,255,255,.025);
+    }
+    .severity strong{display:inline-flex;align-items:center;gap:8px;font-size:17px;margin-bottom:8px}
+    .severity p{color:var(--muted);font-size:13px;line-height:1.45}
+    .sev-dot{width:10px;height:10px;border-radius:50%}
+
+    .jira-report{
+      margin-top:18px;
+      border:1px solid var(--line2);
+      border-radius:25px;
+      overflow:hidden;
+      background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.016));
+    }
+    .jira-report-head{padding:18px 20px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+    .jira-report-head h3{font-size:29px;letter-spacing:-.035em;margin-bottom:6px}
+    .jira-report-head p{color:var(--muted);font-size:14px;line-height:1.45}
+    .report-body{padding:18px 20px;color:#dce6f7;font-size:14px;line-height:1.55}
+    .report-body h4{margin:0 0 9px;font-size:19px;letter-spacing:-.02em}
+    .report-body p{overflow-wrap:anywhere}
+    .report-body p+p{margin-top:8px}
+    .finding{padding-top:18px;margin-top:18px;border-top:1px solid rgba(255,255,255,.08)}
+    .finding-title{font-size:15px;color:#f1f5ff}
+    .finding-title .severity-label{margin-inline-end:8px}
+    .severity-label{display:inline-block;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:950;letter-spacing:.06em}
+    .severity-label.high{color:#ffd9dd;background:rgba(255,107,120,.14);border:1px solid rgba(255,107,120,.24)}
+    .severity-label.medium{color:#ffeac5;background:rgba(255,191,92,.13);border:1px solid rgba(255,191,92,.23)}
+    .severity-label.low{color:#deebff;background:rgba(120,178,255,.13);border:1px solid rgba(120,178,255,.22)}
+    .diff-label{color:var(--muted);font-size:12px;font-weight:850}
+    .diff-block{
+      margin:8px 0 0;
+      padding:12px 14px;
+      border:1px solid rgba(181,202,255,.14);
+      border-radius:12px;
+      background:#090e19;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+      font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    }
+    .diff-block code{display:block;padding:0;border:0;border-radius:0;background:none;color:#dce7ff;font-size:inherit}
+    .diff-line{display:block;margin:0 -14px;padding:0 14px}
+    .diff-hunk{color:#aebfff}
+    .diff-del{color:#ffd9dd;background:rgba(255,107,120,.10)}
+    .diff-add{color:#d8ffe8;background:rgba(120,239,177,.10)}
+    .report-foot{padding:14px 20px 18px;color:#dce7f8;font-size:14px;line-height:1.5;border-top:1px solid rgba(255,255,255,.06)}
+
+    @media(max-width:1250px){
+      .hero-grid,.pilot-grid,.pipeline-note,.section-head{display:grid;grid-template-columns:1fr}
+      .status-rail{grid-template-columns:1fr 1fr}
+      .phase{grid-template-columns:1fr}
+      .phase-label{border-right:none;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:13px}
+      .steps.three{grid-template-columns:1fr 1fr}
+      .skills-grid,.review-passes,.severity-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:820px){
+      .page{width:calc(100vw - 16px);padding-top:8px}
+      .hero,.section{padding:22px 17px;border-radius:25px}
+      .hero::after{display:none}
+      h1{font-size:43px}
+      .status-rail,.steps.two,.steps.three,.skills-grid,.review-passes,.severity-grid{grid-template-columns:1fr}
+      .permissions,.checklist-section{overflow-x:auto}
+      .perm-table,.check-table{min-width:820px}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">AI Review · Jira UX · Multica under the hood</div>
+      <h1>AI Review через Jira и <span class="accent">Multica</span></h1>
+      <p class="lead">Цель — встроить универсального AI reviewer в привычный Jira-процесс. Команда назначает задачу на одну цифровую личность Reviewer, а Multica под капотом собирает мультирепозиторный контекст, выполняет review и возвращает итог обратно в Jira.</p>
+
+      <div class="hero-grid">
+        <div class="glass">
+          <h3>Что именно решаем</h3>
+          <div class="hero-list">
+            <div class="hero-item"><div class="hero-num">1</div><div><strong>Единый UX через Jira</strong><span>Пользователь не открывает отдельный интерфейс. Он назначает issue на Reviewer и получает итоговый комментарий в той же задаче.</span></div></div>
+            <div class="hero-item"><div class="hero-num">2</div><div><strong>Контекст из нескольких репозиториев</strong><span>Client, ClientCore и четыре серверных repo лежат в одной продуктовой рабочей папке, но остаются независимыми Git-репозиториями.</span></div></div>
+            <div class="hero-item"><div class="hero-num">3</div><div><strong>Review конкретных коммитов задачи</strong><span>Reviewer проверяет коммиты, в сообщении которых содержится Jira issue key. Новый набор правок создаёт новый независимый review-run.</span></div></div>
+          </div>
+        </div>
+        <div class="glass">
+          <h3>Рабочий контекст продукта</h3>
+          <div class="repo-cloud">
+            <span class="repo-chip">Client</span>
+            <span class="repo-chip">ClientCore</span>
+            <span class="repo-chip">shelterserver</span>
+            <span class="repo-chip">sheltershared</span>
+            <span class="repo-chip">shelteradmin</span>
+            <span class="repo-chip">shelterresourceconverter</span>
+          </div>
+          <div class="micro-label">6 независимых Git repo</div>
+          <div class="micro-copy">Из Jira-комментария Coordinator получает ветки и служебный контекст, находит нужные коммиты и передаёт детерминированному Python-скрипту точное описание того, что должно оказаться в slot workspace.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Пилотная конфигурация в Multica</h2>
+        <div class="desc">Пилот состоит всего из двух частей: инфраструктурный контур с тремя workspace и два агента. AI Reviewer один; слоты не являются его репликами.</div>
+      </div>
+
+      <div class="pilot-grid">
+        <article class="card blue">
+          <div class="card-head"><div class="num blue">1</div><h3>Runtime и workspace</h3></div>
+          <div class="runtime-shell">
+            <div class="runtime-title">1 Runtime · 3 Multica projects</div>
+            <div class="runtime-branch">
+              <div class="workspace"><strong>Coordinator Project</strong><span>Workspace координатора: состояние Slot 01/02, очередь review-run, manifests, служебные JSON и orchestration state.</span></div>
+              <div class="workspace"><strong>Review Slot 01</strong><span>Первая независимая локальная директория с шестью Git repo, подготавливаемая под конкретный review-run.</span></div>
+              <div class="workspace"><strong>Review Slot 02</strong><span>Вторая идентичная локальная директория для параллельного пилотного review.</span></div>
+            </div>
+          </div>
+          <div class="pilot-note">Два слота ограничивают файловый параллелизм и позволяют проверить очередь, не создавая отдельные workspace под каждую Jira-задачу.</div>
+        </article>
+
+        <article class="card green">
+          <div class="card-head"><div class="num green">2</div><h3>Агенты</h3></div>
+          <div class="agent">
+            <strong>AI Review Coordinator</strong>
+            <p>Лёгкая модель, например Codex Spark. Coordinator не делает глубокий анализ кода: он принимает события, выбирает слот, запускает Python-процессы, создаёт review issue и публикует итог в Jira.</p>
+          </div>
+          <div class="agent">
+            <strong>Universal AI Reviewer</strong>
+            <p>Один универсальный агент, который может работать с issue в любом slot project. Он не разделяется на клиентского и серверного reviewer и получает только read-only доступ к уже подготовленному workspace.</p>
+          </div>
+          <div class="persona-note">В Jira тоже существует одна цифровая личность: <strong>Reviewer</strong>. Skills самого reviewer детализируем отдельно; здесь фиксируется только его роль и граница доступа.</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Pipeline review: от Jira hook до возврата задачи</h2>
+        <div class="desc">Coordinator редактирует один служебный progress-комментарий. Видимых состояний мало: только четыре пользовательски значимых этапа, без технического шума.</div>
+      </div>
+
+      <div class="status-rail">
+        <div class="status" data-n="1"><div class="label">Jira status</div><strong>Координатор запрос принял</strong></div>
+        <div class="status" data-n="2"><div class="label">Jira status</div><strong>Ожидание слота</strong><span class="alt">или: Подготовка слота</span></div>
+        <div class="status" data-n="3"><div class="label">Jira status</div><strong>Ревью в слоте начато</strong></div>
+        <div class="status final" data-n="4"><div class="label">Финал в Jira</div><strong>Публикуется само review</strong><span class="alt">задача возвращается исполнителю</span></div>
+      </div>
+
+      <div class="pipeline-phases">
+        <div class="phase">
+          <div class="phase-label">
+            <div class="phase-n">Этап 1</div>
+            <h3>Принять запрос</h3>
+            <p>Jira assignment hook запускает Coordinator и фиксирует новый review-run.</p>
+          </div>
+          <div class="steps two">
+            <article class="step-card">
+              <div class="step-top"><span class="step-no">Шаг 1</span><span class="event">Jira hook</span></div>
+              <h4>Задача назначена на Reviewer</h4>
+              <p>Autopilot получает issue key, пользователя, который отправил задачу на review, и комментарии с ветками и служебным контекстом.</p>
+              <div class="jira-line"><b>Статус Jira</b><span class="jira-value">Координатор запрос принял</span></div>
+            </article>
+            <article class="step-card">
+              <div class="step-top"><span class="step-no">Шаг 2</span><span class="event">Coordinator</span></div>
+              <h4>Разобрать change set</h4>
+              <p>Coordinator определяет тип задачи и находит в нужных repo коммиты, в сообщениях которых есть ключ этой Jira-задачи.</p>
+              <div class="jira-line"><b>Статус Jira</b><span class="jira-value">Координатор запрос принял</span></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">
+            <div class="phase-n">Этап 2</div>
+            <h3>Получить workspace</h3>
+            <p>Coordinator резервирует свободный слот либо ставит run в очередь.</p>
+          </div>
+          <div class="steps three">
+            <article class="step-card">
+              <div class="step-top"><span class="step-no">Шаг 3</span><span class="event">Coordinator</span></div>
+              <h4>Выбрать слот или очередь</h4>
+              <p>Свободный Slot 01/02 атомарно закрепляется за run. Если свободных слотов нет, run сохраняется в очереди coordinator workspace.</p>
+              <div class="jira-line"><b>Статус Jira</b><span class="jira-value">Ожидание слота</span></div>
+            </article>
+            <article class="step-card">
+              <div class="step-top"><span class="step-no">Шаг 4</span><span class="event">Python process</span></div>
+              <h4>Запустить <code>prepare_workspace.py</code></h4>
+              <p>One-shot процесс выполняет fetch, reset и checkout нужных коммитов в шести repo, записывает manifest и завершается.</p>
+              <div class="jira-line"><b>Статус Jira</b><span class="jira-value">Подготовка слота</span></div>
+            </article>
+            <article class="step-card">
+              <div class="step-top"><span class="step-no">Шаг 5</span><span class="event">Python callback</span></div>
+              <h4>Получить <code>workspace.ready</code></h4>
+              <p>Coordinator проверяет, что manifest относится к ожидаемому run и что каждый repo находится на нужном commit SHA.</p>
+              <div class="jira-line"><b>Статус Jira</b><span class="jira-value">Подготовка слота</span></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">
+            <div class="phase-n">Этап 3</div>
+            <h3>Запустить review</h3>
+            <p>Coordinator создаёт issue в готовом slot project, а единый Reviewer начинает анализ.</p>
+          </div>
+          <div class="steps two">
+            <article class="step-card">
+              <div class="step-top"><span class="step-no">Шаг 6</span><span class="event">Multica issue</span></div>
+              <h4>Создать issue в выбранном slot project</h4>
+              <p>Issue содержит Jira-контекст, список целевых коммитов, пути к repo, manifest и указание, что review является клиентским, серверным или cross-repo.</p>
+              <div class="jira-line"><b>Статус Jira</b><span class="jira-value">Ревью в слоте начато</span></div>
+            </article>
+            <article class="step-card">
+              <div class="step-top"><span class="step-no">Шаг 7</span><span class="event">AI Reviewer</span></div>
+              <h4>Провести read-only review</h4>
+              <p>Reviewer проходит чеклисты, смотрит целевые коммиты и связанные участки во всех нужных repo, после чего записывает структурированный итог в собственную Multica issue.</p>
+              <div class="jira-line"><b>Статус Jira</b><span class="jira-value">Ревью в слоте начато</span></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label">
+            <div class="phase-n">Этап 4</div>
+            <h3>Вернуть результат</h3>
+            <p>Coordinator публикует итог и освобождает инфраструктурный ресурс.</p>
+          </div>
+          <div class="steps three">
+            <article class="step-card">
+              <div class="step-top"><span class="step-no">Шаг 8</span><span class="event">Multica hook</span></div>
+              <h4>Получить завершённую reviewer issue</h4>
+              <p>Coordinator забирает итог review, проверяет наличие summary, checklist results и списка findings с точным фрагментом исходного diff, где видна причина каждого замечания.</p>
+              <div class="jira-line"><b>Статус Jira</b><span class="jira-value">Ревью в слоте начато</span></div>
+            </article>
+            <article class="step-card">
+              <div class="step-top"><span class="step-no">Шаг 9</span><span class="event">Jira R/W</span></div>
+              <h4>Опубликовать review и вернуть задачу</h4>
+              <p>В Jira появляется финальный rich-text комментарий с итогом, severity и абзацами по каждой находке; проблемные строки из проверяемого change set цитируются inline-diff блоками. После публикации задача возвращается тому, кто отправил её на review.</p>
+              <div class="jira-line"><b>Jira</b><span class="jira-value final">Публикуется само review; задача возвращается</span></div>
+            </article>
+            <article class="step-card">
+              <div class="step-top"><span class="step-no">Шаг 10</span><span class="event">Python process</span></div>
+              <h4>Запустить <code>cleanup_workspace.py</code></h4>
+              <p>Слот очищается, assignment снимается, после <code>slot.cleaned</code> он становится доступным для следующего run из очереди.</p>
+              <div class="jira-line"><b>Jira</b><span class="jira-value final">Публикуется само review; задача возвращается</span></div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipeline-note">
+        <div class="note-box">
+          <h3>Очередь и повторный review</h3>
+          <ul>
+            <li>освободившийся слот сразу забирает следующий queued run</li>
+            <li>watchdog может периодически перепроверять очередь как резервный механизм</li>
+            <li>после новых правок Jira-задача снова назначается на Reviewer и создаётся новый run на любом свободном слоте</li>
+            <li>старый slot workspace и старая AI-сессия не являются состоянием процесса</li>
+          </ul>
+        </div>
+        <div class="note-box warning">
+          <h3>Детерминированное отдельно от LLM</h3>
+          <p>Coordinator запускает Python-процесс и завершает свой task. Он не держит агентную сессию открытой во время fetch, checkout или очистки.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Три skills AI Review Coordinator</h2>
+        <div class="desc">Skills Coordinator соответствуют трём видам входящих событий. Это позволяет не делать один огромный оркестратор с неявной логикой продолжения.</div>
+      </div>
+
+      <div class="skills-grid">
+        <article class="skill">
+          <div class="skill-index">Skill 01 · Jira hook</div>
+          <h3><code>new_review_from_jira</code></h3>
+          <dl>
+            <dt>Вход</dt><dd>назначение Jira issue на Reviewer</dd>
+            <dt>Действия</dt><dd>прочитать комментарии, найти change set, выбрать слот или очередь, записать progress-comment</dd>
+            <dt>Выход</dt><dd>запущенный <code>prepare_workspace.py</code> либо queued review-run</dd>
+          </dl>
+        </article>
+        <article class="skill">
+          <div class="skill-index">Skill 02 · Python callback</div>
+          <h3><code>workspace_ready_from_python</code></h3>
+          <dl>
+            <dt>Вход</dt><dd><code>workspace.ready</code> + manifest слота</dd>
+            <dt>Действия</dt><dd>валидировать slot/run/SHA, создать issue в нужном slot project, назначить Universal AI Reviewer</dd>
+            <dt>Выход</dt><dd>reviewer task запущен; Jira показывает «Ревью в слоте начато»</dd>
+          </dl>
+        </article>
+        <article class="skill">
+          <div class="skill-index">Skill 03 · Multica hook</div>
+          <h3><code>review_completed_from_multica</code></h3>
+          <dl>
+            <dt>Вход</dt><dd>завершение reviewer issue</dd>
+            <dt>Действия</dt><dd>забрать итог, опубликовать Jira comment, вернуть задачу, запустить cleanup</dd>
+            <dt>Выход</dt><dd>финальное review в Jira и слот, возвращаемый в пул</dd>
+          </dl>
+        </article>
+      </div>
+      <div class="reviewer-skill-placeholder"><strong>Skills Universal AI Reviewer</strong> в этой версии proposal не раскладываются на отдельные системные skills. Вместо этого ниже фиксируется его review-контракт: какие чеклисты он проходит и в каком формате возвращает findings.</div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Границы ответственности и доступа</h2>
+        <div class="desc">Reviewer остаётся действительно read-only: он анализирует подготовленное состояние, но не управляет Jira, слотами или Python-процессами.</div>
+      </div>
+
+      <div class="permissions">
+        <div class="permissions-head"><h3>Permissions matrix</h3><span>минимально необходимые права для каждой роли</span></div>
+        <table class="perm-table">
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Jira</th>
+              <th>Python runner</th>
+              <th>Coordinator state</th>
+              <th>Slot files</th>
+              <th>Git repos</th>
+              <th>Multica issues</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>AI Review Coordinator</td>
+              <td class="ok">R/W</td>
+              <td class="ok">spawn / status</td>
+              <td class="ok">R/W</td>
+              <td class="limited">manifest / state</td>
+              <td class="limited">через prepare logic</td>
+              <td class="ok">create / read</td>
+            </tr>
+            <tr>
+              <td>Python prepare / cleanup</td>
+              <td class="none">—</td>
+              <td class="process">process</td>
+              <td class="limited">status callback</td>
+              <td class="ok">R/W</td>
+              <td class="ok">fetch / reset / checkout</td>
+              <td class="none">—</td>
+            </tr>
+            <tr>
+              <td>Universal AI Reviewer</td>
+              <td class="none">—</td>
+              <td class="none">—</td>
+              <td class="none">—</td>
+              <td class="limited">read-only</td>
+              <td class="limited">read-only context</td>
+              <td class="limited">own issue</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="perm-legend">
+          <span><i class="dot" style="background:var(--green)"></i>полноценный доступ</span>
+          <span><i class="dot" style="background:var(--blue)"></i>ограниченный / read-only</span>
+          <span><i class="dot" style="background:var(--yellow)"></i>служебный процесс</span>
+          <span><i class="dot" style="background:var(--muted)"></i>нет доступа</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Как проводится само AI review</h2>
+        <div class="desc">Reviewer анализирует код игры по явным чеклистам. Результат — обычный rich-text Jira-comment с кратким summary, абзацами по находкам и точными фрагментами проверяемого diff.</div>
+      </div>
+
+      <div class="review-passes">
+        <div class="pass"><b>Pass 1</b><strong>Собрать change set</strong><span>Найти все коммиты с issue key и построить diff по затронутым repo.</span></div>
+        <div class="pass"><b>Pass 2</b><strong>Пройти чеклисты</strong><span>Проверить корректность, архитектуру, конфиги, дубликаты и стоимость изменения.</span></div>
+        <div class="pass"><b>Pass 3</b><strong>Проверить связи</strong><span>Посмотреть вызовы, модели и контракты вне строк изменённого diff.</span></div>
+        <div class="pass"><b>Pass 4</b><strong>Собрать Jira-report</strong><span>Назначить severity, дать точную локацию, риск и направление исправления.</span></div>
+      </div>
+
+      <div class="checklist-section">
+        <div class="checklist-head"><h3>Preflight · Mechanical и границы change set</h3><span class="layer">Layer 1</span></div>
+        <table class="check-table">
+          <thead><tr><th class="boxcol">Check</th><th>Проверка</th><th>Что именно проверяет Reviewer</th></tr></thead>
+          <tbody>
+            <tr><td class="boxcol"><span class="checkbox">✓</span></td><td class="check-name">Коммиты задачи найдены полностью</td><td class="check-detail">Список проверяемых коммитов из каждого репозитория. Ветка каждого репозитория в слоте.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="checklist-section">
+        <div class="checklist-head"><h3>Checklist A · Игровая логика и корректность</h3><span class="layer">Layer 2</span></div>
+        <table class="check-table">
+          <thead><tr><th class="boxcol">Check</th><th>Проверка</th><th>Что именно проверяет Reviewer</th></tr></thead>
+          <tbody>
+            <tr><td class="boxcol"><span class="checkbox">✓</span></td><td class="check-name">Требование Jira реализовано</td><td class="check-detail">Изменение действительно решает описанную задачу и не подменяет её локально удобной, но другой логикой.</td></tr>
+            <tr><td class="boxcol"><span class="checkbox">✓</span></td><td class="check-name">Стиль согласован с проектом</td><td class="check-detail">Именование, структура методов, imports/usings и локальные паттерны соответствуют окружающему коду.</td></tr>
+            <tr><td class="boxcol"><span class="checkbox">✓</span></td><td class="check-name">Состояния и переходы корректны</td><td class="check-detail">Учтены повторный вызов, частичное выполнение, отмена, отсутствие данных, граничные значения и неожиданный порядок событий.</td></tr>
+            <tr><td class="boxcol"><span class="checkbox">✓</span></td><td class="check-name">Ошибки и fallback-пути</td><td class="check-detail">Исключения и невалидные состояния обрабатываются на правильном уровне; логирование даёт достаточно контекста для диагностики.</td></tr>
+            <tr><td class="boxcol"><span class="checkbox">✓</span></td><td class="check-name">Перфоманс</td><td class="check-detail">Нет лишних аллокаций, повторных проходов, сериализаций, дорогих lookup или сетевой работы в частых игровых и серверных путях.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="checklist-section">
+        <div class="checklist-head"><h3>Checklist B · Архитектура, конфиги и отсутствие дубликатов</h3><span class="layer">Layer 2</span></div>
+        <table class="check-table">
+          <thead><tr><th class="boxcol">Check</th><th>Проверка</th><th>Что именно проверяет Reviewer</th></tr></thead>
+          <tbody>
+            <tr><td class="boxcol"><span class="checkbox">✓</span></td><td class="check-name">Разделение ответственности</td><td class="check-detail">Логика находится в правильном слое, методы и классы не получают несвязанные обязанности, зависимости не запутываются без необходимости.</td></tr>
+            <tr><td class="boxcol"><span class="checkbox">✓</span></td><td class="check-name">Не создано то, что уже существует</td><td class="check-detail">Перед добавлением нового метода, helper, модели, конвертера или алгоритма Reviewer ищет аналог по всему проекту и отмечает дублирование существующей реализации.</td></tr>
+            <tr><td class="boxcol"><span class="checkbox">✓</span></td><td class="check-name">Параметры доступны геймдизайнерам</td><td class="check-detail">Балансные и продуктовые параметры не зашиты в код, а находятся в JSON-конфигах, описанных соответствующими proto-схемами.</td></tr>
+            <tr><td class="boxcol"><span class="checkbox">✓</span></td><td class="check-name">Код остаётся читаемым</td><td class="check-detail">Нет чрезмерной вложенности, слишком длинных методов, неочевидных side effects и скрытых предположений, которые придётся реконструировать следующему разработчику.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="checklist-section">
+        <div class="checklist-head"><h3>Checklist C · Cross-repo и смысл изменения</h3><span class="layer">Layer 3</span></div>
+        <table class="check-table">
+          <thead><tr><th class="boxcol">Check</th><th>Проверка</th><th>Что именно проверяет Reviewer</th></tr></thead>
+          <tbody>
+            <tr><td class="boxcol"><span class="checkbox">✓</span></td><td class="check-name">Клиент и сервер трактуют данные одинаково</td><td class="check-detail">Совпадают идентификаторы, enum, единицы измерения, сериализация, значения по умолчанию и правила перехода состояний.</td></tr>
+            <tr><td class="boxcol"><span class="checkbox">✓</span></td><td class="check-name">Изменение контракта доведено до всех repo</td><td class="check-detail">Если изменена модель или протокол, Reviewer проверяет все места, где контракт читается, пишется, преобразуется или хранится.</td></tr>
+            <tr><td class="boxcol"><span class="checkbox">✓</span></td><td class="check-name">Совместимость версий</td><td class="check-detail">Новый клиент не предполагает мгновенное обновление сервера, а сервер не требует, чтобы все игроки уже использовали новую версию клиента.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="jira-report">
+        <div class="jira-report-head">
+          <h3>Формат финального комментария в Jira</h3>
+          <p>Обычный rich-text отчёт: вводные абзацы с ветками и проверенными коммитами, краткая сводка по чеклистам, затем несколько абзацев на каждое замечание. Путь оформляется как inline code, а точный hunk из исходного change set — как Jira code block с языком <code>diff</code>. Направление исправления остаётся отдельным абзацем; Reviewer не синтезирует patch вместо исходного diff.</p>
+        </div>
+        <div class="report-body">
+          <h4>AI Review · HC-12345</h4>
+          <p><strong>Итог.</strong> Максимальная severity: <strong>HIGH</strong>. Найдено: 1 HIGH, 1 MEDIUM, 1 LOW.</p>
+          <p><strong>Change set.</strong> <code>Client · HC-12345_feature · a1b2c3d</code>; <code>ClientCore · HC-12345_feature · d4e5f6a</code>; <code>shelterserver · HC-12345_feature · 7b8c9d0</code>.</p>
+          <p><strong>Чеклисты.</strong> Game logic — FINDINGS; Architecture &amp; configs — FINDINGS; Cross-repo — FINDINGS.</p>
+
+          <div class="finding">
+            <p class="finding-title"><span class="severity-label high">HIGH</span><strong>AIR-001 · Состояние сохраняется частично</strong></p>
+            <p><code>shelterserver/.../BattleService.java:184</code></p>
+            <p>При исключении после первого изменения часть состояния уже сохранена, а вторая остаётся старой. Клиент и сервер могут увидеть разные результаты одной игровой операции.</p>
+            <p><strong>Исправление.</strong> Выполнить оба изменения атомарно либо добавить явную компенсацию первого шага.</p>
+            <p class="diff-label">Фрагмент исходного diff</p>
+            <pre class="diff-block"><code><span class="diff-line diff-hunk">@@ BattleService.java:184 @@</span><span class="diff-line">  applyBattleResult(player, battle);</span><span class="diff-line diff-add">+ savePlayerState(player);</span><span class="diff-line diff-add">+ saveBattleState(battle);</span></code></pre>
+          </div>
+
+          <div class="finding">
+            <p class="finding-title"><span class="severity-label medium">MEDIUM</span><strong>AIR-002 · Cooldown зашит в код</strong></p>
+            <p><code>Client/.../CooldownController.cs:73</code></p>
+            <p>Балансное значение cooldown находится в коде, хотя остальные параметры механики читаются из JSON/proto-конфига. Геймдизайнер не сможет изменить его без новой сборки, а клиентское и серверное значения могут разойтись.</p>
+            <p><strong>Исправление.</strong> Добавить поле в proto-схему и читать его из общего JSON-конфига.</p>
+            <p class="diff-label">Фрагмент исходного diff</p>
+            <pre class="diff-block"><code><span class="diff-line diff-hunk">@@ CooldownController.cs:73 @@</span><span class="diff-line diff-del">- _cooldown.Start(_config.CooldownSeconds);</span><span class="diff-line diff-add">+ _cooldown.Start(30);</span></code></pre>
+          </div>
+
+          <div class="finding">
+            <p class="finding-title"><span class="severity-label low">LOW</span><strong>AIR-003 · Дублируется правило округления</strong></p>
+            <p><code>ClientCore/.../RewardUtils.cs:41</code></p>
+            <p>Новый helper повторяет существующий метод с тем же правилом округления. Две реализации одного правила со временем могут разойтись.</p>
+            <p><strong>Исправление.</strong> Переиспользовать существующий общий метод.</p>
+            <p class="diff-label">Фрагмент исходного diff</p>
+            <pre class="diff-block"><code><span class="diff-line diff-hunk">@@ RewardUtils.cs:41 @@</span><span class="diff-line diff-add">+ public static int CalculateReward(float value, float multiplier)</span><span class="diff-line diff-add">+ {</span><span class="diff-line diff-add">+     return Mathf.RoundToInt(value * multiplier);</span><span class="diff-line diff-add">+ }</span></code></pre>
+          </div>
+        </div>
+        <div class="report-foot"><p><strong>После публикации:</strong> Coordinator возвращает Jira-задачу пользователю, который отправил её на review. Если findings отсутствуют, отчёт всё равно содержит checklist summary и короткую формулировку «Замечаний не найдено».</p></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
