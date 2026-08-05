@@ -1,0 +1,3378 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Гид по маршруту: Париж, Нормандия, Бургундия, Брюссель, Амстердам, Ницца, Эльзас</title>
+  <style>
+    :root {
+      --bg: #f7f6f1;
+      --paper: #fffdf8;
+      --ink: #17212b;
+      --muted: #66707d;
+      --line: #d9d5cc;
+      --blue: #2f6f8f;
+      --blue-dark: #16475f;
+      --green: #4f7b55;
+      --rose: #b85f4d;
+      --gold: #b77b23;
+      --violet: #6d638e;
+      --shadow: 0 18px 60px rgba(23, 33, 43, 0.12);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(47, 111, 143, 0.08), transparent 380px),
+        var(--bg);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .page {
+      width: min(1440px, 100%);
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
+      gap: 22px;
+      align-items: stretch;
+      min-height: 540px;
+    }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 34px;
+      border: 1px solid rgba(23, 33, 43, 0.12);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.86);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 8px 10px;
+      border: 1px solid rgba(47, 111, 143, 0.22);
+      border-radius: 999px;
+      color: var(--blue-dark);
+      background: rgba(47, 111, 143, 0.08);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 16px;
+      max-width: 720px;
+      font-size: clamp(42px, 7vw, 78px);
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .hero-copy > div > p {
+      max-width: 640px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .stat {
+      min-height: 100px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .stat strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 9px 13px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--ink);
+      background: #fff;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(47, 111, 143, 0.55);
+    }
+
+    .btn.primary {
+      border-color: var(--blue);
+      color: #fff;
+      background: var(--blue);
+    }
+
+    .btn.danger {
+      border-color: rgba(184, 95, 77, 0.35);
+      color: #8d3528;
+      background: rgba(184, 95, 77, 0.08);
+    }
+
+    .btn.icon-only {
+      width: 42px;
+      padding: 0;
+    }
+
+    .map-wrap {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(23, 33, 43, 0.12);
+      border-radius: var(--radius);
+      background: #d9e7ea;
+      box-shadow: var(--shadow);
+    }
+
+    .map-toolbar {
+      position: absolute;
+      z-index: 3;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .map-title {
+      padding: 9px 11px;
+      border: 1px solid rgba(23, 33, 43, 0.12);
+      border-radius: 6px;
+      background: rgba(255, 253, 248, 0.9);
+      font-weight: 800;
+      box-shadow: 0 8px 22px rgba(23, 33, 43, 0.10);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 9px;
+      border: 1px solid rgba(23, 33, 43, 0.12);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, 0.9);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--blue);
+    }
+
+    .dot.overnight { background: var(--rose); }
+    .dot.optional { background: var(--gold); }
+
+    .route-map {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 540px;
+    }
+
+    .route-map .land {
+      fill: #eef0de;
+      stroke: rgba(23, 33, 43, 0.16);
+      stroke-width: 2;
+    }
+
+    .route-map .water {
+      fill: #cde5ec;
+    }
+
+    .route-map .route {
+      fill: none;
+      stroke: var(--rose);
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 1 11;
+    }
+
+    .route-map .route-main {
+      fill: none;
+      stroke: var(--blue-dark);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .route-map .optional-route {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 9 10;
+    }
+
+    .route-map text {
+      fill: #21313d;
+      font-size: 13px;
+      font-weight: 800;
+      paint-order: stroke;
+      stroke: rgba(255, 253, 248, 0.92);
+      stroke-width: 4px;
+      stroke-linejoin: round;
+    }
+
+    .map-node {
+      outline: none;
+      cursor: pointer;
+    }
+
+    .map-node circle {
+      fill: var(--blue);
+      stroke: #fff;
+      stroke-width: 4;
+      filter: drop-shadow(0 6px 10px rgba(23, 33, 43, 0.24));
+      transition: transform 0.15s ease, fill 0.15s ease;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .map-node:hover circle,
+    .map-node.active circle {
+      fill: var(--rose);
+      transform: scale(1.16);
+    }
+
+    .map-node.optional circle {
+      fill: var(--gold);
+    }
+
+    .map-node.overnight circle {
+      fill: var(--rose);
+    }
+
+    .section {
+      margin-top: 22px;
+      padding: 22px;
+      border: 1px solid rgba(23, 33, 43, 0.12);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.92);
+      box-shadow: 0 12px 36px rgba(23, 33, 43, 0.08);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.9fr) minmax(0, 1.4fr) auto;
+      gap: 12px;
+      align-items: center;
+      position: sticky;
+      z-index: 10;
+      top: 0;
+      margin-top: 22px;
+      padding: 12px;
+      border: 1px solid rgba(23, 33, 43, 0.12);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.94);
+      box-shadow: 0 10px 28px rgba(23, 33, 43, 0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    .search {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tab {
+      min-height: 38px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .tab.active {
+      border-color: var(--blue);
+      color: #fff;
+      background: var(--blue);
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 410px minmax(0, 1fr);
+      gap: 22px;
+      margin-top: 22px;
+      align-items: start;
+    }
+
+    .day-list {
+      display: grid;
+      gap: 10px;
+      max-height: calc(100vh - 110px);
+      overflow: auto;
+      padding-right: 4px;
+      position: sticky;
+      top: 92px;
+    }
+
+    .day-card {
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      gap: 12px;
+      width: 100%;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      color: inherit;
+      text-align: left;
+      box-shadow: 0 6px 18px rgba(23, 33, 43, 0.04);
+    }
+
+    .day-card:hover {
+      border-color: rgba(47, 111, 143, 0.48);
+    }
+
+    .day-card.active {
+      border-color: var(--blue);
+      box-shadow: inset 4px 0 0 var(--blue), 0 10px 24px rgba(47, 111, 143, 0.14);
+    }
+
+    .day-number {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--blue-dark);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .day-number span {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      opacity: 0.84;
+    }
+
+    .day-card[data-region="paris"] .day-number { background: var(--blue-dark); }
+    .day-card[data-region="normandy"] .day-number { background: var(--green); }
+    .day-card[data-region="netherlands"] .day-number { background: #386b7f; }
+    .day-card[data-region="east"] .day-number { background: var(--violet); }
+    .day-card[data-region="riviera"] .day-number { background: var(--rose); }
+    .day-card[data-region="return"] .day-number { background: var(--gold); }
+
+    .day-card h3 {
+      margin: 0 0 4px;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .day-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 9px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(23, 33, 43, 0.06);
+      color: #40505c;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .chip.note {
+      background: rgba(184, 95, 77, 0.12);
+      color: #823528;
+    }
+
+    .detail {
+      min-width: 0;
+      border: 1px solid rgba(23, 33, 43, 0.12);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .postcard {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
+      min-height: 360px;
+      border-bottom: 1px solid var(--line);
+      background: #fffdf8;
+    }
+
+    .postcard-copy {
+      padding: 28px;
+    }
+
+    .date-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .detail h2 {
+      margin-bottom: 12px;
+      font-size: clamp(30px, 4.2vw, 54px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 760px;
+      color: #4e5965;
+      font-size: 17px;
+    }
+
+    .visual {
+      min-height: 360px;
+      border-left: 1px solid var(--line);
+      background: #dce9eb;
+    }
+
+    .visual svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 360px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.56fr);
+      gap: 0;
+    }
+
+    .detail-main,
+    .notes-panel {
+      padding: 24px;
+    }
+
+    .notes-panel {
+      border-left: 1px solid var(--line);
+      background: #fbfaf7;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .info {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .info strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 13px;
+      color: #3b4752;
+    }
+
+    .info span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .split-lists {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .list-box {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .list-box h3,
+    .notes-panel h3,
+    .section h2 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    li + li {
+      margin-top: 7px;
+    }
+
+    .note-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .note-area {
+      width: 100%;
+      min-height: 260px;
+      resize: vertical;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .hint {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .export-panel {
+      display: none;
+      margin-top: 12px;
+    }
+
+    .export-panel.open {
+      display: block;
+    }
+
+    .export-output {
+      width: 100%;
+      min-height: 220px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #111b22;
+      color: #f4f8f8;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.45;
+      resize: vertical;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .mini-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .mini-card h3 {
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .mini-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .ticket-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .ticket-table th,
+    .ticket-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .ticket-table th {
+      color: #394653;
+      background: #f0f3ee;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .ticket-table td {
+      color: #3e4a55;
+      font-size: 14px;
+    }
+
+    .route-planner {
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, #fff, #fbfaf7);
+    }
+
+    .route-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .route-head h3 {
+      margin-bottom: 4px;
+      font-size: 20px;
+    }
+
+    .route-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .route-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 6px 10px;
+      border: 1px solid rgba(47, 111, 143, 0.26);
+      border-radius: 999px;
+      color: var(--blue-dark);
+      background: rgba(47, 111, 143, 0.08);
+      font-size: 13px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .day-route-map {
+      display: block;
+      width: 100%;
+      min-height: 170px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(23, 33, 43, 0.10);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(47, 111, 143, 0.08) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(47, 111, 143, 0.08) 1px, transparent 1px),
+        #eef4f1;
+      background-size: 44px 44px;
+    }
+
+    .day-route-map .route-line {
+      fill: none;
+      stroke: var(--blue-dark);
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .day-route-map .route-line.transfer {
+      stroke: var(--rose);
+      stroke-dasharray: 10 9;
+    }
+
+    .day-route-map .route-node circle {
+      fill: #fff;
+      stroke: var(--blue);
+      stroke-width: 4;
+    }
+
+    .day-route-map .route-node text {
+      fill: #18242e;
+      font-size: 12px;
+      font-weight: 850;
+      paint-order: stroke;
+      stroke: rgba(255, 255, 255, 0.9);
+      stroke-width: 4px;
+      stroke-linejoin: round;
+    }
+
+    .stop-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stop-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .stop-photo {
+      position: relative;
+      height: 150px;
+      border-bottom: 1px solid var(--line);
+      background: #dce9eb;
+      overflow: hidden;
+    }
+
+    .stop-photo svg,
+    .stop-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-fallback,
+    .stop-photo img {
+      position: absolute;
+      inset: 0;
+    }
+
+    .stop-photo.image-failed img,
+    .stop-photo.image-failed .photo-credit {
+      display: none;
+    }
+
+    .photo-credit {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      max-width: calc(100% - 16px);
+      padding: 4px 7px;
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(23, 33, 43, 0.72);
+      font-size: 11px;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .food-block {
+      margin-top: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .food-block h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .food-card {
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfaf7;
+    }
+
+    .food-card h4 {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      align-items: center;
+      margin: 0 0 7px;
+      font-size: 16px;
+    }
+
+    .food-card p {
+      margin-bottom: 9px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .food-card a {
+      color: var(--blue-dark);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .food-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(79, 123, 85, 0.12);
+      color: #315f39;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .stop-copy {
+      padding: 13px;
+    }
+
+    .stop-copy h4 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+
+    .stop-copy p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .special-block,
+    .guide-block,
+    .source-block {
+      margin-top: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .special-block {
+      border-color: rgba(183, 123, 35, 0.28);
+      background: rgba(183, 123, 35, 0.08);
+    }
+
+    .special-block h3,
+    .guide-block h3,
+    .source-block h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .guide-card {
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfaf7;
+    }
+
+    .guide-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .guide-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .source-block ul {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 18px;
+      padding-left: 18px;
+    }
+
+    .source-block a {
+      color: var(--blue-dark);
+      font-weight: 750;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 50;
+      max-width: min(420px, calc(100vw - 36px));
+      padding: 12px 14px;
+      border: 1px solid rgba(23, 33, 43, 0.12);
+      border-radius: 8px;
+      background: #17212b;
+      color: #fff;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .empty-state {
+      padding: 28px;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      color: var(--muted);
+      background: #fff;
+    }
+
+    @media (max-width: 1180px) {
+      .hero,
+      .workspace,
+      .postcard,
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .day-list {
+        position: static;
+        max-height: none;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .visual,
+      .notes-panel {
+        border-left: 0;
+      }
+
+      .visual {
+        border-top: 1px solid var(--line);
+      }
+
+      .controls {
+        grid-template-columns: 1fr;
+        position: static;
+      }
+
+      .cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 12px;
+      }
+
+      .hero-copy,
+      .section,
+      .detail-main,
+      .notes-panel,
+      .postcard-copy {
+        padding: 18px;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      .stats,
+      .info-grid,
+      .split-lists,
+      .stop-grid,
+      .guide-grid,
+      .food-grid,
+      .source-block ul,
+      .cards-grid,
+      .day-list {
+        grid-template-columns: 1fr;
+      }
+
+      .route-map {
+        min-height: 420px;
+      }
+
+      .day-card {
+        grid-template-columns: 52px minmax(0, 1fr);
+      }
+
+      .day-number {
+        width: 52px;
+        height: 52px;
+      }
+
+      .ticket-table,
+      .ticket-table thead,
+      .ticket-table tbody,
+      .ticket-table tr,
+      .ticket-table th,
+      .ticket-table td {
+        display: block;
+      }
+
+      .ticket-table thead {
+        display: none;
+      }
+
+      .ticket-table tr {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .ticket-table td {
+        border-bottom: 0;
+      }
+
+      .ticket-table td::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: 4px;
+        color: #394653;
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero" id="top">
+      <section class="hero-copy" aria-labelledby="page-title">
+        <div>
+          <div class="eyebrow">21 сентября - 10 октября 2026</div>
+          <h1 id="page-title">Сайт-гид по большому маршруту</h1>
+          <p>Париж как база, выезды в Нормандию, Версаль, Бургундию, Брюссель, Амстердам, Лазурный берег и Эльзас. Бургундия теперь стоит перед Амстердамом: вечером 29 сентября переезд в Дижон, 30 сентября Дижон/Бон со стартом из Appart'hôtel Odalys City - Dijon Centre Les Cordeliers и возвратом в Libertel Canal Saint Martin, 1 октября Брюссель по дороге в Амстердам, оплаченный Holiday Inn Express Amsterdam Arena Towers by IHG на 1-3 октября, 3 октября рейс в Ниццу в 11:00.</p>
+          <div class="stats" aria-label="Сводка маршрута">
+            <div class="stat"><strong>20</strong><span>дней поездки</span></div>
+            <div class="stat"><strong>8</strong><span>крупных регионов и стран</span></div>
+            <div class="stat"><strong>11</strong><span>ночей в Париже</span></div>
+            <div class="stat"><strong>1</strong><span>эльзасская ночевка</span></div>
+          </div>
+        </div>
+        <div class="quick-actions">
+          <button class="btn primary" type="button" data-action="export-notes">Скопировать заметки</button>
+          <button class="btn" type="button" data-action="show-all">Все дни</button>
+          <button class="btn" type="button" data-action="download-json">Скачать JSON</button>
+          <a class="btn" href="#tickets">Билеты и бронь</a>
+        </div>
+      </section>
+
+      <section class="map-wrap" aria-label="Карта маршрута">
+        <div class="map-toolbar">
+          <div class="map-title">Карта маршрута</div>
+          <div class="legend" aria-label="Легенда">
+            <span><i class="dot"></i>основные точки</span>
+            <span><i class="dot overnight"></i>ночевка вне Парижа</span>
+            <span><i class="dot optional"></i>опция</span>
+          </div>
+        </div>
+        <svg class="route-map" viewBox="0 0 740 560" role="img" aria-label="Схематичная карта маршрута по Европе и Франции">
+          <rect class="water" x="0" y="0" width="740" height="560"></rect>
+          <path class="land" d="M91 151 C133 112, 204 100, 263 113 C295 69, 365 55, 442 77 C510 96, 560 135, 590 192 C640 219, 668 267, 649 321 C632 369, 578 383, 531 408 C494 428, 492 483, 445 502 C382 528, 318 504, 278 468 C229 479, 168 466, 139 423 C113 385, 117 329, 87 293 C50 249, 43 190, 91 151 Z"></path>
+          <path class="land" d="M496 44 C528 28, 588 31, 626 61 C666 92, 676 145, 646 182 C614 222, 553 218, 515 183 C477 149, 455 66, 496 44 Z" opacity="0.76"></path>
+          <path class="land" d="M132 124 C160 99, 210 93, 247 108 C229 142, 201 167, 162 170 C128 173, 104 151, 132 124 Z" opacity="0.72"></path>
+          <path class="route-main" d="M335 247 L177 180 L213 225 L153 259 L286 275 L335 247 L452 305 L335 247 L390 132 L438 75 L333 472 L414 433 L333 472 L335 247 L568 203 L548 225 L335 247"></path>
+          <path class="route" d="M335 247 L178 180 L213 225 L153 259 L335 247"></path>
+          <path class="optional-route" d="M335 247 L380 399"></path>
+
+          <g class="map-node" tabindex="0" data-map-day="1" transform="translate(335 247)">
+            <circle r="12"></circle><text x="16" y="-12">Париж</text>
+          </g>
+          <g class="map-node" tabindex="0" data-map-day="5" transform="translate(177 180)">
+            <circle r="10"></circle><text x="-50" y="-14">Этрета</text>
+          </g>
+          <g class="map-node" tabindex="0" data-map-day="7" transform="translate(213 225)">
+            <circle r="10"></circle><text x="-54" y="3">Живерни</text>
+          </g>
+          <g class="map-node overnight" tabindex="0" data-map-day="7" transform="translate(153 259)">
+            <circle r="12"></circle><text x="-98" y="18">Мон-Сен-Мишель</text>
+          </g>
+          <g class="map-node overnight" tabindex="0" data-map-day="8" transform="translate(286 275)">
+            <circle r="10"></circle><text x="-26" y="28">Версаль</text>
+          </g>
+          <g class="map-node" tabindex="0" data-map-day="11" transform="translate(390 132)">
+            <circle r="10"></circle><text x="14" y="5">Брюссель</text>
+          </g>
+          <g class="map-node" tabindex="0" data-map-day="11" transform="translate(438 75)">
+            <circle r="12"></circle><text x="14" y="-8">Амстердам</text>
+          </g>
+          <g class="map-node" tabindex="0" data-map-day="17" transform="translate(568 203)">
+            <circle r="11"></circle><text x="14" y="5">Страсбург</text>
+          </g>
+          <g class="map-node" tabindex="0" data-map-day="10" transform="translate(452 305)">
+            <circle r="11"></circle><text x="14" y="5">Дижон / Бон</text>
+          </g>
+          <g class="map-node overnight" tabindex="0" data-map-day="18" transform="translate(548 225)">
+            <circle r="10"></circle><text x="14" y="18">Кольмар</text>
+          </g>
+          <g class="map-node overnight" tabindex="0" data-map-day="13" transform="translate(333 472)">
+            <circle r="12"></circle><text x="-22" y="32">Ницца</text>
+          </g>
+          <g class="map-node" tabindex="0" data-map-day="14" transform="translate(414 433)">
+            <circle r="10"></circle><text x="14" y="5">Монако</text>
+          </g>
+          <g class="map-node optional" tabindex="-1" transform="translate(380 399)">
+            <circle r="11"></circle><text x="14" y="5">Авиньон снят</text>
+          </g>
+        </svg>
+      </section>
+    </header>
+
+    <section class="controls" aria-label="Фильтры и экспорт">
+      <input id="search" class="search" type="search" placeholder="Найти день, город, место или заметку">
+      <div class="tabs" id="tabs" role="tablist" aria-label="Фильтр по региону"></div>
+      <div class="quick-actions">
+        <button class="btn icon-only" type="button" title="Предыдущий день" data-action="prev-day" aria-label="Предыдущий день">←</button>
+        <button class="btn icon-only" type="button" title="Следующий день" data-action="next-day" aria-label="Следующий день">→</button>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <nav class="day-list" id="dayList" aria-label="Список дней"></nav>
+      <article class="detail" id="detail" aria-live="polite"></article>
+    </section>
+
+    <section class="section" id="tickets">
+      <h2>Билеты, бронь и логистика</h2>
+      <div class="cards-grid">
+        <div class="mini-card">
+          <h3>Парижские музеи</h3>
+          <p>Лувр, Орсе, Оранжери, Роден, Инвалиды и Версаль лучше держать в одном списке дат и тайм-слотов, чтобы не перегрузить дни 2, 3, 6 и 9.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Дальние поезда</h3>
+          <p>Бургундия, Брюссель, Амстердам, Ницца и Эльзас завязаны на ранние выезды, поздние приезды и багаж. День 11 нужно покупать как два железнодорожных плеча: Париж - Брюссель и Брюссель - Амстердам; отель в Амстердаме уже оплачен на 1-3 октября.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Нормандия</h3>
+          <p>Этрета, Живерни, Мон-Сен-Мишель и Ренн удобнее проверять как отдельный блок: аренда авто, экскурсия или связка поездов/шаттлов.</p>
+        </div>
+        <div class="mini-card">
+          <h3>Лазурный берег</h3>
+          <p>Для Эза, Монако, Вильфранша и Кап-Ферра оставьте запас по погоде и транспорту. День 16 можно сделать легче, если день 17 получится плотным.</p>
+        </div>
+      </div>
+
+      <table class="ticket-table" aria-label="Приоритеты бронирования">
+        <thead>
+          <tr>
+            <th>Когда</th>
+            <th>Что проверить</th>
+            <th>Зачем</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Когда">Сначала</td>
+            <td data-label="Что проверить">Междугородние поезда/перелет: Париж - Дижон - Париж, Париж - Брюссель, Брюссель - Амстердам, дорогу от Amsterdam Centraal до Holiday Inn Express Amsterdam Arena Towers by IHG, рейс Амстердам - Ницца 3 октября в 11:00, Ницца - Париж, Париж - Страсбург, Кольмар - Париж.</td>
+            <td data-label="Зачем">Это самые дорогие и чувствительные к времени элементы маршрута.</td>
+          </tr>
+          <tr>
+            <td data-label="Когда">Следом</td>
+            <td data-label="Что проверить">Тайм-слоты: Лувр, Версаль, дом Моне в Живерни, аббатство Мон-Сен-Мишель, Jardin Exotique в Эзе.</td>
+            <td data-label="Зачем">Так проще закрепить дни без лишних очередей и конфликтов по времени.</td>
+          </tr>
+          <tr>
+            <td data-label="Когда">После каркаса</td>
+            <td data-label="Что проверить">Экскурсии/трансферы: Этрета, Живерни + Мон-Сен-Мишель, Бургундский винный тур.</td>
+            <td data-label="Зачем">Эти дни сильнее зависят от формата: авто, групповая экскурсия или самостоятельный маршрут.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const tripDays = [
+      {
+        id: 1,
+        date: "21 сентября",
+        region: "paris",
+        regionLabel: "Париж",
+        title: "Прилет в Париж",
+        base: "Париж",
+        lodging: "ibis budget Paris Porte de Vanves (21-27 сентября)",
+        pace: "Легкий",
+        transfer: "Аэропорт -> отель",
+        scene: "paris",
+        short: "Заселение, адаптация к городу, прогулка рядом с отелем и ужин без плотной программы.",
+        focus: ["Заселиться в ibis budget Paris Porte de Vanves", "Проверить район отеля", "Отметить ближайшее метро, аптеку, кафе"],
+        places: ["Район у удобной станции метро/RER", "Сена или ближайший парк", "Квартал у отеля", "Небольшое бистро для первого ужина"],
+        tickets: ["Трансфер из аэропорта", "Бронь ibis budget Paris Porte de Vanves подтверждена", "Резерв ужина рядом с отелем по желанию"],
+        tip: "Главная задача дня - спокойно войти в ритм и не ставить музейные слоты после перелета."
+      },
+      {
+        id: 2,
+        date: "22 сентября",
+        region: "paris",
+        regionLabel: "Париж",
+        title: "Фотосессия у Эйфелевой башни, Роден, Инвалиды и Люксембургский сад",
+        base: "Париж",
+        lodging: "ibis budget Paris Porte de Vanves (21-27 сентября)",
+        pace: "Средний",
+        transfer: "Городской маршрут пешком + метро",
+        scene: "eiffel",
+        short: "08:30-09:30 подтвержденная фотосессия у Эйфелевой башни, затем Роден, обед, Инвалиды и Люксембургский сад до закрытия около 19:15.",
+        focus: ["Фотосессия 08:30-09:30", "Музей Родена", "Дом инвалидов и Музей армии", "Люксембургский сад до закрытия", "Сен-Жермен вечером"],
+        places: ["Trocadero", "Champ de Mars", "Musee Rodin", "Les Invalides", "Jardin du Luxembourg", "Saint-Germain-des-Pres"],
+        tickets: ["Фотосессия у Эйфелевой башни 08:30-09:30", "Комбинированный билет Musée Rodin + Musée de l'Armée", "Люксембургский сад закрывается около 19:15"],
+        tip: "Не ставьте сюда утренний подъем на башню: старый слот 09:00 конфликтует с фотосессией, а мост Александра III лучше оставить на другой вечер."
+      },
+      {
+        id: 3,
+        date: "23 сентября",
+        region: "paris",
+        regionLabel: "Париж",
+        title: "Лувр и Латинский квартал",
+        base: "Париж",
+        lodging: "ibis budget Paris Porte de Vanves (21-27 сентября)",
+        pace: "Плотный",
+        transfer: "Пешком вдоль Сены",
+        scene: "museum",
+        short: "Экскурсия по Лувру в 10:00, затем Сена, Сент-Шапель в 17:30, Нотр-Дам и Латинский квартал.",
+        focus: ["Экскурсия по Лувру в 10:00", "Набережные Сены", "Сент-Шапель в 17:30", "Нотр-Дам и Латинский квартал"],
+        places: ["Cour Carree", "Лувр", "Jardin des Tuileries", "Ile de la Cite", "Notre-Dame de Paris", "Shakespeare and Company", "Rue Mouffetard"],
+        tickets: ["Экскурсия по Лувру в 10:00", "Сент-Шапель 23 сентября в 17:30", "Бесплатная бронь входа в Нотр-Дам на официальном сайте"],
+        tip: "Лувр открыт в среду; после экскурсии не планируйте слишком много залов сверх программы, чтобы остались силы на центр."
+      },
+      {
+        id: 4,
+        date: "24 сентября",
+        region: "paris",
+        regionLabel: "Париж",
+        title: "Оранжери, Орсе и спокойная Сена",
+        base: "Париж",
+        lodging: "ibis budget Paris Porte de Vanves (21-27 сентября)",
+        pace: "Средний",
+        transfer: "Городской маршрут без дальних поездов",
+        scene: "orsay",
+        short: "Оранжери по купленному билету на 09:00, пауза в Тюильри, затем Орсе по силам и спокойный вечер у Сены.",
+        focus: ["Оранжери в 09:00", "Кувшинки Моне", "Пауза в Тюильри", "Орсе и Сена"],
+        places: ["Musee de l'Orangerie", "Jardin des Tuileries / Seine", "Musee d'Orsay", "Набережные Сены"],
+        tickets: ["Оранжери 24 сентября в 09:00", "Орсе по желанию"],
+        tip: "После раннего слота в Оранжери не перегружайте день: Орсе оставьте по самочувствию, вечер — без обязательной программы."
+      },
+      {
+        id: 5,
+        date: "25 сентября",
+        region: "normandy",
+        regionLabel: "Нормандия",
+        title: "Этрета одним днем из Парижа",
+        base: "Париж",
+        lodging: "ibis budget Paris Porte de Vanves (21-27 сентября)",
+        pace: "Плотный",
+        transfer: "Поезд/авто/экскурсия туда-обратно",
+        scene: "etretat",
+        short: "Скалы Этрета, море, Сады Этрета, береговая прогулка и вечернее возвращение в Париж.",
+        focus: ["Falaise d'Aval", "Falaise d'Amont", "Сады Этрета", "Пляж и набережная"],
+        places: ["Porte d'Aval", "Chapelle Notre-Dame-de-la-Garde", "Les Jardins d'Etretat", "Le Clos Lupin по желанию"],
+        tickets: ["Транспорт Париж - Этрета - Париж", "Вход в Сады Этрета", "Экскурсия или авто, если не хочется сложной логистики"],
+        tip: "Это длинный день. При плохой погоде лучше иметь план Б в Париже или Нормандии с меньшим количеством пеших участков."
+      },
+      {
+        id: 6,
+        date: "26 сентября",
+        region: "paris",
+        regionLabel: "Париж",
+        title: "Монмартр",
+        base: "Париж",
+        lodging: "ibis budget Paris Porte de Vanves (ночь 26 сентября, checkout 27 сентября)",
+        pace: "Легкий",
+        transfer: "Метро + пешком",
+        scene: "montmartre",
+        short: "Сакре-Кер, Place du Tertre, лестницы, улочки Монмартра, кафе и спокойный вечер.",
+        focus: ["Сакре-Кер", "Place du Tertre", "Rue de l'Abreuvoir", "Кафе и виды"],
+        places: ["Basilique du Sacre-Coeur", "La Maison Rose", "Le Consulat", "Moulin Rouge снаружи"],
+        tickets: ["Тайм-слоты не критичны", "Ужин на Монмартре можно забронировать заранее"],
+        tip: "Лучшее ощущение района появляется, если не превращать его в чек-лист и оставить время на случайные улицы."
+      },
+      {
+        id: 7,
+        date: "27 сентября",
+        region: "normandy",
+        regionLabel: "Живерни / Нормандия",
+        title: "Живерни -> Hôtel Vert Mont Saint Michel",
+        base: "Hôtel Vert Mont Saint Michel",
+        lodging: "Hôtel Vert Mont Saint Michel (бронь 27-28 сентября)",
+        pace: "Плотный",
+        transfer: "Париж -> Живерни -> Hôtel Vert",
+        scene: "giverny",
+        short: "Утром checkout из ibis budget Paris Porte de Vanves, затем Живерни: дом и сады Моне, пруд с кувшинками. Вечером переезд и заселение в Hôtel Vert у Мон-Сен-Мишель.",
+        focus: ["Checkout из ibis budget Paris Porte de Vanves", "Дом и сады Моне", "Пруд с кувшинками", "Переезд к Hôtel Vert Mont Saint Michel", "Вечерний вид на Мон-Сен-Мишель"],
+        places: ["ibis budget Paris Porte de Vanves", "Fondation Claude Monet", "Пруд с кувшинками", "Hôtel Vert", "Вечерний вид на Мон-Сен-Мишель"],
+        tickets: ["Дом и сады Моне", "Бронь Hôtel Vert Mont Saint Michel подтверждена на 27-28 сентября", "Проверить транспорт/авто Париж -> Живерни -> Hôtel Vert"],
+        tip: "Новая бронь снимает конфликт: 26 сентября остаёмся в Париже, а 27-го едем через Живерни к Мон-Сен-Мишель."
+      },
+      {
+        id: 8,
+        date: "28 сентября",
+        region: "normandy",
+        regionLabel: "Нормандия / Версаль",
+        title: "Мон-Сен-Мишель -> Версаль",
+        base: "Версаль",
+        lodging: "Hôtel d'Angleterre, Версаль (бронь 28-29 сентября)",
+        pace: "Плотный",
+        transfer: "Hôtel Vert -> Мон-Сен-Мишель -> Ренн/Париж -> Версаль",
+        scene: "msm",
+        short: "Старт из Hôtel Vert, утро в аббатстве и на острове Мон-Сен-Мишель, затем переезд в Версаль после Нормандии. Дворец в понедельник не планируем.",
+        focus: ["Checkout из Hôtel Vert", "Аббатство Мон-Сен-Мишель", "Grande Rue", "Виды на залив", "Заселение в Hôtel d'Angleterre"],
+        places: ["Hôtel Vert", "Abbaye du Mont-Saint-Michel", "Grande Rue", "Mont-Saint-Michel Bay", "Gare de Rennes", "Hôtel d'Angleterre"],
+        tickets: ["Аббатство Мон-Сен-Мишель", "Транспорт Hôtel Vert -> Ренн/Париж -> Версаль", "Бронь Hôtel d'Angleterre подтверждена на 28-29 сентября"],
+        tip: "28 сентября - понедельник, дворец Версаля закрыт. Это нормально: день используем для аббатства и переезда, а дворец ставим на вторник."
+      },
+      {
+        id: 9,
+        date: "29 сентября",
+        region: "paris",
+        regionLabel: "Версаль / Дижон",
+        title: "Версаль -> Дижон",
+        base: "Дижон",
+        lodging: "Appart'hôtel Odalys City - Dijon Centre Les Cordeliers (бронь 29-30 сентября)",
+        pace: "Средний",
+        transfer: "Версаль пешком/локально, вечером переезд в Дижон",
+        scene: "versailles",
+        short: "Утром checkout из Hôtel d'Angleterre, затем купленная экскурсия в Версаль в 11:00: дворец, Зеркальная галерея и парадные залы. После неё — сады и Трианоны по силам; вечером переезд в Дижон и заселение в Appart'hôtel Odalys City - Dijon Centre Les Cordeliers.",
+        focus: ["Checkout из Hôtel d'Angleterre", "Экскурсия в 11:00", "Дворец", "Зеркальная галерея", "Вечерний переезд в Дижон"],
+        places: ["Chateau de Versailles", "Galerie des Glaces", "Grand Trianon", "Hameau de la Reine", "Appart'hôtel Odalys City - Dijon Centre Les Cordeliers"],
+        tickets: ["Купленная экскурсия в Версаль: 29 сентября, 11:00", "Проверить режим фонтанов/садов", "Транспорт Версаль -> Дижон", "Бронь Appart'hôtel Odalys City - Dijon Centre Les Cordeliers подтверждена на 29-30 сентября"],
+        tip: "29 сентября - вторник, дворец открыт по обычному недельному циклу; вечерняя ночёвка в Дижоне снимает ранний переезд на старт бургундского дня 30 сентября."
+      },
+      {
+        id: 10,
+        date: "30 сентября",
+        region: "east",
+        regionLabel: "Бургундия",
+        title: "Бургундия перед Амстердамом",
+        base: "Дижон / Париж",
+        lodging: "Libertel Canal Saint Martin (ночь 30 сентября - 1 октября)",
+        pace: "Плотный",
+        transfer: "Старт из Дижона + винный тур, возврат в Париж",
+        scene: "burgundy",
+        short: "Старт из Appart'hôtel Odalys City - Dijon Centre Les Cordeliers: Дижон, центр Дижона, винный тур по Route des Grands Crus, Бон и Hospices de Beaune, возвращение в Libertel Canal Saint Martin. Бургундия теперь стоит перед Амстердамом.",
+        focus: ["Checkout из Appart'hôtel Odalys City - Dijon Centre Les Cordeliers", "Дижон", "Les Halles", "Route des Grands Crus", "Beaune", "Ночь в Libertel Canal Saint Martin"],
+        places: ["Dijon Station", "Palais des Ducs de Bourgogne", "Les Halles de Dijon", "Route des Grands Crus", "Hospices de Beaune"],
+        tickets: ["Checkout из Appart'hôtel Odalys City - Dijon Centre Les Cordeliers", "Винный тур", "Транспорт между Дижоном и Боном", "Поезд Дижон - Париж", "Libertel Canal Saint Martin на 30 сентября - 1 октября", "Проверить завтрашний поезд Париж - Брюссель"],
+        tip: "Ночёвка в Дижоне убирает ранний старт из Парижа, но сам день всё равно лучше закончить в Libertel Canal Saint Martin: на следующий день нужен переезд через Брюссель в Амстердам."
+      },
+      {
+        id: 11,
+        date: "1 октября",
+        region: "netherlands",
+        regionLabel: "Брюссель / Амстердам",
+        title: "Париж -> Брюссель -> Амстердам",
+        base: "Амстердам",
+        lodging: "Holiday Inn Express Amsterdam Arena Towers by IHG (оплачено, 1-3 октября)",
+        pace: "Средний",
+        transfer: "Париж -> Bruxelles-Midi -> Amsterdam Centraal",
+        scene: "amsterdam",
+        short: "Поезд из Libertel Canal Saint Martin с дневной остановкой в Брюсселе: Grand Place, Galeries Royales, Mont des Arts и обед. Затем снова поезд до Амстердама и заселение в оплаченный Holiday Inn Express Amsterdam Arena Towers by IHG.",
+        focus: ["Поезд Париж - Брюссель", "Выезд из Libertel Canal Saint Martin", "Grand Place", "Mont des Arts", "Поезд Брюссель - Амстердам", "Заселение в Holiday Inn Express"],
+        places: ["Bruxelles-Midi", "Grand Place Brussels", "Galeries Royales Saint-Hubert", "Mont des Arts", "Amsterdam Centraal", "Holiday Inn Express Amsterdam Arena Towers by IHG"],
+        tickets: ["Checkout из Libertel Canal Saint Martin", "Поезд Париж - Брюссель", "Камера хранения в Брюсселе", "Поезд Брюссель - Амстердам", "Holiday Inn Express Amsterdam Arena Towers by IHG оплачен на 1-3 октября"],
+        tip: "Брюссель лучше держать как дневной стоповер без музеев: багаж, обед, центр пешком и запас на вечерний поезд в Амстердам."
+      },
+      {
+        id: 12,
+        date: "2 октября",
+        region: "netherlands",
+        regionLabel: "Амстердам",
+        title: "Полный день в Амстердаме",
+        base: "Амстердам",
+        lodging: "Holiday Inn Express Amsterdam Arena Towers by IHG (оплачено, 1-3 октября)",
+        pace: "Средний",
+        transfer: "Метро/трамвай и пешком по Амстердаму",
+        scene: "canals",
+        short: "Полный день в Амстердаме: Йордан, каналы, Вонделпарк, Nine Streets или короткий круиз. Вторая ночь уже оплачена в Holiday Inn Express Amsterdam Arena Towers by IHG перед рейсом в Ниццу 3 октября в 11:00.",
+        focus: ["Йордан", "Каналы", "Вонделпарк", "Круиз по каналам", "Вторая ночь в Holiday Inn Express"],
+        places: ["Holiday Inn Express Amsterdam Arena Towers by IHG", "Vondelpark", "Noordermarkt", "Prinsengracht", "Canal cruise", "De 9 Straatjes", "Jordaan"],
+        tickets: ["Holiday Inn Express Amsterdam Arena Towers by IHG оплачен на вторую ночь", "Круиз по каналам по желанию", "Рейс Амстердам - Ницца 3 октября в 11:00", "Трансфер в Schiphol утром 3 октября"],
+        tip: "Вторая ночь убирает спешку: можно смотреть Амстердам нормально, а утром 3 октября спокойно ехать в Schiphol."
+      },
+      {
+        id: 13,
+        date: "3 октября",
+        region: "riviera",
+        regionLabel: "Амстердам / Лазурный берег",
+        title: "Амстердам -> Ницца",
+        base: "Ницца",
+        lodging: "Hôtel Esprit d'Azur, Ницца (ночь 3-4 октября)",
+        pace: "Средний",
+        transfer: "Рейс Амстердам -> Ницца в 11:00",
+        scene: "nice-old",
+        short: "Утром checkout из Holiday Inn Express Amsterdam Arena Towers by IHG, дорога в Schiphol и рейс в Ниццу в 11:00. После прилёта: багаж или заселение в Hôtel Esprit d'Azur, затем Cours Saleya, старый город, Promenade des Anglais и море.",
+        focus: ["Рейс Амстердам - Ницца 11:00", "Заселение или багаж в Hôtel Esprit d'Azur", "Vieux Nice", "Cours Saleya", "Promenade des Anglais"],
+        places: ["Holiday Inn Express Amsterdam Arena Towers by IHG", "Amsterdam Schiphol", "Nice Airport", "Hôtel Esprit d'Azur", "Cours Saleya", "Vieux Nice", "Promenade des Anglais", "Place Massena"],
+        tickets: ["Checkout из Holiday Inn Express Amsterdam Arena Towers by IHG", "Рейс Амстердам - Ницца 3 октября в 11:00", "Трансфер из аэропорта Ниццы", "Бронь Hôtel Esprit d'Azur подтверждена на 3-6 октября", "Ресторан у моря"],
+        tip: "Это день дороги: Вильфранш или Кап-Ферра лучше держать на гибкий день 5 октября."
+      },
+      {
+        id: 14,
+        date: "4 октября",
+        region: "riviera",
+        regionLabel: "Лазурный берег / Монако",
+        title: "Эз + Монако одним днем",
+        base: "Ницца",
+        lodging: "Hôtel Esprit d'Azur, Ницца (ночь 4-5 октября)",
+        pace: "Плотный",
+        transfer: "Локальный транспорт туда-обратно",
+        scene: "monaco",
+        short: "Эз и Jardin Exotique утром, затем Монако: старый город, дворец, порт, Casino Square. Вечером возвращение в Hôtel Esprit d'Azur.",
+        focus: ["Эз", "Jardin Exotique", "Monaco-Ville", "Дворец", "Порт", "Casino Square"],
+        places: ["Eze Village", "Jardin Exotique d'Eze", "Monaco-Ville", "Prince's Palace", "Port Hercule", "Casino de Monte-Carlo"],
+        tickets: ["Jardin Exotique", "Дворец Монако по интересу", "Локальный поезд/автобус", "Возврат в Hôtel Esprit d'Azur"],
+        tip: "День красивый, но с перепадами высот. Удобная обувь здесь важнее, чем в Париже."
+      },
+      {
+        id: 15,
+        date: "5 октября",
+        region: "riviera",
+        regionLabel: "Лазурный берег",
+        title: "Ницца и резервный день у моря",
+        base: "Ницца",
+        lodging: "Hôtel Esprit d'Azur, Ницца (ночь 5-6 октября)",
+        pace: "Легкий",
+        transfer: "Локально, без дальнего переезда",
+        scene: "nice",
+        short: "Купленные билеты в Villa Ephrussi de Rothschild на Кап-Ферра задают основу дня: вилла и сады, затем Saint-Jean-Cap-Ferrat, море или Вильфранш по силам.",
+        focus: ["Villa Ephrussi de Rothschild", "Сады виллы", "Saint-Jean-Cap-Ferrat", "Море или Вильфранш", "Спокойный ужин"],
+        places: ["Villa Ephrussi de Rothschild", "Saint-Jean-Cap-Ferrat", "Villefranche-sur-Mer", "Hôtel Esprit d'Azur"],
+        tickets: ["Билеты в Villa Ephrussi de Rothschild на 5 октября куплены", "Локальный транспорт по необходимости", "Checkout из Hôtel Esprit d'Azur 6 октября", "Билет Ницца - Страсбург: отправление в 16:55"],
+        tip: "Вилла — обязательная точка дня; прогулку по Кап-Ферра или Вильфранш оставить как гибкое продолжение по погоде и силам."
+      },
+      {
+        id: 16,
+        date: "6 октября",
+        region: "return",
+        regionLabel: "Возвращение",
+        title: "Ницца -> Страсбург",
+        base: "Страсбург",
+        lodging: "Cour du Corbeau Hotel Strasbourg - MGallery Collection (ночь 6-7 октября)",
+        pace: "Средний",
+        transfer: "Ницца -> Страсбург, отправление в 16:55",
+        scene: "train",
+        short: "До выезда можно спокойно провести первую половину дня в Ницце и забрать багаж из Hôtel Esprit d'Azur. Билет Ницца -> Страсбург уже куплен: отправление в 16:55; после прибытия — заселение в Cour du Corbeau Hotel Strasbourg - MGallery Collection и спокойный вечер.",
+        focus: ["Свободное время в Ницце", "Багаж из Hôtel Esprit d'Azur", "Отправление в 16:55", "Заселение", "Спокойный ужин"],
+        places: ["Nice Ville", "Strasbourg hotel"],
+        tickets: ["Билет Ницца - Страсбург, отправление 6 октября в 16:55", "Бронь Cour du Corbeau Hotel Strasbourg - MGallery Collection подтверждена на 6-8 октября", "Трансфер с вокзала"],
+        tip: "Эта бронь убирает возврат в Париж 6 октября: логичнее сразу зайти в эльзасский блок и уже потом возвращаться в столицу."
+      },
+      {
+        id: 17,
+        date: "7 октября",
+        region: "east",
+        regionLabel: "Эльзас",
+        title: "Полный день в Страсбурге",
+        base: "Страсбург",
+        lodging: "Cour du Corbeau Hotel Strasbourg - MGallery Collection (ночь 7-8 октября)",
+        pace: "Средний",
+        transfer: "Локально по Страсбургу",
+        scene: "strasbourg",
+        short: "Полный день в Страсбурге без переезда: собор, Petite France, каналы, старый город и эльзасская еда. Ночуем там же, в Cour du Corbeau Hotel Strasbourg - MGallery Collection.",
+        focus: ["Strasbourg Cathedral", "Petite France", "Каналы", "Старый город", "Эльзасская кухня", "Вторая ночь в Страсбурге"],
+        places: ["Strasbourg Cathedral", "Petite France", "Barrage Vauban", "Ill River", "Strasbourg hotel"],
+        tickets: ["Cour du Corbeau Hotel Strasbourg - MGallery Collection", "Ресторан с эльзасской кухней", "Круиз по каналам по желанию"],
+        tip: "Теперь Страсбург не нужно сжимать в день приезда: бронь 6→8 октября даёт ему отдельный полноценный день."
+      },
+      {
+        id: 18,
+        date: "8 октября",
+        region: "east",
+        regionLabel: "Эльзас",
+        title: "Кольмар после Страсбурга",
+        base: "Париж",
+        lodging: "ibis budget Paris Porte de Vanves (ночь 8-9 октября)",
+        pace: "Плотный",
+        transfer: "Страсбург -> Кольмар, вечером возврат в Париж",
+        scene: "strasbourg",
+        short: "Кольмар после эльзасской ночёвки: старый город, Petite Venise, фахверковые кварталы, рынок, Maison Pfister и вечерний возврат в Париж.",
+        focus: ["Petite Venise", "Старый город Кольмара", "Фахверковые улицы", "Marché Couvert", "Эльзасская кухня"],
+        places: ["Colmar", "Petite Venise Colmar", "Marché Couvert Colmar", "Maison Pfister"],
+        tickets: ["Checkout из Cour du Corbeau Hotel Strasbourg - MGallery Collection", "Поезд/TER Страсбург - Кольмар", "Поезд Кольмар - Париж или Кольмар - Страсбург - Париж", "ibis budget Paris Porte de Vanves на 8-10 октября", "Ресторан в Кольмаре"],
+        tip: "Практичный каркас теперь жёсткий: две ночи в Страсбурге 6→8 октября, затем Кольмар 8 октября и вечерний возврат в Париж под финальный день."
+      },
+      {
+        id: 19,
+        date: "9 октября",
+        region: "return",
+        regionLabel: "Париж",
+        title: "Финальный Париж",
+        base: "Париж",
+        lodging: "ibis budget Paris Porte de Vanves (ночь 9-10 октября)",
+        pace: "Легкий",
+        transfer: "Пешком + метро",
+        scene: "paris-evening",
+        short: "База снова в ibis budget Paris Porte de Vanves: подарки, любимые места, легкая прогулка, финальный ужин и сборы перед вылетом.",
+        focus: ["ibis budget Paris Porte de Vanves", "Подарки", "Любимый район", "Финальный ужин", "Сборы"],
+        places: ["Le Marais", "Galeries Lafayette по желанию", "Сена вечером", "Кафе, которое хочется повторить"],
+        tickets: ["ibis budget Paris Porte de Vanves на 8-10 октября", "Ресторан на финальный ужин", "Проверить трансфер на следующий день", "Онлайн-регистрация на рейс"],
+        tip: "Держите этот день свободным: он впитает все, что не успели в начале поездки."
+      },
+      {
+        id: 20,
+        date: "10 октября",
+        region: "return",
+        regionLabel: "Отъезд",
+        title: "Отъезд",
+        base: "Дорога домой",
+        lodging: "checkout из ibis budget Paris Porte de Vanves",
+        pace: "Легкий",
+        transfer: "Отель -> аэропорт/вокзал",
+        scene: "departure",
+        short: "Checkout из ibis budget Paris Porte de Vanves, дорога в аэропорт или на вокзал, вылет домой.",
+        focus: ["Checkout из ibis budget Paris Porte de Vanves", "Дорога в аэропорт/вокзал", "Проверка документов", "Запас времени"],
+        places: ["ibis budget Paris Porte de Vanves", "Аэропорт или вокзал", "Кафе рядом с точкой выезда"],
+        tickets: ["Checkout из ibis budget Paris Porte de Vanves", "Рейс/поезд домой", "Трансфер", "Багаж и документы"],
+        tip: "Лучше заложить запас времени и не ставить на утро обязательные достопримечательности."
+      }
+    ];
+
+    const defaultNotes = {
+      1: "Выбрать подходящий отель",
+      2: "22 сентября: фотосессия у Эйфелевой башни 08:30-09:30, затем Роден, Инвалиды и Люксембургский сад до закрытия около 19:15. Мост Александра III не ставить в обязательную часть дня.",
+      3: "Экскурсия по Лувру 23 сентября в 10:00. На странице этого дня нужна визуализация маршрута; Нотр-Дам можно планировать внутри: добавить бесплатную официальную бронь.",
+      4: "На странице этого дня нужна визуализация маршрута, и для каждой точки маршрута краткая информация о точке с фотографиями - почему её стоит посетить.",
+      5: "На странице этого дня нужна визуализация маршрута, и для каждой точки маршрута краткая информация о точке с фотографиями - почему её стоит посетить.",
+      4: "24 сентября: купленный слот в Оранжери на 09:00, затем Тюильри, Орсе по силам и спокойный вечер у Сены.",
+      6: "26 сентября: Монмартр — Сакре-Кер, Place du Tertre, тихие улицы, виды, кафе и спокойный вечер.",
+      7: "Живерни и Hôtel Vert перенесены на 27 сентября: checkout из ibis, сады Моне, вечером заселение в Hôtel Vert Mont Saint Michel.",
+      8: "Мон-Сен-Мишель утром и переезд в Hôtel d'Angleterre в Версале вечером. Дворец в понедельник не планируем.",
+      9: "29 сентября купленная экскурсия в Версаль в 11:00: дворец, Зеркальная галерея, затем сады и Трианоны по силам; вечером переезд в Дижон на бронь 29→30 сентября.",
+      10: "Бургундия перед Амстердамом: старт из Дижона, Route des Grands Crus, Бон, затем возврат и ночь в Париже.",
+      11: "Париж -> Брюссель -> Амстердам: купить два поездных плеча, проверить камеру хранения в Брюсселе и дорогу до Holiday Inn Express Amsterdam Arena Towers by IHG.",
+      12: "Полный день в Амстердаме и вторая оплаченная ночь в Holiday Inn Express Amsterdam Arena Towers by IHG. Рейс в Ниццу 3 октября в 11:00.",
+      13: "Checkout из Holiday Inn Express Amsterdam Arena Towers by IHG, затем 3 октября в 11:00 рейс Амстердам -> Ницца и мягкий первый день на Лазурном берегу.",
+      14: "Эз и Монако теперь 4 октября, ночёвка снова в Ницце.",
+      15: "5 октября купленные билеты в Villa Ephrussi de Rothschild: вилла и сады на Кап-Ферра, затем Saint-Jean-Cap-Ferrat, море или Вильфранш по силам.",
+      16: "6 октября Ницца -> Страсбург: билет уже куплен, отправление в 16:55; до этого — свободное время в Ницце, затем заселение в Cour du Corbeau Hotel Strasbourg - MGallery Collection без плотной вечерней программы.",
+      17: "7 октября — полноценный день Страсбурга: собор, Petite France, каналы и вторая ночь в Cour du Corbeau Hotel Strasbourg - MGallery Collection.",
+      18: "8 октября — checkout в Страсбурге, Кольмар днём и вечерний возврат в ibis budget Paris Porte de Vanves."
+    };
+
+    const weekdaysByDay = {
+      1: "понедельник",
+      2: "вторник",
+      3: "среда",
+      4: "четверг",
+      5: "пятница",
+      6: "суббота",
+      7: "воскресенье",
+      8: "понедельник",
+      9: "вторник",
+      10: "среда",
+      11: "четверг",
+      12: "пятница",
+      13: "суббота",
+      14: "воскресенье",
+      15: "понедельник",
+      16: "вторник",
+      17: "среда",
+      18: "четверг",
+      19: "пятница",
+      20: "суббота"
+    };
+
+    const placeInfo = {
+      "Подходящий отель": { theme: "hotel", why: "Ключевой выбор поездки: от района зависит темп всех ранних выездов, вечерних возвращений и пересадок." },
+      "ibis budget Paris Porte de Vanves": { theme: "hotel", why: "Подтвержденная база Парижа в двух окнах маршрута: 21→27 сентября для стартового блока и 8→10 октября для финального возврата перед отъездом." },
+      "Аэропорт": { theme: "train", why: "Первая логистическая точка. Здесь важно заранее решить: RER, такси, трансфер или шаттл." },
+      "Район у удобной станции метро/RER": { theme: "train", why: "Для первого дня важно понять ближайшую рабочую транспортную связку и время до центра." },
+      "Сена или ближайший парк": { theme: "park", why: "Лёгкая прогулка после перелёта без обязательного расписания и длинных пересадок." },
+      "Район отеля": { theme: "hotel", why: "Практичная зона для позднего ужина, супермаркета, аптеки и проверки утренних маршрутов." },
+      "Небольшое бистро для первого ужина": { theme: "cafe", why: "Первый ужин лучше держать рядом с отелем, чтобы не усложнять вечер после дороги." },
+      "Квартал у отеля": { theme: "street", why: "Нужен для адаптации: метро, аптека, супермаркет, поздний ужин и безопасный вечерний радиус." },
+      "Trocadero": { theme: "tower", why: "Одна из лучших стартовых точек для вида на Эйфелеву башню и первых фотографий без лишнего блуждания." },
+      "Эйфелева башня": { theme: "tower", why: "Главный символ Парижа. Смысл посещения - панорама города и ощущение масштаба, а не только фото снизу." },
+      "Champ de Mars": { theme: "park", why: "Зеленая ось под башней: хороша для паузы и спокойного перехода к Инвалидам." },
+      "Les Invalides": { theme: "museum", why: "Монументальная архитектура Людовика XIV, музей армии и купол с гробницей Наполеона." },
+      "Pont Alexandre III": { theme: "bridge", why: "Самый парадный мост маршрута: золото, скульптуры, вид на Сену и Гран-Пале." },
+      "Jardin du Luxembourg": { theme: "park", why: "Лучший мягкий финал после двух музеев: стулья у воды, фонтан Медичи и спокойный левый берег до закрытия сада." },
+      "Boulevard Saint-Germain": { theme: "street", why: "Классическая ось левого берега для вечерней прогулки, кафе и книжных." },
+      "Saint-Germain-des-Pres": { theme: "cafe", why: "Вечерний район кафе, книжных, галерей и классического левого берега." },
+      "Cour Carree": { theme: "palace", why: "Тихий двор Лувра, где проще почувствовать дворцовую историю до музейной толпы." },
+      "Лувр": { theme: "museum", why: "Сильнейшая музейная точка маршрута: лучше идти с коротким списком шедевров или гидом." },
+      "Jardin des Tuileries": { theme: "park", why: "Логичная пауза после Лувра: прямая ось к Сене и хороший способ не перегрузить музейный день." },
+      "Ile de la Cite": { theme: "island", why: "Историческое ядро Парижа, удобный переход между Лувром, Нотр-Дамом и Латинским кварталом." },
+      "Notre-Dame de Paris": { theme: "cathedral", why: "Собор снова открыт для внутреннего посещения; это теперь не только внешняя остановка." },
+      "Shakespeare and Company": { theme: "book", why: "Легендарная англоязычная книжная напротив Нотр-Дама, хорошо вписывается в Латинский квартал." },
+      "Rue Mouffetard": { theme: "cafe", why: "Живая гастрономическая улица Латинского квартала для ужина без музейной формальности." },
+      "Basilique du Sacre-Coeur": { theme: "cathedral", why: "Белая базилика и панорама города: сильная визуальная точка Монмартра." },
+      "Place du Tertre": { theme: "street", why: "Туристическая, но атмосферная площадь художников; ее лучше смотреть коротко и идти в тихие улицы." },
+      "Rue de l'Abreuvoir": { theme: "street", why: "Одна из самых живописных улиц Монмартра, особенно для спокойной прогулки без плотной программы." },
+      "La Maison Rose": { theme: "cafe", why: "Фотогеничная розовая точка района и хороший ориентир для маршрута по верхнему Монмартру." },
+      "Le Consulat": { theme: "cafe", why: "Классическое кафе на углу, где Монмартр выглядит почти открыткой." },
+      "Moulin Rouge снаружи": { theme: "theatre", why: "Фасад кабаре удобно оставить как короткий финальный акцент Монмартра без покупки шоу." },
+      "Moulin Rouge": { theme: "theatre", why: "Финальный контраст к тихим улочкам: не обязательно идти на шоу, но увидеть фасад стоит." },
+      "Porte d'Aval": { theme: "cliff", why: "Главная арка Этрета, узнаваемая по пейзажам импрессионистов и виду на море." },
+      "Falaise d'Amont": { theme: "cliff", why: "Высокая точка с часовней и широким видом на город, пляж и скалы." },
+      "Chapelle Notre-Dame-de-la-Garde": { theme: "cliff", why: "Часовня над Этрета даёт лучший обзор линии пляжа и скал с северной стороны." },
+      "Les Jardins d'Etretat": { theme: "garden", why: "Сады дают другую перспективу на скалы: скульптуры, формы кустов и виды сверху." },
+      "Etretat Beach": { theme: "sea", why: "Лучшее место для паузы между подъемами: слышно море и виден масштаб белых обрывов." },
+      "Le Clos Lupin по желанию": { theme: "museum", why: "Опциональная литературная остановка про Арсена Люпена, если погода или темп не зовут на скалы." },
+      "Le Clos Lupin": { theme: "museum", why: "Небольшая литературная точка про Арсена Люпена, если хочется разбавить природный день." },
+      "Musee de l'Orangerie": { theme: "museum", why: "Кувшинки Моне в овальных залах: короткий, но очень сильный музейный опыт." },
+      "Musee d'Orsay": { theme: "museum", why: "Импрессионисты в бывшем вокзале: лучший центр тяжести музейного дня." },
+      "Musee Rodin": { theme: "sculpture", why: "Скульптуры и сад дают красивый, не слишком тяжелый музейный блок рядом с Инвалидами." },
+      "Jardin des Tuileries / Seine": { theme: "park", why: "Связка для паузы и красивого перехода между музеями без метро." },
+      "Набережные Сены": { theme: "park", why: "Спокойный вечерний буфер после Орсе: вода, мосты и город без третьего музея подряд." },
+      "Fondation Claude Monet": { theme: "garden", why: "Дом и сады Моне показывают источник его цвета, воды и света." },
+      "Пруд с кувшинками": { theme: "garden", why: "Главная точка Живерни: мостик, отражения, вода и прямой мост к картинам Моне." },
+      "Musee des Impressionnismes Giverny": { theme: "museum", why: "Дополнение к дому Моне, если хочется контекста импрессионизма без перегруза." },
+      "Hôtel Vert": { theme: "hotel", why: "Подтвержденная ночёвка 27→28 сентября у Мон-Сен-Мишель: ключевая точка нормандского блока перед аббатством." },
+      "Вечерний вид на Мон-Сен-Мишель": { theme: "island", why: "Главная причина ночевки рядом: остров меняет настроение после дневного потока туристов." },
+      "Abbaye du Mont-Saint-Michel": { theme: "cathedral", why: "Кульминация острова: вертикальный маршрут через монастырские залы и виды на залив." },
+      "Grande Rue": { theme: "street", why: "Средневековая главная улица острова; туристическая, но дает нужный вход в атмосферу." },
+      "Mont-Saint-Michel Bay": { theme: "sea", why: "Виды на залив объясняют, почему остров стал таким сильным оборонительным и паломническим местом." },
+      "Place des Lices": { theme: "street", why: "Историческая площадь Ренна с фахверком и рынком; хороший первый контакт с городом." },
+      "Parlement de Bretagne": { theme: "palace", why: "Парадная архитектура Ренна и быстрый способ увидеть город не только как вокзальную пересадку." },
+      "Gare de Rennes": { theme: "train", why: "Ключевая логистическая точка дня: отсюда удобнее выбираться в сторону Парижа и Версаля." },
+      "Hôtel d'Angleterre": { theme: "hotel", why: "Подтвержденная ночь 28→29 сентября в Версале снижает логистику перед дворцом во вторник." },
+      "Chateau de Versailles": { theme: "palace", why: "Дворец показывает абсолютную монархию через архитектуру, церемонию и масштаб." },
+      "Galerie des Glaces": { theme: "palace", why: "Зеркальная галерея - главная внутренняя точка Версаля и место ключевых исторических образов." },
+      "Gardens of Versailles": { theme: "park", why: "Сады нужны, чтобы понять Версаль как систему власти, осей, воды и перспективы." },
+      "Grand Trianon": { theme: "palace", why: "Более камерная королевская резиденция, если есть силы после дворца." },
+      "Hameau de la Reine": { theme: "village", why: "Деревня Марии-Антуанетты добавляет человеческий масштаб к парадному Версалю." },
+      "Парижский отель": { theme: "hotel", why: "Здесь это Libertel Canal Saint Martin: парижская база между Бургундией и Брюсселем, куда возвращаемся вечером 30 сентября перед поездом 1 октября." },
+      "Appart'hôtel Odalys City - Dijon Centre Les Cordeliers": { theme: "hotel", why: "Подтвержденная ночёвка 29→30 сентября в Дижоне: она переводит старт бургундского дня прямо в город, без утреннего переезда из Парижа." },
+      "Аэропорт Парижа / Paris Nord": { theme: "train", why: "Развилка дня 10: если берёте перелёт, едем в аэропорт; если поезд - на Paris Nord." },
+      "Bruxelles-Midi": { theme: "train", why: "Логистическая точка стоповера: здесь важно решить вопрос с багажом перед прогулкой по центру Брюсселя." },
+      "Grand Place Brussels": { theme: "square", why: "Главная площадь Брюсселя и самая компактная точка, ради которой стоит выходить из поезда днём." },
+      "Galeries Royales Saint-Hubert": { theme: "street", why: "Красивая крытая галерея рядом с Grand Place: шоколад, витрины и короткий маршрут без лишнего транспорта." },
+      "Mont des Arts": { theme: "view", why: "Смотровая и связка центра с музейным кварталом; хорошая точка для короткой дневной прогулки." },
+      "Amsterdam Centraal": { theme: "train", why: "Удобный старт и финиш амстердамского блока: от вокзала начинается город каналов и дальнейшая дорога к отелю." },
+      "Holiday Inn Express Amsterdam Arena Towers by IHG": { theme: "hotel", why: "Оплаченная база Амстердама на 1→3 октября: сюда приезжаем вечером 1 октября и отсюда утром 3 октября стартуем в Schiphol." },
+      "Amsterdam Schiphol": { theme: "train", why: "Утренняя логистика 3 октября: нужен запас на дорогу из Holiday Inn Express Amsterdam Arena Towers by IHG, багаж и контроль перед рейсом в Ниццу." },
+      "Nice Airport": { theme: "train", why: "Вход в южный блок после утреннего перелёта из Амстердама; лучше заранее проверить трансфер до Hôtel Esprit d'Azur или камеры хранения." },
+      "Hôtel Esprit d'Azur": { theme: "hotel", why: "Подтвержденная база Ниццы на 3→6 октября: от неё строятся вечер 3 октября, выезды в Эз и Монако и утренний отъезд 6 октября." },
+      "Paris Nord": { theme: "train", why: "Ключевой вокзал для поездки на Брюссель и дальше в Амстердам." },
+      "Grachtengordel": { theme: "canal", why: "Кольцо каналов - главный городской рисунок Амстердама и лучший первый вечерний маршрут." },
+      "Damrak": { theme: "canal", why: "Первый вид Амстердама после вокзала: вода, узкие фасады и городской шум." },
+      "Dam Square": { theme: "square", why: "Центральная площадь, удобная для ориентации и короткой остановки." },
+      "De 9 Straatjes": { theme: "street", why: "Компактный район бутиков и каналов, где Амстердам становится более камерным." },
+      "Jordaan": { theme: "canal", why: "Лучший район для вечерней прогулки без музейной гонки." },
+      "Westerkerk": { theme: "church", why: "Высокая церковная башня рядом с Йорданом помогает завершить прогулку по каналам понятным ориентиром." },
+      "Vondelpark": { theme: "park", why: "Зеленая пауза перед обратным поездом, если хочется снизить темп." },
+      "Noordermarkt": { theme: "square", why: "Живая районная площадь Йордана с кафе, рынками и спокойной атмосферой." },
+      "Prinsengracht": { theme: "canal", why: "Один из красивых каналов для прогулки и круиза." },
+      "Museumplein снаружи": { theme: "museum", why: "Если нет музейного слота, площадь работает как короткая архитектурная и парковая остановка." },
+      "Canal cruise": { theme: "boat", why: "Круиз быстро связывает город в голове, особенно когда времени всего два дня." },
+      "Strasbourg Cathedral": { theme: "cathedral", why: "Готическая доминанта Страсбурга, которую стоит поставить первой после вокзала." },
+      "Maison Kammerzell": { theme: "street", why: "Фахверковая открытка рядом с собором и удобная точка для эльзасского обеда." },
+      "Petite France": { theme: "canal", why: "Самый красивый квартал каналов, мостов и фахверка." },
+      "Ill River": { theme: "canal", why: "Река связывает собор, Petite France и прогулочные виды старого Страсбурга." },
+      "Strasbourg hotel": { theme: "hotel", why: "Подтвержденная база Эльзаса на 6→8 октября: Cour du Corbeau Hotel Strasbourg - MGallery Collection, откуда удобно собирать спокойный вечер приезда, полный день Страсбурга и утренний выезд в Кольмар." },
+      "Colmar hotel": { theme: "hotel", why: "В этой версии маршрута отель в Кольмаре уже не нужен: город идёт однодневным выездом из страсбургской базы." },
+      "Colmar": { theme: "street", why: "Камерный эльзасский город с фахверком, каналами и более сказочной атмосферой, чем большой Страсбург." },
+      "Petite Venise Colmar": { theme: "canal", why: "Самая узнаваемая прогулочная зона Кольмара: каналы, цветные дома и короткий красивый маршрут." },
+      "Marché Couvert Colmar": { theme: "food", why: "Удобная гастрономическая пауза в старом городе Кольмара рядом с Petite Venise." },
+      "Maison Pfister": { theme: "street", why: "Один из самых узнаваемых исторических фасадов Кольмара и хорошая точка на маршруте по центру." },
+      "Barrage Vauban": { theme: "bridge", why: "Панорамная точка на старый город и крытые мосты." },
+      "Ponts Couverts": { theme: "bridge", why: "Историческая оборонительная линия, хорошо завершает прогулку по Petite France." },
+      "Dijon Station": { theme: "train", why: "Опорная точка бургундского дня: отсюда удобно строить выход в центр, винный тур и вечерний возврат в Париж." },
+      "Palais des Ducs de Bourgogne": { theme: "palace", why: "Главная историческая точка Дижона и центр бургундской столицы." },
+      "Les Halles de Dijon": { theme: "food", why: "Рынок дает гастрономический вход в регион до вина и Бона." },
+      "Route des Grands Crus": { theme: "vineyard", why: "Смысл бургундского выезда: виноградники и деревни между Дижоном и Боном." },
+      "Hospices de Beaune": { theme: "palace", why: "Главная архитектурная точка Бона и яркий символ Бургундии." },
+      "Gare de Lyon": { theme: "train", why: "Главная парижская точка для южного переезда: удобно проверить платформу и запас времени." },
+      "Nice Ville": { theme: "train", why: "Точка прибытия в Ниццу; от нее начинается южный блок маршрута." },
+      "Promenade des Anglais": { theme: "sea", why: "Главная линия Ниццы у моря: лучший вечер после переезда." },
+      "Place Massena": { theme: "square", why: "Центральная площадь между старым городом, морем и торговыми улицами." },
+      "Vieux Nice": { theme: "street", why: "Старый город Ниццы: узкие улицы, цвет, еда и вечерняя жизнь." },
+      "Opera de Nice": { theme: "theatre", why: "Парадный ориентир между старым городом и набережной, хорошо ложится в вечернюю прогулку." },
+      "Quai des Etats-Unis": { theme: "sea", why: "Набережная между старым городом и морем, удобная для первого вечернего прохода." },
+      "Place Rossetti": { theme: "square", why: "Живая площадь старой Ниццы рядом с собором, мороженым и вечерними кафе." },
+      "Cours Saleya": { theme: "food", why: "Цветочный рынок и гастрономическая ось старого города." },
+      "Marche aux Fleurs": { theme: "food", why: "Цветочный рынок на Cours Saleya даёт дневной ритм старой Ниццы и хороший старт прогулки." },
+      "Colline du Chateau": { theme: "view", why: "Лучший обзор Ниццы, бухты и порта." },
+      "Port Lympia": { theme: "sea", why: "Красивый портовый район, который дает другой ритм после Promenade." },
+      "Villefranche-sur-Mer": { theme: "sea", why: "Короткий выезд к одной из самых красивых бухт рядом с Ниццей." },
+      "Saint-Jean-Cap-Ferrat": { theme: "sea", why: "Опция для более тихого, виллового и пейзажного Лазурного берега." },
+      "Villa Ephrussi de Rothschild": { theme: "garden", why: "Купленные билеты на 5 октября: вилла и сады — главная обязательная точка дня на Кап-Ферра." },
+      "Eze Village": { theme: "village", why: "Средневековая деревня на высоте с сильными видами на море." },
+      "Jardin Exotique d'Eze": { theme: "garden", why: "Сад как смотровая площадка: кактусы, скалы и панорама побережья." },
+      "Monaco-Ville": { theme: "palace", why: "Старый город Монако на скале, удобный вход к дворцу и видам." },
+      "Prince's Palace": { theme: "palace", why: "Символ княжества и хорошая точка для понимания масштаба Монако." },
+      "Port Hercule": { theme: "sea", why: "Порт показывает другой Монако: яхты, плотная застройка и рельеф." },
+      "Casino de Monte-Carlo": { theme: "palace", why: "Главный фасад Casino Square и узнаваемый символ светского Монте-Карло." },
+      "Casino Square": { theme: "square", why: "Самая узнаваемая светская площадь Монако." },
+      "Paris buffer evening": { theme: "cafe", why: "Буфер после дороги: ужин, прачечная, пересборка маршрута и отдых." },
+      "Avignon TGV": { theme: "train", why: "Логистический вход в Прованс одним днем из Парижа." },
+      "Palais des Papes": { theme: "palace", why: "Главная причина ехать в Авиньон: масштаб папского дворца и средневековой власти." },
+      "Pont d'Avignon": { theme: "bridge", why: "Иконический мост над Роной, короткая и запоминающаяся остановка." },
+      "Place de l'Horloge": { theme: "square", why: "Центральная площадь для обеда, кафе и южной атмосферы." },
+      "Rocher des Doms": { theme: "park", why: "Сад-смотровая над Роной, лучшее завершение Авиньона перед вокзалом." },
+      "Le Marais": { theme: "street", why: "Хороший свободный район для финального Парижа: магазины, кафе, галереи и прогулка без расписания." },
+      "Сена вечером": { theme: "river", why: "Самый простой способ закрыть день в Париже без билетов, очередей и новой логистики." },
+      "Набережная Сены по силам": { theme: "river", why: "Лёгкая прогулка без обязательного тайм-слота, если после дороги ещё остаются силы." },
+      "Любимое кафе": { theme: "cafe", why: "Хорошая финальная точка без обязательной достопримечательности: возвращение туда, где уже понравилось." },
+      "Кафе, которое хочется повторить": { theme: "cafe", why: "Финальный день лучше использовать для проверенного места, а не для рискованного поиска." },
+      "Галереи Lafayette по желанию": { theme: "shopping", why: "Практичная опция для подарков и купола, если нужен торговый финальный акцент." },
+      "Galeries Lafayette по желанию": { theme: "shopping", why: "Практичная опция для подарков и купола, если нужен торговый финальный акцент." },
+      "Galeries Lafayette": { theme: "shopping", why: "Практичная точка для подарков и красивый купол, если хочется финального городского акцента." },
+      "Seine evening": { theme: "river", why: "Спокойная финальная прогулка без музеев и дедлайнов." },
+      "Финальный ресторан": { theme: "cafe", why: "Лучше забронировать заранее, чтобы последний вечер не превратился в поиск места." },
+      "Отель": { theme: "hotel", why: "Старт отъезда: проверка багажа, документов, времени выселения и трансфера." },
+      "Аэропорт или вокзал": { theme: "train", why: "Финальная точка маршрута, где важнее всего запас времени." },
+      "Кафе рядом с точкой выезда": { theme: "cafe", why: "В день отъезда еду лучше держать около багажа и транспорта, без дальних прогулок." }
+    };
+
+    const routePlans = {
+      1: { mode: "Заселение + легкий вечер", overview: "Стартовая база в Париже уже зафиксирована: ibis budget Paris Porte de Vanves на 21→27 сентября.", stops: ["Аэропорт", "ibis budget Paris Porte de Vanves", "Квартал у отеля"] },
+      2: { mode: "Фотосессия + музеи + сад", overview: "Утро закреплено фотосессией 08:30-09:30 у Эйфелевой башни, затем маршрут идет к Родену, Инвалидам и Люксембургскому саду до закрытия.", stops: ["Trocadero", "Эйфелева башня", "Champ de Mars", "Musee Rodin", "Les Invalides", "Jardin du Luxembourg", "Saint-Germain-des-Pres"] },
+      3: { mode: "Лувр в 10:00 + Сент-Шапель в 17:30", overview: "Экскурсия по Лувру 23 сентября в 10:00, затем остров Сите, Сент-Шапель в 17:30 и Латинский квартал.", stops: ["Cour Carree", "Лувр", "Jardin des Tuileries", "Сент-Шапель", "Notre-Dame de Paris", "Shakespeare and Company", "Rue Mouffetard"] },
+      4: { mode: "Оранжери в 09:00 + Орсе по силам", overview: "Купленный слот в Оранжери 24 сентября в 09:00, затем пауза в Тюильри, Орсе по самочувствию и спокойная Сена.", stops: ["Musee de l'Orangerie", "Jardin des Tuileries / Seine", "Musee d'Orsay", "Набережные Сены"] },
+      5: { mode: "Дальний выезд", overview: "В Этрета держите маршрут простым: одна сторона скал, сад, пляж и вторая сторона по силам.", transfer: true, stops: ["Porte d'Aval", "Falaise d'Amont", "Les Jardins d'Etretat", "Etretat Beach", "Le Clos Lupin"] },
+      6: { mode: "Монмартр", overview: "После перестановки 26 сентября отдано Монмартру: Сакре-Кер, тихие улицы, виды, кафе и спокойный вечер.", stops: ["Basilique du Sacre-Coeur", "Place du Tertre", "Rue de l'Abreuvoir", "La Maison Rose", "Le Consulat", "Moulin Rouge"] },
+      7: { mode: "Живерни по дороге", overview: "Checkout в Париже, Живерни днём, Hôtel Vert вечером. Бронь у Мон-Сен-Мишель стоит на 27→28 сентября.", transfer: true, stops: ["ibis budget Paris Porte de Vanves", "Fondation Claude Monet", "Пруд с кувшинками", "Hôtel Vert", "Вечерний вид на Мон-Сен-Мишель"] },
+      8: { mode: "Аббатство + переезд в Версаль", overview: "Утро у Мон-Сен-Мишель после ночёвки рядом, затем вечерний переезд в Hôtel d'Angleterre. Дворец в понедельник не ставим.", transfer: true, stops: ["Hôtel Vert", "Abbaye du Mont-Saint-Michel", "Grande Rue", "Mont-Saint-Michel Bay", "Gare de Rennes", "Hôtel d'Angleterre"] },
+      9: { mode: "Экскурсия 11:00 + переезд в Дижон", overview: "Купленная экскурсия в Версаль начинается в 11:00; после дворца и Зеркальной галереи остаются сады и Трианоны по силам, затем вечерний переезд в Дижон.", transfer: true, stops: ["Hôtel d'Angleterre", "Chateau de Versailles", "Galerie des Glaces", "Gardens of Versailles", "Grand Trianon", "Hameau de la Reine", "Appart'hôtel Odalys City - Dijon Centre Les Cordeliers"] },
+      10: { mode: "Старт из Дижона + винный тур", overview: "Бургундия переезжает перед Амстердамом: старт из Дижона, винная дорога, Бон и возврат в Париж.", transfer: true, stops: ["Appart'hôtel Odalys City - Dijon Centre Les Cordeliers", "Dijon Station", "Palais des Ducs de Bourgogne", "Les Halles de Dijon", "Route des Grands Crus", "Hospices de Beaune"] },
+      11: { mode: "Поезд + стоповер", overview: "Выезд из Libertel Canal Saint Martin, затем Париж -> Брюссель днём, прогулка по центру и вечерний поезд до Амстердама.", transfer: true, stops: ["Парижский отель", "Bruxelles-Midi", "Grand Place Brussels", "Galeries Royales Saint-Hubert", "Mont des Arts", "Amsterdam Centraal", "Holiday Inn Express Amsterdam Arena Towers by IHG"] },
+      12: { mode: "Полный день в Амстердаме", overview: "Вторая ночь в Holiday Inn Express Amsterdam Arena Towers by IHG снимает спешку: каналы, Йордан, Вонделпарк или круиз перед рейсом 3 октября в 11:00.", stops: ["Holiday Inn Express Amsterdam Arena Towers by IHG", "Vondelpark", "Noordermarkt", "Prinsengracht", "Canal cruise", "De 9 Straatjes", "Jordaan"] },
+      13: { mode: "Рейс 11:00 + Ницца", overview: "Checkout из Holiday Inn Express Amsterdam Arena Towers by IHG, затем в 11:00 рейс Амстердам -> Ницца и заселение в Hôtel Esprit d'Azur перед мягким первым днём у моря.", transfer: true, stops: ["Holiday Inn Express Amsterdam Arena Towers by IHG", "Amsterdam Schiphol", "Nice Airport", "Hôtel Esprit d'Azur", "Cours Saleya", "Vieux Nice", "Promenade des Anglais", "Place Massena"] },
+      14: { mode: "Локальный транспорт", overview: "Сначала Эз, пока меньше людей, затем Монако по нисходящей плотности.", transfer: true, stops: ["Eze Village", "Jardin Exotique d'Eze", "Monaco-Ville", "Prince's Palace", "Port Hercule", "Casino de Monte-Carlo"] },
+      15: { mode: "Villa Rothschild + Кап-Ферра", overview: "Билеты в Villa Ephrussi de Rothschild на 5 октября уже куплены; после виллы и садов можно продолжить день на Saint-Jean-Cap-Ferrat или в Вильфранше.", transfer: true, stops: ["Hôtel Esprit d'Azur", "Villa Ephrussi de Rothschild", "Saint-Jean-Cap-Ferrat", "Villefranche-sur-Mer"] },
+      16: { mode: "Отправление 16:55 + заселение", overview: "6 октября билет Ницца -> Страсбург уже куплен, отправление в 16:55; до выезда остаётся свободное время в Ницце, затем спокойный вечер на новой базе.", transfer: true, stops: ["Nice Ville", "Strasbourg hotel"] },
+      17: { mode: "Полный день в Страсбурге", overview: "7 октября Страсбург идёт без переезда: собор, Petite France, каналы и эльзасская еда с ночёвкой там же.", transfer: true, stops: ["Strasbourg hotel", "Strasbourg Cathedral", "Petite France", "Barrage Vauban", "Ill River"] },
+      18: { mode: "Кольмар после Страсбурга", overview: "Кольмар идёт сразу после Страсбурга: Petite Venise, фахверк, рынок, Maison Pfister и вечерний возврат в ibis budget Paris Porte de Vanves.", transfer: true, stops: ["Colmar", "Petite Venise Colmar", "Marché Couvert Colmar", "Maison Pfister", "ibis budget Paris Porte de Vanves"] },
+      19: { mode: "Свободный Париж", overview: "Финальный день должен собирать хвосты: подарки, любимые места, ужин. Мост Александра III можно добавить только как легкую вечернюю опцию.", stops: ["ibis budget Paris Porte de Vanves", "Le Marais", "Galeries Lafayette", "Pont Alexandre III", "Seine evening", "Финальный ресторан"] },
+      20: { mode: "Отъезд", overview: "Никаких обязательных достопримечательностей: только checkout из ibis budget Paris Porte de Vanves, проверка времени и запас.", transfer: true, stops: ["ibis budget Paris Porte de Vanves", "Аэропорт или вокзал"] }
+    };
+
+    const specialBlocks = {
+      1: {
+        title: "Стартовый отель в Париже подтвержден",
+        text: "Стартовая база в Париже: ibis budget Paris Porte de Vanves на 21→27 сентября. После новых билетов музейный день перенесен на 24 сентября, а 26 сентября отдано Монмартру."
+      },
+      6: {
+        title: "Музейный день вернулся на субботу",
+        text: "24 сентября Оранжери стоит первым слотом в 09:00, после него — пауза и Орсе по силам. 26 сентября теперь можно провести на Монмартре без музейного тайминга."
+      },
+      3: {
+        title: "Нотр-Дам: планируем внутрь",
+        text: "Нотр-Дам больше не нужно ставить только как внешний осмотр. Официальный сайт собора пишет, что вход свободный и бесплатный, а бесплатную бронь нужно делать только через официальный сайт; сторонние платные билеты на вход не нужны. Значит, день 3 лучше строить так: экскурсия по Лувру в 10:00, затем Сена, затем бесплатный слот в Нотр-Дам, после этого Shakespeare and Company и Латинский квартал."
+      },
+      7: {
+        title: "Живерни стыкуется с Hôtel Vert",
+        text: "27 сентября утром checkout в Париже, днём Живерни и сады Моне, вечером заселение в Hôtel Vert Mont Saint Michel на бронь 27→28 сентября."
+      },
+      8: {
+        title: "Мон-Сен-Мишель и вечерний Версаль",
+        text: "28 сентября - понедельник: дворец Версаля не нужен в этот день. Утро отдаём аббатству и острову, вечером переезжаем в Версаль и ночуем там."
+      },
+      10: {
+        title: "Бургундия перед Амстердамом",
+        text: "29 сентября вечером переезжаем в Дижон и ночуем в Appart'hôtel Odalys City - Dijon Centre Les Cordeliers. 30 сентября Дижон, Route des Grands Crus и Бон стоят до амстердамского блока, а вечером возвращаемся в Libertel Canal Saint Martin, чтобы 1 октября ехать через Брюссель."
+      },
+      11: {
+        title: "Брюссель как стоповер",
+        text: "1 октября не едем напрямую в Амстердам: выходим в Брюсселе днём, гуляем по центру, затем садимся на второй поезд до Amsterdam Centraal и заселяемся в оплаченный Holiday Inn Express Amsterdam Arena Towers by IHG."
+      },
+      12: {
+        title: "Амстердам на две оплаченные ночи",
+        text: "2 октября остаёмся в Holiday Inn Express Amsterdam Arena Towers by IHG на вторую оплаченную ночь. Это полноценный день для каналов, Йордана и круиза перед рейсом в Ниццу 3 октября."
+      },
+      13: {
+        title: "Рейс в Ниццу в 11:00",
+        text: "3 октября утром делаем checkout из Holiday Inn Express Amsterdam Arena Towers by IHG, едем в Schiphol и летим в Ниццу в 11:00. База южного блока теперь подтверждена: Hôtel Esprit d'Azur на 3→6 октября, поэтому день можно начинать мягко через багаж, заселение, старый город, Promenade des Anglais и море."
+      },
+      15: {
+        title: "Лазурный берег получил буфер",
+        text: "5 октября лучше оставить гибким днём у моря: он страхует погоду, рейс из Амстердама и плотный день Эз + Монако."
+      },
+      17: {
+        title: "Эльзас теперь после Ниццы",
+        text: "6 октября билет из Ниццы в Страсбург уже куплен, отправление в 16:55. После заселения в Cour du Corbeau Hotel Strasbourg - MGallery Collection на 6→8 октября 7 октября можно отдать Страсбургу целый день без лишней пересадки."
+      },
+      18: {
+        title: "Кольмар перед финальным Парижем",
+        text: "8 октября Кольмар идёт после эльзасской ночёвки, а вечером возвращаемся в ibis budget Paris Porte de Vanves на бронь 8→10 октября. 9 октября остаётся свободным финальным днём."
+      }
+    };
+
+    const guideBlocks = {
+      3: {
+        title: "Русскоязычный гид для Лувра",
+        checked: "Экскурсия зафиксирована на 23 сентября в 10:00; Лувр открыт по средам",
+        advice: "Так как экскурсия уже стоит на 10:00, держите первую половину дня под музей и не добавляйте длинную программу внутри Лувра сверх гида.",
+        candidates: [
+          { name: "Главные сокровища Лувра за 2 часа", meta: "Криста · мини-группа · 4,91 · 854 отзыва · около €69/чел." },
+          { name: "Лувр сквозь века и эпохи", meta: "Анастасия · индивидуально · 5,0 · 62 отзыва · около €286/группа" },
+          { name: "Сокровища Лувра: знакомство с шедеврами", meta: "Альвина · индивидуально · 5,0 · 69 отзывов · около €250/группа" }
+        ]
+      },
+      9: {
+        title: "Русскоязычный гид для Версаля",
+        checked: "Проверено 21.06.2026 по Tripster",
+        advice: "Для Версаля предпочтительнее гид с логистикой из Парижа или четким местом встречи у дворца. Если хотите легче, берите групповую экскурсию с билетом/таймингом.",
+        candidates: [
+          { name: "В чарующий Версаль - на автомобиле из Парижа", meta: "Тарас · индивидуально · 4,98 · 48 отзывов · около €580/группа" },
+          { name: "Большое знакомство с Версалем", meta: "Криста · групповая · 4,9 · 171 отзыв · около €87/чел." },
+          { name: "Версальский дворец - без очередей", meta: "Надежда · индивидуально · 4,98 · 54 отзыва · около €465/группа" }
+        ]
+      }
+    };
+
+    const sourceLinks = {
+      3: [
+        { label: "Louvre: официальный режим работы", url: "https://www.louvre.fr/en/visit/hours-admission" },
+        { label: "Notre-Dame: официальный раздел Visit / Free admission", url: "https://www.notredamedeparis.fr/en/visit/" },
+        { label: "Tripster: экскурсии в Лувр", url: "https://experience.tripster.ru/experience/Paris/9248-luvr/" }
+      ],
+      9: [
+        { label: "Tripster: экскурсии в Версаль", url: "https://experience.tripster.ru/experience/Paris/7326-exkursii-v-versal/" }
+      ]
+    };
+
+    const foodPlans = {
+      1: {
+        note: "Точный выбор зависит от района отеля. Ниже - хорошие универсальные варианты для первого вечера без сложной логистики.",
+        items: [
+          { name: "Bouillon Chartier", tag: "ужин без стресса", area: "Grands Boulevards / Montparnasse", why: "Культовый формат bouillon: быстро, шумно, недорого, удобно для первого вечера.", url: "https://www.bouillon-chartier.com/" },
+          { name: "Breizh Café", tag: "лёгкий ужин", area: "Marais / Odéon", why: "Галеты и сидр, удобно если хочется не тяжёлую классику после перелёта.", url: "https://www.breizhcafe.com/" },
+          { name: "Le Petit Vendôme", tag: "бистро-гем", area: "Opéra / Vendôme", why: "Французский бистро-формат, отмечался в актуальных подборках Eater Paris.", url: "https://www.eater.com/maps/best-restaurants-paris-france" }
+        ]
+      },
+      2: {
+        note: "Маршрут идет от башни к Инвалидам и Сен-Жермену: лучше заложить кофе у башни, обед у 7-го округа и ужин на левом берегу.",
+        items: [
+          { name: "Café Constant", tag: "обед", area: "рядом с Eiffel / Rue Saint-Dominique", why: "Практичный адрес у башни без ощущения случайного туристического кафе.", url: "https://www.cafeconstant.com/" },
+          { name: "La Fontaine de Mars", tag: "классика", area: "7-й округ", why: "Старомодная парижская брассерия для утки, вина и плотного обеда.", url: "https://www.lafontainedemars.com/" },
+          { name: "Les Deux Magots", tag: "культовое кафе", area: "Saint-Germain", why: "Историческое кафе Сен-Жермена; идти скорее за атмосферой и финальным бокалом.", url: "https://lesdeuxmagots.fr/" },
+          { name: "Café de Flore", tag: "культовое кафе", area: "Saint-Germain", why: "Икона района, хороша как остановка на кофе, десерт или аперитив.", url: "https://cafedeflore.fr/" }
+        ]
+      },
+      3: {
+        note: "После экскурсии по Лувру в 10:00 лучше не уезжать далеко: держите еду между Palais-Royal, Ситэ и Латинским кварталом.",
+        items: [
+          { name: "Café Marly", tag: "вид на Лувр", area: "Лувр", why: "Не самый бюджетный, но сильный вид на пирамиду и удобная пауза после музея.", url: "https://www.beaumarly.com/en/venues/cafe-marly/" },
+          { name: "Le Fumoir", tag: "обед", area: "у Лувра", why: "Хороший спокойный адрес между Лувром и Сеной, удобен после утреннего слота.", url: "https://www.lefumoir.com/" },
+          { name: "La Jacobine", tag: "ужин", area: "Saint-Germain / Latin Quarter", why: "Популярная камерная классика для ужина после Нотр-Дама и книжной.", url: "https://www.lajacobine.fr/" },
+          { name: "Bouillon Racine", tag: "арт-нуво", area: "Latin Quarter", why: "Красивый зал и понятная французская кухня в финале маршрута.", url: "https://www.bouillonracine.fr/" }
+        ]
+      },
+      4: {
+        note: "После раннего Оранжери удобнее обедать у Тюильри или Орсе и не добавлять дальний переезд.",
+        items: [
+          { name: "Loulou Paris", tag: "обед с видом", area: "Tuileries", why: "Удобно после Оранжери; лучше бронировать заранее.", url: "https://loulou-paris.com/" },
+          { name: "Café Campana", tag: "внутри Орсе", area: "Musée d'Orsay", why: "Пауза без выхода из музея, если день идет плотно.", url: "https://www.musee-orsay.fr/en/visit/food-and-drink" },
+          { name: "Les Antiquaires", tag: "бистро", area: "около Орсе", why: "Классический адрес для обеда или раннего ужина после Орсе.", url: "https://www.lesantiquaires.net/" }
+        ]
+      },
+      5: {
+        note: "В Этрета лучше бронировать обед заранее: поток туристов большой, а день завязан на транспорт.",
+        items: [
+          { name: "Le Donjon - Domaine Saint Clair", tag: "вид / гастро", area: "над Этрета", why: "Более особенный обед с видом, если день хочется сделать не только прогулочным.", url: "https://www.hoteletretat.com/fr/restaurant-etretat.html" },
+          { name: "Lann-Bihoué", tag: "морепродукты", area: "центр Этрета", why: "Удобная точка для нормандской кухни и морской темы рядом с маршрутом.", url: "https://www.lann-bihoue.com/" },
+          { name: "Le Bel Ami", tag: "ужин/обед", area: "Этрета", why: "Практичный вариант в городе, если не хочется уходить далеко от пляжа.", url: "https://www.lebelami-etretat.com/" }
+        ]
+      },
+      6: {
+        note: "На Монмартре много ловушек на самых туристических улицах. Лучше идти в конкретные места или уходить к Pigalle.",
+        items: [
+          { name: "Hardware Société", tag: "бранч", area: "под Сакре-Кёр", why: "Хороший старт дня на Монмартре, особенно если хочется поздний завтрак.", url: "https://www.hardwaresocieteparis.com/" },
+          { name: "Le Poulbot", tag: "бистро", area: "верхний Монмартр", why: "Небольшой адрес рядом с Place du Tertre.", url: "https://lepoulbot.com/" },
+          { name: "La Mère Catherine", tag: "история", area: "Place du Tertre", why: "Один из старейших ресторанов площади.", url: "https://en.wikipedia.org/wiki/La_M%C3%A8re_Catherine" },
+          { name: "Bouillon Pigalle", tag: "дешевле и живо", area: "Pigalle", why: "Хороший финал после Moulin Rouge.", url: "https://bouillonlesite.com/bouillon-pigalle" }
+        ]
+      },
+      7: {
+        note: "День завязан на дорогу Париж - Живерни - Hôtel Vert, поэтому еду лучше поставить в Живерни и оставить простой ужин у Мон-Сен-Мишель.",
+        items: [
+          { name: "Restaurant Baudy", tag: "история импрессионистов", area: "Живерни", why: "Историческая гостиница-кафе художников, хорошо ложится на тему Моне.", url: "https://www.restaurantbaudy.com/" },
+          { name: "Les Nymphéas", tag: "рядом с садами", area: "Живерни", why: "Практичный обед у Fondation Monet, если важно не терять время перед переездом.", url: "https://restaurant-lesnympheas.com/" },
+          { name: "La Ferme Saint Michel", tag: "ужин у отеля", area: "La Caserne / Hôtel Vert", why: "Удобный ужин около зоны отелей после дороги к Мон-Сен-Мишель.", url: "https://www.lafermesaintmichel.com/" }
+        ]
+      },
+      8: {
+        note: "Утро отдаём острову и аббатству, а нормальную паузу можно сделать либо на Мон-Сен-Мишель, либо уже в Ренне перед дорогой в Версаль.",
+        items: [
+          { name: "La Mère Poulard", tag: "культовое", area: "Mont-Saint-Michel", why: "Историческая омлетная легенда острова; дорого и туристично, но культурно узнаваемо.", url: "https://www.merepoulard.com/" },
+          { name: "La Saint-Georges", tag: "крепы", area: "Rennes", why: "Хороший бретонский формат после острова: галеты, сидр, местный характер.", url: "https://www.lacreperie-saintgeorges.fr/" },
+          { name: "Café Breton", tag: "местная кухня", area: "Rennes", why: "Подходит для короткой прогулки по центру без ухода далеко от маршрута.", url: "https://www.cafe-breton.fr/" },
+          { name: "Le Galopin", tag: "ужин", area: "Rennes", why: "Более ресторанный вариант, если поезд/переезд в Версаль поздний.", url: "https://www.legalopin-rennes.fr/" }
+        ]
+      },
+      9: {
+        note: "В Версале еду лучше планировать внутри домена или рядом с дворцом, иначе потеряете много времени.",
+        items: [
+          { name: "Ore - Ducasse au château de Versailles", tag: "внутри дворца", area: "Château", why: "Самый логичный адрес для завтрака/обеда прямо в дворцовом блоке.", url: "https://www.ducasse-chateauversailles.com/" },
+          { name: "La Petite Venise", tag: "сады", area: "Grand Canal", why: "Удобно, если уходите в сады и к Трианонам.", url: "https://www.angelina-paris.fr/en/locations/la-petite-venise/" },
+          { name: "La Flottille", tag: "садовая пауза", area: "Grand Canal", why: "Практичная остановка у канала, когда день с садами получается длинным.", url: "https://www.laflottille.fr/" },
+          { name: "Gordon Ramsay au Trianon", tag: "особый ужин", area: "Trianon Palace", why: "Дорогой вариант для отдельного события, если хотите превратить Версаль в гастро-вечер.", url: "https://www.waldorfastoriaversailles.fr/dining/gordon-ramsay-au-trianon/" }
+        ]
+      },
+      10: {
+        note: "В Бургундии главный риск - несовпадение поездов и винного тура. Бронируйте ресторан вокруг точки старта/финиша тура.",
+        items: [
+          { name: "Dr Wine", tag: "вино + обед", area: "Dijon", why: "Логичный адрес в Дижоне для винной темы до или после тура.", url: "https://www.drwine.fr/" },
+          { name: "Loiseau des Ducs", tag: "гастро", area: "Dijon", why: "Более высокий уровень, если хотите сделать Бургундию гастро-днем.", url: "https://www.bernard-loiseau.com/en/loiseau-des-ducs.html" },
+          { name: "Caves Madeleine", tag: "винный бар", area: "Beaune", why: "Очень подходящий формат после Hospices de Beaune и дегустаций.", url: "https://www.cavesmadeleine.com/" },
+          { name: "Ma Cuisine", tag: "Beaune classic", area: "Beaune", why: "Небольшой любимый гастро-путешественниками адрес; бронировать заранее.", url: "https://www.macuisinebeaune.com/" }
+        ]
+      },
+      11: {
+        note: "День делится на Брюссель днём и Амстердам вечером. Обед лучше держать около Grand Place, ужин - уже рядом с каналами или после заселения в Holiday Inn Express Amsterdam Arena Towers by IHG.",
+        items: [
+          { name: "Maison Dandoy", tag: "вафли", area: "Grand Place / Brussels", why: "Короткая сладкая остановка рядом с центральной частью маршрута.", url: "https://maisondandoy.com/" },
+          { name: "Chez Léon", tag: "бельгийская классика", area: "центр Брюсселя", why: "Практичный вариант для мидий и бельгийской кухни во время дневного стоповера.", url: "https://www.chezleon.be/" },
+          { name: "Winkel 43", tag: "вечерний пирог", area: "Noordermarkt / Jordaan", why: "Если останутся силы после приезда в Амстердам, это понятная короткая остановка у каналов.", url: "https://www.winkel43.nl/" },
+          { name: "Foodhallen", tag: "много выбора", area: "Amsterdam Oud-West", why: "Если приезд поздний и вкусы разные, фуд-холл проще ресторанной брони.", url: "https://foodhallen.nl/" }
+        ]
+      },
+      12: {
+        note: "Теперь это полный день в Амстердаме без вечернего рейса. Можно спокойно держать завтрак, каналы, обед и ужин в городе.",
+        items: [
+          { name: "Gartine", tag: "завтрак", area: "центр", why: "Хороший вариант для спокойного начала дня до прогулки по каналам.", url: "https://www.gartine.nl/" },
+          { name: "Pluk", tag: "кофе/бранч", area: "Nine Streets", why: "Удобно между каналами и магазинами, если нужен лёгкий красивый перекус.", url: "https://pluk-amsterdam.com/" },
+          { name: "Foodhallen", tag: "обед", area: "рядом с Vondelpark", why: "Практично, если день проходит через Вонделпарк и нужен быстрый выбор.", url: "https://foodhallen.nl/" },
+          { name: "Moeders", tag: "ужин", area: "Jordaan", why: "Домашный, очень амстердамский формат для второй ночи в городе.", url: "https://moeders.com/" }
+        ]
+      },
+      13: {
+        note: "Рейс в 11:00 съедает часть дня, поэтому еду лучше держать в старой Ницце и около моря, без дальнего выезда в первый день.",
+        items: [
+          { name: "Café de Turin", tag: "морепродукты", area: "Place Garibaldi", why: "Культовая точка Ниццы для устриц и морепродуктов.", url: "https://www.cafedeturin.fr/" },
+          { name: "Le Safari", tag: "Vieux Nice", area: "Cours Saleya", why: "Практичная классика старого города, удобно после заселения и прогулки.", url: "https://www.lesafari.fr/" },
+          { name: "Chez Acchiardo", tag: "семейная кухня", area: "Vieux Nice", why: "Нисуазская кухня и локальный характер; бронировать заранее.", url: "https://www.acchiardo.com/" },
+          { name: "Fenocchio", tag: "мороженое", area: "Place Rossetti", why: "Легкий финал первого вечера в Ницце.", url: "https://www.fenocchio.fr/" }
+        ]
+      },
+      14: {
+        note: "В Эзе и Монако цены легко улетают вверх. Здесь важно заранее выбрать: красивый вид, рынок или большой гастро-жест.",
+        items: [
+          { name: "Café du Jardin", tag: "вид в Эзе", area: "Chèvre d'Or", why: "Более расслабленный вариант при легендарном Château de la Chèvre d'Or и видах на море.", url: "https://www.chevredor.com/restaurants-bars/cafe-du-jardin/" },
+          { name: "Château Eza", tag: "особый обед", area: "Eze Village", why: "Дорогой, но очень видовой вариант в самом Эзе.", url: "https://www.chateaueza.com/restaurant-eze/" },
+          { name: "Marché de la Condamine", tag: "быстро и локально", area: "Monaco", why: "Более земной способ поесть в Монако без ресторанной церемонии.", url: "https://www.visitmonaco.com/en/place/markets/76/condamine-market" },
+          { name: "Café de Paris Monte-Carlo", tag: "культовое", area: "Casino Square", why: "Историческая точка у казино; идти за местом и сценой Monte-Carlo.", url: "https://www.montecarlosbm.com/en/restaurant-monaco/the-cafe-de-paris" }
+        ]
+      },
+      15: {
+        note: "Основа дня — купленные билеты в Villa Ephrussi de Rothschild; после виллы и садов можно продолжить прогулкой по Кап-Ферра или морем в Вильфранше.",
+        items: [
+          { name: "Le Plongeoir", tag: "вид на море", area: "Nice port", why: "Эффектная точка на скале у моря; лучше для особого обеда или ужина.", url: "https://leplongeoir.com/" },
+          { name: "La Mère Germaine", tag: "Вильфранш", area: "Villefranche-sur-Mer", why: "Классика у воды для морского обеда в красивой бухте.", url: "https://www.meregermaine.com/" },
+          { name: "Mayssa Beach", tag: "терраса", area: "Villefranche-sur-Mer", why: "Видовая пауза у бухты, если хочется неформально, но красиво.", url: "https://www.mayssabeach.com/" },
+          { name: "Paloma Beach", tag: "Кап-Ферра", area: "Saint-Jean-Cap-Ferrat", why: "Хорошо сочетается с прогулкой по Кап-Ферра в хорошую погоду.", url: "https://www.paloma-beach.com/" }
+        ]
+      },
+      16: {
+        note: "День возвращения: выбирайте еду рядом с вокзалом или отелем, без дальних пересадок.",
+        items: [
+          { name: "Le Train Bleu", tag: "культовое", area: "Gare de Lyon", why: "Исторический ресторан вокзала, идеально если приезжаете на Gare de Lyon.", url: "https://www.le-train-bleu.com/" },
+          { name: "L'Européen", tag: "у вокзала", area: "Gare de Lyon", why: "Брассерия рядом с вокзалом, проще для ужина после дороги.", url: "https://www.leuropeen.paris/" },
+          { name: "Ground Control", tag: "неформально", area: "рядом с Gare de Lyon", why: "Много форматов еды и напитков, удобно если не хочется бронировать ресторан.", url: "https://www.groundcontrolparis.com/" }
+        ]
+      },
+      17: {
+        note: "Страсбург теперь с ночёвкой в Эльзасе: еду лучше держать около собора, Petite France и каналов, а ужин выбирать с учетом места ночёвки.",
+        items: [
+          { name: "Maison Kammerzell", tag: "культовое", area: "у собора", why: "Фахверковая классика рядом с собором: туристично, но очень по месту.", url: "https://www.maison-kammerzell.com/" },
+          { name: "La Corde à Linge", tag: "обед", area: "Petite France", why: "Практичный обед в самом красивом квартале Страсбурга.", url: "https://www.lacordealinge.com/" },
+          { name: "Au Pont Corbeau", tag: "winstub", area: "центр", why: "Классический эльзасский формат с более локальным характером.", url: "https://aupontcorbeau.fr/" },
+          { name: "Christian", tag: "десерт", area: "у собора", why: "Хорошая остановка на кофе и сладкое между собором и старым городом.", url: "https://www.christian.fr/" }
+        ]
+      },
+      18: {
+        note: "Кольмар идёт сразу после Страсбурга: держите еду в старом городе и около Petite Venise, без лишних переездов по региону.",
+        items: [
+          { name: "Wistub Brenner", tag: "эльзасская классика", area: "Petite Venise", why: "Классический winstub рядом с самой красивой частью Кольмара.", url: "https://www.wistub-brenner.fr/" },
+          { name: "JY'S", tag: "гастро", area: "Colmar", why: "Дорогой гастрономический вариант у воды, если хочется сделать день особенным.", url: "https://www.jean-yves-schillinger.com/" },
+          { name: "La Maison des Têtes", tag: "исторический адрес", area: "старый город", why: "Сильный вариант в историческом здании, если нужна красивая пауза в центре.", url: "https://www.maisondestetes.com/" },
+          { name: "Le Fer Rouge", tag: "winstub", area: "центр", why: "Понятный эльзасский формат для обеда без ухода от маршрута по старому городу.", url: "https://www.wistub-fer-rouge.com/" }
+        ]
+      },
+      19: {
+        note: "Финальный ужин лучше бронировать заранее и выбирать по настроению: классика, морепродукты, винный бар или bouillon.",
+        items: [
+          { name: "Bistrot Paul Bert", tag: "финальная классика", area: "11-й округ", why: "Один из самых любимых классических бистро Парижа; бронировать сильно заранее.", url: "https://www.vogue.com/article/best-restaurants-in-paris" },
+          { name: "Clamato", tag: "морепродукты", area: "11-й округ", why: "Более современный и живой вариант для финального вечера без тяжелой классики.", url: "https://www.clamato-charonne.fr/" },
+          { name: "Frenchie Bar à Vins", tag: "винный бар", area: "Sentier", why: "Удобный формат sharing plates и вина, если хочется неформальный финал.", url: "https://www.frenchie-ruedunil.com/" },
+          { name: "Bouillon République", tag: "демократично", area: "République", why: "Если хочется французской классики без дорогого финального счета.", url: "https://bouillonlesite.com/bouillon-republique" }
+        ]
+      },
+      20: {
+        note: "Еда в день вылета должна зависеть от времени рейса. Главное - не уезжать далеко от багажа и транспорта.",
+        items: [
+          { name: "Le Train Bleu", tag: "если Gare de Lyon", area: "вокзал", why: "Красивый прощальный завтрак/обед, если логистика проходит через Gare de Lyon.", url: "https://www.le-train-bleu.com/" },
+          { name: "Bouillon Chartier", tag: "если есть время", area: "Париж", why: "Практичная финальная французская классика без сложной брони.", url: "https://www.bouillon-chartier.com/" },
+          { name: "Paul / Eric Kayser / Pret", tag: "если аэропорт", area: "аэропорт/вокзал", why: "На день вылета лучше иметь запасной быстрый вариант, чем рискованный ресторан.", url: "https://www.parisaeroport.fr/en/passengers/shops/restaurants" }
+        ]
+      }
+    };
+
+    const filters = [
+      { id: "all", label: "Все дни" },
+      { id: "paris", label: "Париж" },
+      { id: "normandy", label: "Нормандия" },
+      { id: "netherlands", label: "Брюссель / Амстердам" },
+      { id: "east", label: "Эльзас / Бургундия" },
+      { id: "riviera", label: "Ницца" },
+      { id: "return", label: "Финал" },
+      { id: "notes", label: "С заметками" }
+    ];
+
+    const sceneSvg = {
+      paris: skyScene("Париж", "M140 260 L175 80 L210 260 M158 178 L192 178 M150 218 L200 218 M125 260 L225 260", "#2f6f8f"),
+      eiffel: skyScene("Эйфелева башня", "M130 284 L180 58 L230 284 M151 170 L209 170 M142 226 L218 226 M116 284 L244 284", "#16475f"),
+      museum: museumScene("Лувр", "#6d638e"),
+      montmartre: basilicaScene("Монмартр", "#b85f4d"),
+      etretat: cliffScene("Этрета", "#4f7b55"),
+      orsay: museumScene("Орсе и Оранжери", "#2f6f8f"),
+      giverny: gardenScene("Живерни", "#4f7b55"),
+      msm: islandScene("Мон-Сен-Мишель", "#b77b23"),
+      versailles: palaceScene("Версаль", "#b77b23"),
+      amsterdam: canalScene("Амстердам", "#386b7f"),
+      canals: canalScene("Каналы", "#2f6f8f"),
+      strasbourg: timberScene("Страсбург", "#b85f4d"),
+      burgundy: vineyardScene("Бургундия", "#6d638e"),
+      nice: rivieraScene("Ницца", "#2f6f8f"),
+      "nice-old": rivieraScene("Vieux Nice", "#b85f4d"),
+      monaco: monacoScene("Эз и Монако", "#b77b23"),
+      train: trainScene("Возвращение", "#386b7f"),
+      avignon: avignonScene("Париж или Авиньон", "#b77b23"),
+      "paris-evening": skyScene("Финальный Париж", "M134 274 C154 236 194 236 214 274 M126 274 L222 274 M174 274 L174 126 M144 158 L204 158", "#b85f4d"),
+      departure: trainScene("Отъезд", "#4f7b55")
+    };
+
+    const wikiPhotos = {
+          "Аэропорт": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Paris_A%C3%A9roport_logo.svg/960px-Paris_A%C3%A9roport_logo.svg.png",
+                "page": "https://en.wikipedia.org/wiki/Charles_de_Gaulle_Airport",
+                "credit": "Wikipedia: Charles de Gaulle Airport"
+          },
+          "Подходящий отель": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Livorno_-_Hotel_Palazzo_-_2025-09-29_20-09-38_001.jpg/960px-Livorno_-_Hotel_Palazzo_-_2025-09-29_20-09-38_001.jpg",
+                "page": "https://en.wikipedia.org/wiki/Hotel",
+                "credit": "Wikipedia: Hotel"
+          },
+          "Квартал у отеля": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/P1010244_Paris_Ier_Rue_de_Rivoli_reductwk.JPG/960px-P1010244_Paris_Ier_Rue_de_Rivoli_reductwk.JPG",
+                "page": "https://en.wikipedia.org/wiki/Rue_de_Rivoli",
+                "credit": "Wikipedia: Rue de Rivoli"
+          },
+          "Эйфелева башня": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg/960px-Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg",
+                "page": "https://en.wikipedia.org/wiki/Eiffel_Tower",
+                "credit": "Wikipedia: Eiffel Tower"
+          },
+          "Champ de Mars": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/MG-Paris-Champ_de_Mars.jpg/960px-MG-Paris-Champ_de_Mars.jpg",
+                "page": "https://en.wikipedia.org/wiki/Champ_de_Mars",
+                "credit": "Wikipedia: Champ de Mars"
+          },
+          "Les Invalides": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/H%C3%B4tel_des_Invalides_from_the_Eiffel_Tower%2C_23_July_2009.jpg/960px-H%C3%B4tel_des_Invalides_from_the_Eiffel_Tower%2C_23_July_2009.jpg",
+                "page": "https://en.wikipedia.org/wiki/Les_Invalides",
+                "credit": "Wikipedia: Les Invalides"
+          },
+          "Pont Alexandre III": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Pont_Alexandre_III_depuis_pont_de_la_Concorde_Paris.jpg/960px-Pont_Alexandre_III_depuis_pont_de_la_Concorde_Paris.jpg",
+                "page": "https://en.wikipedia.org/wiki/Pont_Alexandre_III",
+                "credit": "Wikipedia: Pont Alexandre III"
+          },
+          "Jardin du Luxembourg": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Jardin_du_Luxembourg.JPG/960px-Jardin_du_Luxembourg.JPG",
+                "page": "https://commons.wikimedia.org/wiki/File:Jardin_du_Luxembourg.JPG",
+                "credit": "Wikimedia Commons: Jardin du Luxembourg"
+          },
+          "Saint-Germain-des-Pres": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Abbaye_de_Saint-Germain-des-Pr%C3%A9s_140131_1.jpg/960px-Abbaye_de_Saint-Germain-des-Pr%C3%A9s_140131_1.jpg",
+                "page": "https://en.wikipedia.org/wiki/Saint-Germain-des-Pr%C3%A9s",
+                "credit": "Wikipedia: Saint-Germain-des-Prés"
+          },
+          "Cour Carree": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Plan_of_medieval_Louvre_from_Berty_with_overlay_based_on_Hautecoeur.jpg/960px-Plan_of_medieval_Louvre_from_Berty_with_overlay_based_on_Hautecoeur.jpg",
+                "page": "https://en.wikipedia.org/wiki/Cour_Carr%C3%A9e",
+                "credit": "Wikipedia: Cour Carrée"
+          },
+          "Лувр": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Louvre_Museum_Wikimedia_Commons.jpg/960px-Louvre_Museum_Wikimedia_Commons.jpg",
+                "page": "https://en.wikipedia.org/wiki/Louvre",
+                "credit": "Wikipedia: Louvre"
+          },
+          "Jardin des Tuileries": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Crowd_in_the_Jardin_des_Tuileries%2C_Paris_July_2014.jpg/960px-Crowd_in_the_Jardin_des_Tuileries%2C_Paris_July_2014.jpg",
+                "page": "https://en.wikipedia.org/wiki/Tuileries_Garden",
+                "credit": "Wikipedia: Tuileries Garden"
+          },
+          "Ile de la Cite": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/%C3%8Ele_de_la_Cit%C3%A9_shortly_before_sunrise%2C_West_View_140320_1.jpg/960px-%C3%8Ele_de_la_Cit%C3%A9_shortly_before_sunrise%2C_West_View_140320_1.jpg",
+                "page": "https://en.wikipedia.org/wiki/%C3%8Ele_de_la_Cit%C3%A9",
+                "credit": "Wikipedia: Île de la Cité"
+          },
+          "Notre-Dame de Paris": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Notre-Dame_de_Paris%2C_4_October_2017.jpg/960px-Notre-Dame_de_Paris%2C_4_October_2017.jpg",
+                "page": "https://en.wikipedia.org/wiki/Notre-Dame_de_Paris",
+                "credit": "Wikipedia: Notre-Dame de Paris"
+          },
+          "Shakespeare and Company": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Shakespeare_and_Company_bookstore%2C_Paris_13_August_2013.jpg/960px-Shakespeare_and_Company_bookstore%2C_Paris_13_August_2013.jpg",
+                "page": "https://en.wikipedia.org/wiki/Shakespeare_and_Company_(bookstore)",
+                "credit": "Wikipedia: Shakespeare and Company (bookstore)"
+          },
+          "Rue Mouffetard": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Street_market_rue_Mouffetard_St_Medard_dsc00727.jpg/960px-Street_market_rue_Mouffetard_St_Medard_dsc00727.jpg",
+                "page": "https://en.wikipedia.org/wiki/Rue_Mouffetard",
+                "credit": "Wikipedia: Rue Mouffetard"
+          },
+          "Basilique du Sacre-Coeur": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Le_sacre_coeur.jpg/960px-Le_sacre_coeur.jpg",
+                "page": "https://en.wikipedia.org/wiki/Sacr%C3%A9-C%C5%93ur,_Paris",
+                "credit": "Wikipedia: Sacré-Cœur, Paris"
+          },
+          "Place du Tertre": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Restaurants%2C_Place_du_Tertre%2C_Paris_30_September_2019.jpg/960px-Restaurants%2C_Place_du_Tertre%2C_Paris_30_September_2019.jpg",
+                "page": "https://en.wikipedia.org/wiki/Place_du_Tertre",
+                "credit": "Wikipedia: Place du Tertre"
+          },
+          "Le Consulat": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/View_from_Notre-Dame_de_Paris%2C_24_June_2014_004.jpg/960px-View_from_Notre-Dame_de_Paris%2C_24_June_2014_004.jpg",
+                "page": "https://en.wikipedia.org/wiki/Montmartre",
+                "credit": "Wikipedia: Montmartre"
+          },
+          "Moulin Rouge": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Moulin_Rouge%2C_17_April_2011.jpg/960px-Moulin_Rouge%2C_17_April_2011.jpg",
+                "page": "https://en.wikipedia.org/wiki/Moulin_Rouge",
+                "credit": "Wikipedia: Moulin Rouge"
+          },
+          "Porte d'Aval": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Vue_d%27%C3%89tretat.jpg/960px-Vue_d%27%C3%89tretat.jpg",
+                "page": "https://en.wikipedia.org/wiki/%C3%89tretat",
+                "credit": "Wikipedia: Étretat"
+          },
+          "Falaise d'Amont": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Vue_d%27%C3%89tretat.jpg/960px-Vue_d%27%C3%89tretat.jpg",
+                "page": "https://en.wikipedia.org/wiki/%C3%89tretat",
+                "credit": "Wikipedia: Étretat"
+          },
+          "Les Jardins d'Etretat": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Vue_d%27%C3%89tretat.jpg/960px-Vue_d%27%C3%89tretat.jpg",
+                "page": "https://en.wikipedia.org/wiki/%C3%89tretat",
+                "credit": "Wikipedia: Étretat"
+          },
+          "Etretat Beach": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Vue_d%27%C3%89tretat.jpg/960px-Vue_d%27%C3%89tretat.jpg",
+                "page": "https://en.wikipedia.org/wiki/%C3%89tretat",
+                "credit": "Wikipedia: Étretat"
+          },
+          "Le Clos Lupin": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Maurice-leblanc.jpg",
+                "page": "https://en.wikipedia.org/wiki/Maurice_Leblanc",
+                "credit": "Wikipedia: Maurice Leblanc"
+          },
+          "Musee de l'Orangerie": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Mus%C3%A9e_de_l%E2%80%99Orangerie_exterior.JPG/960px-Mus%C3%A9e_de_l%E2%80%99Orangerie_exterior.JPG",
+                "page": "https://en.wikipedia.org/wiki/Mus%C3%A9e_de_l%27Orangerie",
+                "credit": "Wikipedia: Musée de l'Orangerie"
+          },
+          "Musee Rodin": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Le_mus%C3%A9e_Rodin.jpg/960px-Le_mus%C3%A9e_Rodin.jpg",
+                "page": "https://en.wikipedia.org/wiki/Mus%C3%A9e_Rodin",
+                "credit": "Wikipedia: Musée Rodin"
+          },
+          "Jardin des Tuileries / Seine": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Bercy%2C_Paris_01.jpg/960px-Bercy%2C_Paris_01.jpg",
+                "page": "https://en.wikipedia.org/wiki/Seine",
+                "credit": "Wikipedia: Seine"
+          },
+          "Набережные Сены": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Bercy%2C_Paris_01.jpg/960px-Bercy%2C_Paris_01.jpg",
+                "page": "https://en.wikipedia.org/wiki/Seine",
+                "credit": "Wikipedia: Seine"
+          },
+          "Fondation Claude Monet": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/La_maison_de_Claude_Monet_%28Giverny%29_%2848744281997%29.jpg/960px-La_maison_de_Claude_Monet_%28Giverny%29_%2848744281997%29.jpg",
+                "page": "https://en.wikipedia.org/wiki/Fondation_Monet_in_Giverny",
+                "credit": "Wikipedia: Fondation Monet in Giverny"
+          },
+          "Пруд с кувшинками": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Reflections_of_Clouds_on_the_Water-Lily_Pond.jpg/960px-Reflections_of_Clouds_on_the_Water-Lily_Pond.jpg",
+                "page": "https://en.wikipedia.org/wiki/Water_Lilies_(Monet_series)",
+                "credit": "Wikipedia: Water Lilies (Monet series)"
+          },
+          "Hôtel Vert": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Mont-Saint-Michel_vu_du_ciel.jpg/960px-Mont-Saint-Michel_vu_du_ciel.jpg",
+                "page": "https://en.wikipedia.org/wiki/Mont-Saint-Michel",
+                "credit": "Wikipedia: Mont-Saint-Michel"
+          },
+          "Вечерний вид на Мон-Сен-Мишель": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Mont-Saint-Michel_vu_du_ciel.jpg/960px-Mont-Saint-Michel_vu_du_ciel.jpg",
+                "page": "https://en.wikipedia.org/wiki/Mont-Saint-Michel",
+                "credit": "Wikipedia: Mont-Saint-Michel"
+          },
+          "Abbaye du Mont-Saint-Michel": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/FranceNormandieLeMontSaintMichelAbbaye.jpg/960px-FranceNormandieLeMontSaintMichelAbbaye.jpg",
+                "page": "https://en.wikipedia.org/wiki/Mont-Saint-Michel_Abbey",
+                "credit": "Wikipedia: Mont-Saint-Michel Abbey"
+          },
+          "Grande Rue": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Mont-Saint-Michel_vu_du_ciel.jpg/960px-Mont-Saint-Michel_vu_du_ciel.jpg",
+                "page": "https://en.wikipedia.org/wiki/Mont-Saint-Michel",
+                "credit": "Wikipedia: Mont-Saint-Michel"
+          },
+          "Mont-Saint-Michel Bay": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Mont_st_michel_aerial.jpg/960px-Mont_st_michel_aerial.jpg",
+                "page": "https://en.wikipedia.org/wiki/Mont-Saint-Michel_Bay",
+                "credit": "Wikipedia: Mont-Saint-Michel Bay"
+          },
+          "Gare de Rennes": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Gare_de_Rennes_-_August_2024.jpg/960px-Gare_de_Rennes_-_August_2024.jpg",
+                "page": "https://en.wikipedia.org/wiki/Rennes_station",
+                "credit": "Wikipedia: Rennes station"
+          },
+          "Chateau de Versailles": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Vue_a%C3%A9rienne_du_domaine_de_Versailles_par_ToucanWings_-_Creative_Commons_By_Sa_3.0_-_081.jpg/960px-Vue_a%C3%A9rienne_du_domaine_de_Versailles_par_ToucanWings_-_Creative_Commons_By_Sa_3.0_-_081.jpg",
+                "page": "https://en.wikipedia.org/wiki/Palace_of_Versailles",
+                "credit": "Wikipedia: Palace of Versailles"
+          },
+          "Galerie des Glaces": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Chateau_Versailles_Galerie_des_Glaces.jpg/960px-Chateau_Versailles_Galerie_des_Glaces.jpg",
+                "page": "https://en.wikipedia.org/wiki/Hall_of_Mirrors",
+                "credit": "Wikipedia: Hall of Mirrors"
+          },
+          "Gardens of Versailles": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Vue_a%C3%A9rienne_du_domaine_de_Versailles_le_20_ao%C3%BBt_2014_par_ToucanWings_-_Creative_Commons_By_Sa_3.0_-_22.jpg/960px-Vue_a%C3%A9rienne_du_domaine_de_Versailles_le_20_ao%C3%BBt_2014_par_ToucanWings_-_Creative_Commons_By_Sa_3.0_-_22.jpg",
+                "page": "https://en.wikipedia.org/wiki/Gardens_of_Versailles",
+                "credit": "Wikipedia: Gardens of Versailles"
+          },
+          "Grand Trianon": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/78-Versailles-grand-Trianon-jardins.jpg/960px-78-Versailles-grand-Trianon-jardins.jpg",
+                "page": "https://en.wikipedia.org/wiki/Grand_Trianon",
+                "credit": "Wikipedia: Grand Trianon"
+          },
+          "Hameau de la Reine": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Marie_Antoinette_amusement_at_Versailles.JPG/960px-Marie_Antoinette_amusement_at_Versailles.JPG",
+                "page": "https://en.wikipedia.org/wiki/Hameau_de_la_Reine",
+                "credit": "Wikipedia: Hameau de la Reine"
+          },
+          "Amsterdam Centraal": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Amsterdam_Centraal_2016-09-13.jpg/960px-Amsterdam_Centraal_2016-09-13.jpg",
+                "page": "https://en.wikipedia.org/wiki/Amsterdam_Centraal_station",
+                "credit": "Wikipedia: Amsterdam Centraal station"
+          },
+          "Damrak": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Corona_-_Empty_streets_in_Amsterdam_-_Damrak.jpg/960px-Corona_-_Empty_streets_in_Amsterdam_-_Damrak.jpg",
+                "page": "https://en.wikipedia.org/wiki/Damrak",
+                "credit": "Wikipedia: Damrak"
+          },
+          "Dam Square": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Dam_Square_2024.jpg/960px-Dam_Square_2024.jpg",
+                "page": "https://en.wikipedia.org/wiki/Dam_Square",
+                "credit": "Wikipedia: Dam Square"
+          },
+          "De 9 Straatjes": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Brug_24_in_de_Hartenstraat_over_de_Herengracht_foto_2.jpg/960px-Brug_24_in_de_Hartenstraat_over_de_Herengracht_foto_2.jpg",
+                "page": "https://en.wikipedia.org/wiki/Negen_Straatjes",
+                "credit": "Wikipedia: Negen Straatjes"
+          },
+          "Jordaan": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Eerste_Leliedwarsstraat.jpg/960px-Eerste_Leliedwarsstraat.jpg",
+                "page": "https://en.wikipedia.org/wiki/Jordaan",
+                "credit": "Wikipedia: Jordaan"
+          },
+          "Vondelpark": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Amsterdam%2C_Vondelpark%2C_at_the_pond-2.jpg/960px-Amsterdam%2C_Vondelpark%2C_at_the_pond-2.jpg",
+                "page": "https://en.wikipedia.org/wiki/Vondelpark",
+                "credit": "Wikipedia: Vondelpark"
+          },
+          "Noordermarkt": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Amsterdam_%5Edutchphotowalk_-_panoramio_%285%29.jpg/960px-Amsterdam_%5Edutchphotowalk_-_panoramio_%285%29.jpg",
+                "page": "https://en.wikipedia.org/wiki/Noordermarkt",
+                "credit": "Wikipedia: Noordermarkt"
+          },
+          "Prinsengracht": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Prinsengracht.jpg/960px-Prinsengracht.jpg",
+                "page": "https://en.wikipedia.org/wiki/Prinsengracht",
+                "credit": "Wikipedia: Prinsengracht"
+          },
+          "Canal cruise": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Imagen_de_los_canales_conc%C3%A9ntricos_en_%C3%81msterdam.png/960px-Imagen_de_los_canales_conc%C3%A9ntricos_en_%C3%81msterdam.png",
+                "page": "https://en.wikipedia.org/wiki/Canals_of_Amsterdam",
+                "credit": "Wikipedia: Canals of Amsterdam"
+          },
+          "Strasbourg Cathedral": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Strasbourg_Cathedral_Exterior_-_Diliff.jpg/960px-Strasbourg_Cathedral_Exterior_-_Diliff.jpg",
+                "page": "https://en.wikipedia.org/wiki/Strasbourg_Cathedral",
+                "credit": "Wikipedia: Strasbourg Cathedral"
+          },
+          "Maison Kammerzell": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Strassburg_um_1900.jpg/960px-Strassburg_um_1900.jpg",
+                "page": "https://en.wikipedia.org/wiki/Kammerzell_House",
+                "credit": "Wikipedia: Kammerzell House"
+          },
+          "Petite France": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Strasbourg_Petite-France_place_Benjamin-Zix_septembre_2015.jpg/960px-Strasbourg_Petite-France_place_Benjamin-Zix_septembre_2015.jpg",
+                "page": "https://en.wikipedia.org/wiki/Petite_France,_Strasbourg",
+                "credit": "Wikipedia: Petite France, Strasbourg"
+          },
+          "Barrage Vauban": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Strasbourg_Barrage_Vauban_apr%C3%A8s_restauration_2012-01.jpg/960px-Strasbourg_Barrage_Vauban_apr%C3%A8s_restauration_2012-01.jpg",
+                "page": "https://en.wikipedia.org/wiki/Barrage_Vauban",
+                "credit": "Wikipedia: Barrage Vauban"
+          },
+          "Dijon Station": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Gare_de_Dijon-Ville_Jan_2011.JPG/960px-Gare_de_Dijon-Ville_Jan_2011.JPG",
+                "page": "https://en.wikipedia.org/wiki/Dijon-Ville_station",
+                "credit": "Wikipedia: Dijon-Ville station"
+          },
+          "Palais des Ducs de Bourgogne": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Dijon_-_Palais_des_Ducs_et_des_%C3%89tats_de_Bourgogne_-_01.jpg/960px-Dijon_-_Palais_des_Ducs_et_des_%C3%89tats_de_Bourgogne_-_01.jpg",
+                "page": "https://en.wikipedia.org/wiki/Palace_of_the_Dukes_of_Burgundy",
+                "credit": "Wikipedia: Palace of the Dukes of Burgundy"
+          },
+          "Les Halles de Dijon": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Dijon_-_Puits_de_Mo%C3%AFse_-_02.jpg/960px-Dijon_-_Puits_de_Mo%C3%AFse_-_02.jpg",
+                "page": "https://en.wikipedia.org/wiki/Dijon",
+                "credit": "Wikipedia: Dijon"
+          },
+          "Route des Grands Crus": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/9/92/Route_des_Grand_Crus.jpg",
+                "page": "https://en.wikipedia.org/wiki/Route_des_Grands_Crus",
+                "credit": "Wikipedia: Route des Grands Crus"
+          },
+          "Hospices de Beaune": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Beaune_-_H%C3%B4tel-Dieu_-_Cour_-_05.jpg/960px-Beaune_-_H%C3%B4tel-Dieu_-_Cour_-_05.jpg",
+                "page": "https://en.wikipedia.org/wiki/Hospices_de_Beaune",
+                "credit": "Wikipedia: Hospices de Beaune"
+          },
+          "Gare de Lyon": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Gare_De_Lyon_Paris.jpg/960px-Gare_De_Lyon_Paris.jpg",
+                "page": "https://en.wikipedia.org/wiki/Gare_de_Lyon",
+                "credit": "Wikipedia: Gare de Lyon"
+          },
+          "Nice Ville": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Nice-Ville_Station_2014.jpg/960px-Nice-Ville_Station_2014.jpg",
+                "page": "https://en.wikipedia.org/wiki/Nice-Ville_station",
+                "credit": "Wikipedia: Nice-Ville station"
+          },
+          "Promenade des Anglais": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/CollineDuChateau_NiceFrance2022.png/960px-CollineDuChateau_NiceFrance2022.png",
+                "page": "https://en.wikipedia.org/wiki/Promenade_des_Anglais",
+                "credit": "Wikipedia: Promenade des Anglais"
+          },
+          "Place Massena": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Place-Mass%C3%A9na_01.jpg/960px-Place-Mass%C3%A9na_01.jpg",
+                "page": "https://en.wikipedia.org/wiki/Place_Mass%C3%A9na",
+                "credit": "Wikipedia: Place Masséna"
+          },
+          "Villefranche-sur-Mer": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Villefranche-s-Mer-VueSurLeVillage-20071102.jpg/960px-Villefranche-s-Mer-VueSurLeVillage-20071102.jpg",
+                "page": "https://en.wikipedia.org/wiki/Villefranche-sur-Mer",
+                "credit": "Wikipedia: Villefranche-sur-Mer"
+          },
+          "Saint-Jean-Cap-Ferrat": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Pointe_Sainte-Hospice.jpg/960px-Pointe_Sainte-Hospice.jpg",
+                "page": "https://en.wikipedia.org/wiki/Saint-Jean-Cap-Ferrat",
+                "credit": "Wikipedia: Saint-Jean-Cap-Ferrat"
+          },
+          "Eze Village": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/%C3%88ze_Alpes_Maritimes_France_%28261171069%29.jpeg/960px-%C3%88ze_Alpes_Maritimes_France_%28261171069%29.jpeg",
+                "page": "https://en.wikipedia.org/wiki/%C3%88ze",
+                "credit": "Wikipedia: Èze"
+          },
+          "Jardin Exotique d'Eze": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Image-eze_vue_du_jardin_botanique.jpg/960px-Image-eze_vue_du_jardin_botanique.jpg",
+                "page": "https://en.wikipedia.org/wiki/Jardin_botanique_d%27%C3%88ze",
+                "credit": "Wikipedia: Jardin botanique d'Èze"
+          },
+          "Monaco-Ville": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Fuerstenhof_zu_Monaco.jpg/960px-Fuerstenhof_zu_Monaco.jpg",
+                "page": "https://en.wikipedia.org/wiki/Monaco-Ville",
+                "credit": "Wikipedia: Monaco-Ville"
+          },
+          "Prince's Palace": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/%D0%9C%D0%9E%D0%9D%D0%90%D0%9A%D0%9E_-_panoramio_%284%29.jpg/960px-%D0%9C%D0%9E%D0%9D%D0%90%D0%9A%D0%9E_-_panoramio_%284%29.jpg",
+                "page": "https://en.wikipedia.org/wiki/Prince%27s_Palace_of_Monaco",
+                "credit": "Wikipedia: Prince's Palace of Monaco"
+          },
+          "Port Hercule": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Port_Hercules%2C_Monaco.jpg/960px-Port_Hercules%2C_Monaco.jpg",
+                "page": "https://en.wikipedia.org/wiki/Port_Hercules",
+                "credit": "Wikipedia: Port Hercules"
+          },
+          "Casino Square": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/The_Casino%2C_Monte_Carlo_-_panoramio_cropped.jpg/960px-The_Casino%2C_Monte_Carlo_-_panoramio_cropped.jpg",
+                "page": "https://en.wikipedia.org/wiki/Monte_Carlo_Casino",
+                "credit": "Wikipedia: Monte Carlo Casino"
+          },
+          "Paris buffer evening": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg/960px-La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg",
+                "page": "https://en.wikipedia.org/wiki/Paris",
+                "credit": "Wikipedia: Paris"
+          },
+          "Avignon TGV": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Avignon_TGV_train_station_sky_view.jpg/960px-Avignon_TGV_train_station_sky_view.jpg",
+                "page": "https://en.wikipedia.org/wiki/Avignon_TGV_station",
+                "credit": "Wikipedia: Avignon TGV station"
+          },
+          "Palais des Papes": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Avignon_Palais_des_Papes_2013.jpg/960px-Avignon_Palais_des_Papes_2013.jpg",
+                "page": "https://en.wikipedia.org/wiki/Palais_des_Papes",
+                "credit": "Wikipedia: Palais des Papes"
+          },
+          "Pont d'Avignon": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/%22Sur_le_Pont_d%27Avignon_on_y_danse%22_is_the_famous_song%2C_but_now_we_see_only_many_tourist_just_standing_there_-_panoramio.jpg/960px-%22Sur_le_Pont_d%27Avignon_on_y_danse%22_is_the_famous_song%2C_but_now_we_see_only_many_tourist_just_standing_there_-_panoramio.jpg",
+                "page": "https://en.wikipedia.org/wiki/Pont_Saint-B%C3%A9n%C3%A9zet",
+                "credit": "Wikipedia: Pont Saint-Bénézet"
+          },
+          "Place de l'Horloge": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Vue_a%C3%A9rienne_2_JP_Campomar.jpg/960px-Vue_a%C3%A9rienne_2_JP_Campomar.jpg",
+                "page": "https://en.wikipedia.org/wiki/Avignon",
+                "credit": "Wikipedia: Avignon"
+          },
+          "Rocher des Doms": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Vue_a%C3%A9rienne_2_JP_Campomar.jpg/960px-Vue_a%C3%A9rienne_2_JP_Campomar.jpg",
+                "page": "https://en.wikipedia.org/wiki/Avignon",
+                "credit": "Wikipedia: Avignon"
+          },
+          "Le Marais": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Paris_Hotel_de_Sens_dsc04028.jpg/960px-Paris_Hotel_de_Sens_dsc04028.jpg",
+                "page": "https://en.wikipedia.org/wiki/The_Marais",
+                "credit": "Wikipedia: The Marais"
+          },
+          "Galeries Lafayette": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/GaleriesLafayetteNuit.jpg/960px-GaleriesLafayetteNuit.jpg",
+                "page": "https://en.wikipedia.org/wiki/Galeries_Lafayette",
+                "credit": "Wikipedia: Galeries Lafayette"
+          },
+          "Seine evening": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Bercy%2C_Paris_01.jpg/960px-Bercy%2C_Paris_01.jpg",
+                "page": "https://en.wikipedia.org/wiki/Seine",
+                "credit": "Wikipedia: Seine"
+          },
+          "Финальный ресторан": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Caf%C3%A9_de_la_Paix_Paris_France.JPG/960px-Caf%C3%A9_de_la_Paix_Paris_France.JPG",
+                "page": "https://en.wikipedia.org/wiki/Parisian_caf%C3%A9",
+                "credit": "Wikipedia: Parisian café"
+          },
+          "Отель": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Livorno_-_Hotel_Palazzo_-_2025-09-29_20-09-38_001.jpg/960px-Livorno_-_Hotel_Palazzo_-_2025-09-29_20-09-38_001.jpg",
+                "page": "https://en.wikipedia.org/wiki/Hotel",
+                "credit": "Wikipedia: Hotel"
+          },
+          "Аэропорт или вокзал": {
+                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Paris_A%C3%A9roport_logo.svg/960px-Paris_A%C3%A9roport_logo.svg.png",
+                "page": "https://en.wikipedia.org/wiki/Charles_de_Gaulle_Airport",
+                "credit": "Wikipedia: Charles de Gaulle Airport"
+          }
+    };
+
+    const notesKey = "france-trip-guide-notes-2026-v2";
+    const previousNotesKey = "france-trip-guide-notes-2026-v1";
+    let notes = loadNotes();
+    let selectedDay = 1;
+    let activeFilter = "all";
+    let searchTerm = "";
+
+    const els = {
+      tabs: document.getElementById("tabs"),
+      dayList: document.getElementById("dayList"),
+      detail: document.getElementById("detail"),
+      search: document.getElementById("search"),
+      toast: document.getElementById("toast")
+    };
+
+    function loadNotes() {
+      try {
+        const migrated = JSON.parse(localStorage.getItem(previousNotesKey) || "{}");
+        const stored = JSON.parse(localStorage.getItem(notesKey) || "{}");
+        return { ...defaultNotes, ...migrated, ...stored };
+      } catch {
+        return { ...defaultNotes };
+      }
+    }
+
+    function saveNotes() {
+      localStorage.setItem(notesKey, JSON.stringify(notes));
+    }
+
+    function renderTabs() {
+      els.tabs.innerHTML = filters.map(filter => `
+        <button class="tab ${filter.id === activeFilter ? "active" : ""}" type="button" data-filter="${filter.id}">
+          ${filter.label}${filter.id === "notes" ? ` (${noteCount()})` : ""}
+        </button>
+      `).join("");
+    }
+
+    function noteCount() {
+      return Object.values(notes).filter(value => value && value.trim()).length;
+    }
+
+    function filteredDays() {
+      const term = searchTerm.trim().toLowerCase();
+      return tripDays.filter(day => {
+        const matchesFilter = activeFilter === "all"
+          || day.region === activeFilter
+          || (activeFilter === "notes" && notes[day.id] && notes[day.id].trim());
+        const route = routePlans[day.id];
+        const routeText = route ? route.stops.join(" ") : "";
+        const haystack = [
+          day.title, day.date, weekdayFor(day), day.regionLabel, day.base, day.short, day.transfer, day.pace,
+          ...day.focus, ...day.places, ...day.tickets, routeText, notes[day.id] || ""
+        ].join(" ").toLowerCase();
+        return matchesFilter && (!term || haystack.includes(term));
+      });
+    }
+
+    function weekdayFor(day) {
+      return weekdaysByDay[day.id] || "";
+    }
+
+    function renderDayList() {
+      const days = filteredDays();
+      if (!days.length) {
+        els.dayList.innerHTML = `<div class="empty-state">Ничего не найдено. Попробуйте другой фильтр или запрос.</div>`;
+        return;
+      }
+      els.dayList.innerHTML = days.map(day => `
+        <button class="day-card ${day.id === selectedDay ? "active" : ""}" type="button" data-day="${day.id}" data-region="${day.region}">
+          <span class="day-number">${day.id}<span>день</span></span>
+          <span>
+            <h3>${day.title}</h3>
+            <p>${day.date} · ${weekdayFor(day)} · ${day.regionLabel} · ${day.pace}</p>
+            <span class="chips">
+              <span class="chip">${day.base}</span>
+              ${day.lodging ? `<span class="chip note">${day.lodging}</span>` : ""}
+              ${notes[day.id] && notes[day.id].trim() ? `<span class="chip note">есть заметка</span>` : ""}
+            </span>
+          </span>
+        </button>
+      `).join("");
+    }
+
+    function renderDetail() {
+      const day = tripDays.find(item => item.id === selectedDay) || tripDays[0];
+      const noteValue = notes[day.id] || "";
+      els.detail.innerHTML = `
+        <section class="postcard">
+          <div class="postcard-copy">
+            <div class="date-line">
+              <span>День ${day.id}</span>
+              <span>·</span>
+              <span>${day.date} 2026</span>
+              <span>·</span>
+              <span>${weekdayFor(day)}</span>
+              <span>·</span>
+              <span>${day.regionLabel}</span>
+            </div>
+            <h2>${day.title}</h2>
+            <p class="lead">${day.short}</p>
+            <div class="chips">
+              <span class="chip">База: ${day.base}</span>
+              ${day.lodging ? `<span class="chip note">Отель: ${day.lodging}</span>` : ""}
+              <span class="chip">Темп: ${day.pace}</span>
+              <span class="chip">${day.transfer}</span>
+            </div>
+          </div>
+          <div class="visual" aria-hidden="true">${sceneSvg[day.scene] || sceneSvg.paris}</div>
+        </section>
+        <section class="detail-grid">
+          <div class="detail-main">
+            <div class="info-grid">
+              <div class="info"><strong>Формат</strong><span>${day.regionLabel}</span></div>
+              <div class="info"><strong>Ночевка</strong><span>${day.lodging || day.base}</span></div>
+              <div class="info"><strong>День недели</strong><span>${weekdayFor(day)}</span></div>
+              <div class="info"><strong>Ритм</strong><span>${day.pace}</span></div>
+            </div>
+            <p>${day.tip}</p>
+            ${routeSection(day)}
+            ${foodSection(day.id)}
+            ${specialSection(day.id)}
+            ${guideSection(day.id)}
+            ${sourceSection(day.id)}
+            <div class="split-lists">
+              <div class="list-box">
+                <h3>Что делать</h3>
+                <ul>${day.focus.map(item => `<li>${item}</li>`).join("")}</ul>
+              </div>
+              <div class="list-box">
+                <h3>Популярные места</h3>
+                <ul>${day.places.map(item => `<li>${item}</li>`).join("")}</ul>
+              </div>
+              <div class="list-box">
+                <h3>Проверить для билетов</h3>
+                <ul>${day.tickets.map(item => `<li>${item}</li>`).join("")}</ul>
+              </div>
+              <div class="list-box">
+                <h3>Кратко для планирования</h3>
+                <ul>
+                  <li>Дата: ${day.date} 2026, ${weekdayFor(day)}</li>
+                  <li>Маршрут: ${day.transfer}</li>
+                  <li>База дня: ${day.base}</li>
+                  ${day.lodging ? `<li>Отель: ${day.lodging}</li>` : ""}
+                </ul>
+              </div>
+            </div>
+          </div>
+          <aside class="notes-panel">
+            <h3>Заметка к дню ${day.id}</h3>
+            <div class="note-tools">
+              <button class="btn" type="button" data-action="copy-day-note">Копировать день</button>
+              <button class="btn" type="button" data-action="clear-day-note">Очистить</button>
+            </div>
+            <textarea class="note-area" id="noteArea" placeholder="Например: выбрать поезд в 07:52, проверить отель около Gare de Lyon, купить билеты в Лувр на 09:30.">${escapeTextarea(noteValue)}</textarea>
+            <p class="hint">Заметка сохраняется автоматически в этом браузере. Экспорт выше собирает все дни одним блоком.</p>
+            <div class="export-panel" id="exportPanel">
+              <textarea class="export-output" id="exportOutput" readonly></textarea>
+            </div>
+          </aside>
+        </section>
+      `;
+
+      document.getElementById("noteArea").addEventListener("input", event => {
+        notes[day.id] = event.target.value;
+        saveNotes();
+        renderTabs();
+        renderDayList();
+      });
+    }
+
+    function routeSection(day) {
+      const plan = routePlans[day.id];
+      if (!plan) return "";
+      const stops = plan.stops.map((stop, index) => normalizeStop(stop, index));
+      return `
+        <section class="route-planner">
+          <div class="route-head">
+            <div>
+              <h3>Маршрут дня</h3>
+              <p>${escapeHtml(plan.overview)}</p>
+            </div>
+            <span class="route-badge">${escapeHtml(plan.mode)}</span>
+          </div>
+          ${miniRouteSvg(stops, plan.transfer)}
+          <div class="stop-grid">
+            ${stops.map((stop, index) => stopCard(stop, day.id, index)).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function normalizeStop(stop, index) {
+      const title = typeof stop === "string" ? stop : stop.title;
+      const base = placeInfo[title] || {};
+      const override = typeof stop === "string" ? {} : stop;
+      return {
+        title,
+        theme: override.theme || base.theme || "street",
+        why: override.why || base.why || "Стоит оставить как ориентир маршрута и проверить время на месте.",
+        index
+      };
+    }
+
+    function miniRouteSvg(stops, isTransfer) {
+      const count = Math.max(stops.length, 2);
+      const coords = stops.map((stop, index) => {
+        const x = 50 + (index * 820) / (count - 1);
+        const wave = Math.sin(index * 1.18) * 22;
+        const y = 92 + wave + (index % 2 ? 18 : -6);
+        return { x, y };
+      });
+      const path = coords.map((point, index) => `${index ? "L" : "M"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ");
+      return `
+        <svg class="day-route-map" viewBox="0 0 920 190" role="img" aria-label="Схема маршрута выбранного дня">
+          <path class="route-line ${isTransfer ? "transfer" : ""}" d="${path}"></path>
+          ${coords.map((point, index) => {
+            const stop = stops[index];
+            const label = shortLabel(stop.title);
+            return `
+              <g class="route-node" transform="translate(${point.x.toFixed(1)} ${point.y.toFixed(1)})">
+                <circle r="14"></circle>
+                <text x="-4" y="5" text-anchor="middle">${index + 1}</text>
+                <text x="0" y="34" text-anchor="middle">${escapeHtml(label)}</text>
+              </g>
+            `;
+          }).join("")}
+        </svg>
+      `;
+    }
+
+    function stopCard(stop, dayId, index) {
+      return `
+        <article class="stop-card">
+          <div class="stop-photo" aria-hidden="true">${photoThumb(stop, `${dayId}-${index}`)}</div>
+          <div class="stop-copy">
+            <h4>${index + 1}. ${escapeHtml(stop.title)}</h4>
+            <p>${escapeHtml(stop.why)}</p>
+          </div>
+        </article>
+      `;
+    }
+
+    function specialSection(dayId) {
+      const block = specialBlocks[dayId];
+      if (!block) return "";
+      return `
+        <section class="special-block">
+          <h3>${escapeHtml(block.title)}</h3>
+          <p>${escapeHtml(block.text)}</p>
+        </section>
+      `;
+    }
+
+    function foodSection(dayId) {
+      const block = foodPlans[dayId];
+      if (!block) return "";
+      return `
+        <section class="food-block">
+          <h3>Кафе и рестораны по маршруту</h3>
+          <p>${escapeHtml(block.note)}</p>
+          <div class="food-grid">
+            ${block.items.map(item => `
+              <article class="food-card">
+                <h4>${escapeHtml(item.name)} <span class="food-tag">${escapeHtml(item.tag)}</span></h4>
+                <p><strong>${escapeHtml(item.area)}</strong> · ${escapeHtml(item.why)}</p>
+                <a href="${escapeHtml(item.url)}" target="_blank" rel="noreferrer">Проверить меню, часы и бронь</a>
+              </article>
+            `).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function guideSection(dayId) {
+      const block = guideBlocks[dayId];
+      if (!block) return "";
+      return `
+        <section class="guide-block">
+          <h3>${escapeHtml(block.title)}</h3>
+          <p>${escapeHtml(block.advice)}</p>
+          <div class="chips"><span class="chip">${escapeHtml(block.checked)}</span></div>
+          <div class="guide-grid">
+            ${block.candidates.map(candidate => `
+              <div class="guide-card">
+                <strong>${escapeHtml(candidate.name)}</strong>
+                <span>${escapeHtml(candidate.meta)}</span>
+              </div>
+            `).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function sourceSection(dayId) {
+      const links = sourceLinks[dayId];
+      if (!links) return "";
+      return `
+        <section class="source-block">
+          <h3>Источники для проверки</h3>
+          <ul>
+            ${links.map(link => `<li><a href="${escapeHtml(link.url)}" target="_blank" rel="noreferrer">${escapeHtml(link.label)}</a></li>`).join("")}
+          </ul>
+        </section>
+      `;
+    }
+
+    function photoThumb(stop, idSuffix) {
+      const photo = wikiPhotos[stop.title];
+      if (photo?.source) {
+        return `
+          <div class="photo-fallback">${fallbackPhotoSvg(stop, idSuffix)}</div>
+          <img src="${escapeHtml(photo.source)}" alt="${escapeHtml(stop.title)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.stop-photo').classList.add('image-failed')">
+          <a class="photo-credit" href="${escapeHtml(photo.page)}" target="_blank" rel="noreferrer">${escapeHtml(photo.credit)}</a>
+        `;
+      }
+      return fallbackPhotoSvg(stop, idSuffix);
+    }
+
+    function fallbackPhotoSvg(stop, idSuffix) {
+      const colors = themeColors(stop.theme);
+      const id = `grad-${idSuffix}`;
+      return `
+        <svg viewBox="0 0 420 190" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="${id}" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="${colors.sky}"></stop>
+              <stop offset="1" stop-color="${colors.ground}"></stop>
+            </linearGradient>
+          </defs>
+          <rect width="420" height="190" fill="url(#${id})"></rect>
+          <circle cx="342" cy="42" r="23" fill="#f1c66d" opacity="0.9"></circle>
+          ${themeShape(stop.theme, colors.accent)}
+          <path d="M0 154 C72 135, 132 162, 210 142 C286 122, 344 138, 420 116 L420 190 L0 190 Z" fill="${colors.fore}" opacity="0.78"></path>
+          <rect x="14" y="132" width="392" height="42" rx="8" fill="rgba(255,253,248,0.86)"></rect>
+          <text x="24" y="158" fill="#17212b" font-size="18" font-weight="900">${escapeSvgText(shortLabel(stop.title, 34))}</text>
+        </svg>
+      `;
+    }
+
+    function themeColors(theme) {
+      const table = {
+        tower: ["#b9d7df", "#f1dfbc", "#16475f", "#6f9276"],
+        museum: ["#d9e7ea", "#efe5cc", "#6d638e", "#8a9f76"],
+        palace: ["#d8e7e5", "#ecd8aa", "#b77b23", "#6f9276"],
+        cathedral: ["#cfe1e5", "#efe5cc", "#b85f4d", "#7f9a75"],
+        cliff: ["#b9dce5", "#e9dfc6", "#4f7b55", "#5d99ab"],
+        sea: ["#bfe2eb", "#d9c98f", "#2f6f8f", "#4fa3b7"],
+        canal: ["#cfe3e8", "#e7d2aa", "#386b7f", "#6ea5b5"],
+        train: ["#d8e7e5", "#d8c691", "#386b7f", "#747d67"],
+        garden: ["#d8e8d5", "#b7cf91", "#4f7b55", "#7eb4bd"],
+        park: ["#d8e8d5", "#cbd9a3", "#4f7b55", "#6f9276"],
+        cafe: ["#eadfd3", "#f4cfae", "#b85f4d", "#8d6e57"],
+        street: ["#d8e4df", "#efdfc4", "#b85f4d", "#6f9276"],
+        bridge: ["#cfe3e8", "#ead7b1", "#b77b23", "#6ea5b5"],
+        vineyard: ["#d9e4d3", "#cbd99a", "#6d638e", "#6f7f47"],
+        hotel: ["#d7e6e2", "#efe1c2", "#2f6f8f", "#7a9a78"],
+        shopping: ["#e2dde8", "#f0d1d9", "#6d638e", "#b85f4d"]
+      };
+      const [sky, ground, accent, fore] = table[theme] || ["#d9e7ea", "#efe5cc", "#2f6f8f", "#6f9276"];
+      return { sky, ground, accent, fore };
+    }
+
+    function themeShape(theme, accent) {
+      const generic = `<path d="M82 138 L154 80 L226 138 Z M138 138 L246 58 L354 138 Z" fill="${accent}" opacity="0.86"></path>`;
+      const shapes = {
+        tower: `<path d="M160 146 L204 38 L248 146 M178 92 L230 92 M170 120 L238 120 M144 146 L264 146" fill="none" stroke="${accent}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"></path>`,
+        museum: `<path d="M84 136 L336 136 L304 72 L116 72 Z" fill="#fff8eb"></path><path d="M116 72 L210 34 L304 72 Z" fill="${accent}"></path><path d="M130 136 L210 78 L290 136 Z" fill="#cfe3e8" stroke="#fff" stroke-width="5"></path>`,
+        palace: `<path d="M70 134 L350 134 L350 72 L70 72 Z" fill="#fff4dc"></path><path d="M92 72 L328 72 L294 44 L126 44 Z" fill="${accent}"></path><path d="M110 96 L310 96 M110 116 L310 116" stroke="#fff" stroke-width="7"></path>`,
+        cathedral: `<path d="M112 138 L112 70 L164 70 L164 138 Z M178 138 L178 46 L242 46 L242 138 Z M256 138 L256 70 L308 70 L308 138 Z" fill="#fff8eb"></path><path d="M178 46 L210 20 L242 46 Z" fill="${accent}"></path>`,
+        cliff: `<path d="M0 142 L104 76 C136 50, 180 74, 184 116 C198 138, 244 144, 320 112 L420 78 L420 190 L0 190 Z" fill="#efe5cc"></path><path d="M116 78 C144 84, 162 104, 160 130 C136 126, 118 106, 116 78 Z" fill="#b9dce5"></path>`,
+        sea: `<path d="M0 132 C88 102, 142 128, 214 98 C286 70, 346 86, 420 56 L420 190 L0 190 Z" fill="#d9c98f"></path><path d="M0 150 C76 132, 150 152, 220 132 C300 108, 350 124, 420 96 L420 190 L0 190 Z" fill="${accent}" opacity="0.76"></path>`,
+        canal: `<path d="M62 132 L62 72 L116 52 L170 72 L170 132 Z M190 132 L190 58 L248 36 L306 58 L306 132 Z" fill="#fff4dc"></path><path d="M0 150 C76 132, 150 152, 220 132 C300 108, 350 124, 420 96 L420 190 L0 190 Z" fill="${accent}" opacity="0.64"></path>`,
+        train: `<rect x="78" y="74" width="264" height="70" rx="20" fill="#fff8eb"></rect><path d="M112 100 L308 100" stroke="${accent}" stroke-width="10" stroke-linecap="round"></path><rect x="122" y="114" width="50" height="20" rx="5" fill="#b9dce5"></rect><rect x="188" y="114" width="50" height="20" rx="5" fill="#b9dce5"></rect><rect x="254" y="114" width="50" height="20" rx="5" fill="#b9dce5"></rect>`,
+        garden: `<ellipse cx="210" cy="130" rx="128" ry="34" fill="#7eb4bd"></ellipse><path d="M84 100 C126 58, 174 64, 206 104 C162 116, 122 118, 84 100 Z M220 100 C262 58, 310 64, 342 104 C298 116, 258 118, 220 100 Z" fill="${accent}" opacity="0.78"></path>`,
+        park: `<path d="M96 136 C100 88, 136 88, 140 136 Z M182 136 C188 58, 240 58, 246 136 Z M288 136 C292 90, 326 90, 330 136 Z" fill="${accent}" opacity="0.82"></path>`,
+        cafe: `<path d="M100 132 L100 82 L220 82 L220 132 Z" fill="#fff4dc"></path><path d="M88 82 L232 82 L218 56 L102 56 Z" fill="${accent}"></path><path d="M242 132 C254 90, 302 90, 314 132" fill="none" stroke="${accent}" stroke-width="10" stroke-linecap="round"></path>`,
+        street: `<path d="M64 138 L64 78 L122 52 L180 78 L180 138 Z M206 138 L206 64 L272 36 L338 64 L338 138 Z" fill="#fff4dc"></path><path d="M88 80 L156 132 M156 80 L88 132 M232 66 L312 132 M312 66 L232 132" stroke="${accent}" stroke-width="7"></path>`,
+        bridge: `<path d="M34 138 C92 82, 150 82, 208 138 M212 138 C270 82, 328 82, 386 138" fill="none" stroke="#fff8eb" stroke-width="15" stroke-linecap="round"></path><path d="M34 138 C92 82, 150 82, 208 138 M212 138 C270 82, 328 82, 386 138" fill="none" stroke="${accent}" stroke-width="7" stroke-linecap="round"></path>`,
+        vineyard: `<path d="M0 116 C88 80, 150 104, 224 72 C294 42, 354 58, 420 24 L420 190 L0 190 Z" fill="#9db878"></path><circle cx="184" cy="74" r="18" fill="${accent}"></circle><circle cx="208" cy="94" r="18" fill="${accent}"></circle><circle cx="160" cy="94" r="18" fill="${accent}"></circle>`,
+        hotel: `<path d="M104 142 L104 58 L316 58 L316 142 Z" fill="#fff4dc"></path><path d="M128 58 L210 28 L292 58 Z" fill="${accent}"></path><rect x="190" y="100" width="40" height="42" fill="${accent}" opacity="0.86"></rect>`,
+        shopping: `<path d="M120 140 L138 74 L282 74 L300 140 Z" fill="#fff4dc"></path><path d="M166 74 C168 38, 252 38, 254 74" fill="none" stroke="${accent}" stroke-width="9" stroke-linecap="round"></path>`
+      };
+      return shapes[theme] || generic;
+    }
+
+    function shortLabel(value, max = 18) {
+      const text = String(value);
+      return text.length <= max ? text : `${text.slice(0, max - 1)}…`;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function escapeSvgText(value) {
+      return escapeHtml(value).replaceAll("'", "&apos;");
+    }
+
+    function escapeTextarea(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+    }
+
+    function selectDay(id, scrollDetail = false) {
+      selectedDay = Math.max(1, Math.min(20, Number(id)));
+      renderDayList();
+      renderDetail();
+      syncMap();
+      if (scrollDetail) {
+        document.getElementById("detail").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function setFilter(filter) {
+      activeFilter = filter;
+      renderTabs();
+      renderDayList();
+    }
+
+    function syncMap() {
+      document.querySelectorAll(".map-node").forEach(node => {
+        node.classList.toggle("active", Number(node.dataset.mapDay) === selectedDay);
+      });
+    }
+
+    function exportMarkdown() {
+      const lines = [
+        "# Заметки к маршруту: Париж, Нормандия, Бургундия, Брюссель, Амстердам, Ницца, Эльзас",
+        "",
+        "Даты: 21 сентября - 10 октября 2026",
+        ""
+      ];
+      tripDays.forEach(day => {
+        const note = (notes[day.id] || "").trim();
+        const route = routePlans[day.id];
+        const special = specialBlocks[day.id];
+        const guide = guideBlocks[day.id];
+        const food = foodPlans[day.id];
+        lines.push(`## День ${day.id} — ${day.date}, ${weekdayFor(day)} — ${day.title}`);
+        lines.push(`База: ${day.base}`);
+        if (day.lodging) {
+          lines.push(`Отель: ${day.lodging}`);
+        }
+        lines.push(`Транспорт/логистика: ${day.transfer}`);
+        lines.push(`Проверить: ${day.tickets.join("; ")}`);
+        if (route) {
+          lines.push(`Маршрутные точки: ${route.stops.join(" -> ")}`);
+        }
+        if (food) {
+          lines.push(`Еда по маршруту: ${food.items.map(item => `${item.name} (${item.tag}, ${item.area})`).join("; ")}`);
+        }
+        if (special) {
+          lines.push(`Спецрешение: ${special.title} — ${special.text}`);
+        }
+        if (guide) {
+          lines.push(`Гид: ${guide.title}. Кандидаты: ${guide.candidates.map(item => `${item.name} (${item.meta})`).join("; ")}`);
+        }
+        lines.push("");
+        lines.push(note || "_Заметок пока нет._");
+        lines.push("");
+      });
+      return lines.join("\n");
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("Скопировано в буфер обмена");
+      } catch {
+        const panel = document.getElementById("exportPanel");
+        const output = document.getElementById("exportOutput");
+        if (panel && output) {
+          panel.classList.add("open");
+          output.value = text;
+          output.focus();
+          output.select();
+          showToast("Текст открыт ниже: можно скопировать вручную");
+        }
+      }
+    }
+
+    function downloadJson() {
+      const payload = {
+        title: "Маршрут Франция + Брюссель + Амстердам, 21 сентября - 10 октября 2026",
+        exportedAt: new Date().toISOString(),
+        days: tripDays.map(day => ({
+          id: day.id,
+          date: `${day.date} 2026`,
+          weekday: weekdayFor(day),
+          title: day.title,
+          base: day.base,
+          lodging: day.lodging || null,
+          transfer: day.transfer,
+          tickets: day.tickets,
+          routeStops: routePlans[day.id]?.stops || [],
+          food: foodPlans[day.id] || null,
+          special: specialBlocks[day.id] || null,
+          guide: guideBlocks[day.id] || null,
+          note: notes[day.id] || ""
+        }))
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "france-trip-notes-2026.json";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showToast("JSON подготовлен к скачиванию");
+    }
+
+    function showToast(message) {
+      els.toast.textContent = message;
+      els.toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => els.toast.classList.remove("show"), 2400);
+    }
+
+    function skyScene(label, landmarkPath, color) {
+      return `
+        <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="sky-${slug(label)}" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#b9d7df"></stop>
+              <stop offset="1" stop-color="#f8efe0"></stop>
+            </linearGradient>
+          </defs>
+          <rect width="420" height="360" fill="url(#sky-${slug(label)})"></rect>
+          <circle cx="338" cy="72" r="34" fill="#f4c66f" opacity="0.92"></circle>
+          <path d="M0 286 C70 248, 126 294, 204 262 C286 229, 336 268, 420 238 L420 360 L0 360 Z" fill="#e8d7b2"></path>
+          <path d="${landmarkPath}" fill="none" stroke="${color}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M0 314 C86 302, 154 326, 245 306 C320 289, 362 302, 420 292 L420 360 L0 360 Z" fill="#6f9276" opacity="0.72"></path>
+          <text x="24" y="328" fill="#17212b" font-size="24" font-weight="900">${label}</text>
+        </svg>`;
+    }
+
+    function museumScene(label, color) {
+      return `
+        <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid slice">
+          <rect width="420" height="360" fill="#d9e7ea"></rect>
+          <circle cx="334" cy="70" r="32" fill="#f3c66b"></circle>
+          <path d="M66 268 L354 268 L318 162 L102 162 Z" fill="#efe5cc" stroke="#17212b" stroke-opacity="0.18" stroke-width="3"></path>
+          <path d="M100 162 L210 92 L320 162 Z" fill="${color}" opacity="0.86"></path>
+          <path d="M130 268 L210 164 L290 268 Z" fill="#d4edf2" stroke="#fff" stroke-width="5"></path>
+          <path d="M0 296 C88 282, 161 308, 242 290 C326 271, 370 286, 420 276 L420 360 L0 360 Z" fill="#8a9f76"></path>
+          <text x="24" y="328" fill="#17212b" font-size="24" font-weight="900">${label}</text>
+        </svg>`;
+    }
+
+    function basilicaScene(label, color) {
+      return `
+        <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid slice">
+          <rect width="420" height="360" fill="#cfe1e5"></rect>
+          <path d="M0 260 C92 213, 186 242, 261 211 C333 181, 374 198, 420 170 L420 360 L0 360 Z" fill="#e3d7bd"></path>
+          <path d="M92 268 L328 268 L328 178 L92 178 Z" fill="#fff8eb" stroke="#17212b" stroke-opacity="0.12" stroke-width="3"></path>
+          <path d="M128 178 C132 126, 174 126, 178 178 Z M242 178 C246 126, 288 126, 292 178 Z M184 178 C188 106, 232 106, 236 178 Z" fill="${color}" opacity="0.85"></path>
+          <circle cx="210" cy="210" r="22" fill="#d9e7ea"></circle>
+          <path d="M0 306 C76 291, 150 321, 238 300 C317 282, 374 294, 420 286 L420 360 L0 360 Z" fill="#6f9276"></path>
+          <text x="24" y="328" fill="#17212b" font-size="24" font-weight="900">${label}</text>
+        </svg>`;
+    }
+
+    function cliffScene(label, color) {
+      return `
+        <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid slice">
+          <rect width="420" height="360" fill="#b9dce5"></rect>
+          <path d="M0 238 C74 218, 128 230, 186 214 C250 196, 312 202, 420 180 L420 360 L0 360 Z" fill="#5d99ab"></path>
+          <path d="M0 248 L96 170 C127 144, 164 158, 174 196 C183 230, 213 251, 260 235 L420 178 L420 360 L0 360 Z" fill="#e9dfc6"></path>
+          <path d="M116 171 C143 172, 159 190, 163 219 C145 218, 131 210, 121 195 C116 187, 114 179, 116 171 Z" fill="#b9dce5"></path>
+          <path d="M0 304 C92 288, 167 318, 260 298 C333 282, 378 292, 420 284 L420 360 L0 360 Z" fill="${color}" opacity="0.82"></path>
+          <text x="24" y="328" fill="#17212b" font-size="24" font-weight="900">${label}</text>
+        </svg>`;
+    }
+
+    function gardenScene(label, color) {
+      return `
+        <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid slice">
+          <rect width="420" height="360" fill="#d8e8d5"></rect>
+          <path d="M0 252 C92 221, 155 249, 214 222 C288 190, 346 214, 420 178 L420 360 L0 360 Z" fill="#86a56e"></path>
+          <ellipse cx="216" cy="258" rx="142" ry="46" fill="#7eb4bd"></ellipse>
+          <path d="M74 205 C115 158, 169 160, 206 205 C160 220, 116 220, 74 205 Z" fill="#f0d1d9"></path>
+          <path d="M222 205 C263 158, 317 160, 354 205 C308 220, 264 220, 222 205 Z" fill="#f4df8e"></path>
+          <path d="M94 264 C148 238, 274 236, 338 262" fill="none" stroke="#fff8eb" stroke-width="9" stroke-linecap="round"></path>
+          <text x="24" y="328" fill="#17212b" font-size="24" font-weight="900">${label}</text>
+        </svg>`;
+    }
+
+    function islandScene(label, color) {
+      return `
+        <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid slice">
+          <rect width="420" height="360" fill="#c7e1e8"></rect>
+          <path d="M0 270 C84 248, 142 270, 210 248 C292 222, 345 246, 420 218 L420 360 L0 360 Z" fill="#72a8b8"></path>
+          <path d="M110 260 C138 196, 168 169, 210 121 C250 168, 287 198, 314 260 Z" fill="#e8dfc8" stroke="#17212b" stroke-opacity="0.12" stroke-width="3"></path>
+          <path d="M184 178 L236 178 L236 249 L184 249 Z M196 121 L224 121 L224 178 L196 178 Z M210 74 L230 121 L190 121 Z" fill="${color}"></path>
+          <path d="M0 306 C70 289, 151 316, 242 296 C322 279, 374 292, 420 284 L420 360 L0 360 Z" fill="#d7c894"></path>
+          <text x="24" y="328" fill="#17212b" font-size="24" font-weight="900">${label}</text>
+        </svg>`;
+    }
+
+    function palaceScene(label, color) {
+      return `
+        <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid slice">
+          <rect width="420" height="360" fill="#d7e5e1"></rect>
+          <path d="M58 245 L362 245 L362 158 L58 158 Z" fill="#f0dfba" stroke="#17212b" stroke-opacity="0.12" stroke-width="3"></path>
+          <path d="M84 158 L336 158 L306 116 L114 116 Z" fill="${color}" opacity="0.88"></path>
+          <path d="M92 184 L328 184 M92 212 L328 212" stroke="#fff8eb" stroke-width="8"></path>
+          <path d="M42 282 C102 255, 148 283, 210 258 C276 232, 326 253, 378 230" fill="none" stroke="#6f9276" stroke-width="24" stroke-linecap="round"></path>
+          <path d="M0 306 C86 288, 170 318, 255 298 C327 282, 375 292, 420 284 L420 360 L0 360 Z" fill="#6f9276"></path>
+          <text x="24" y="328" fill="#17212b" font-size="24" font-weight="900">${label}</text>
+        </svg>`;
+    }
+
+    function canalScene(label, color) {
+      return `
+        <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid slice">
+          <rect width="420" height="360" fill="#cfe3e8"></rect>
+          <path d="M0 258 C72 236, 144 252, 210 232 C282 210, 344 220, 420 198 L420 360 L0 360 Z" fill="#6ea5b5"></path>
+          <path d="M52 238 L52 150 L94 126 L136 150 L136 238 Z M154 238 L154 132 L196 108 L238 132 L238 238 Z M256 238 L256 156 L298 132 L340 156 L340 238 Z" fill="#f4e8d0"></path>
+          <path d="M72 238 L72 178 M104 238 L104 178 M174 238 L174 160 M206 238 L206 160 M276 238 L276 184 M308 238 L308 184" stroke="${color}" stroke-width="8"></path>
+          <path d="M66 286 C126 254, 164 292, 224 264 C282 238, 338 264, 380 238" fill="none" stroke="#fff8eb" stroke-width="9" stroke-linecap="round"></path>
+          <text x="24" y="328" fill="#17212b" font-size="24" font-weight="900">${label}</text>
+        </svg>`;
+    }
+
+    function timberScene(label, color) {
+      return `
+        <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid slice">
+          <rect width="420" height="360" fill="#d5e4e0"></rect>
+          <path d="M42 254 L42 150 L112 102 L182 150 L182 254 Z M202 254 L202 138 L278 92 L354 138 L354 254 Z" fill="#f5ead6" stroke="#17212b" stroke-opacity="0.12" stroke-width="3"></path>
+          <path d="M70 144 L160 244 M160 144 L70 244 M230 134 L330 244 M330 134 L230 244" stroke="${color}" stroke-width="9"></path>
+          <path d="M0 284 C70 266, 142 286, 210 266 C282 246, 344 254, 420 232 L420 360 L0 360 Z" fill="#7aaab4"></path>
+          <text x="24" y="328" fill="#17212b" font-size="24" font-weight="900">${label}</text>
+        </svg>`;
+    }
+
+    function vineyardScene(label, color) {
+      return `
+        <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid slice">
+          <rect width="420" height="360" fill="#d9e4d3"></rect>
+          <path d="M0 220 C86 180, 154 210, 224 176 C296 142, 356 160, 420 122 L420 360 L0 360 Z" fill="#9db878"></path>
+          <path d="M0 258 C96 228, 176 252, 270 220 C333 198, 376 206, 420 190" fill="none" stroke="#6f7f47" stroke-width="12"></path>
+          <path d="M0 292 C96 262, 176 286, 270 254 C333 232, 376 240, 420 224" fill="none" stroke="#6f7f47" stroke-width="12"></path>
+          <circle cx="194" cy="150" r="20" fill="${color}"></circle>
+          <circle cx="218" cy="172" r="20" fill="${color}"></circle>
+          <circle cx="170" cy="172" r="20" fill="${color}"></circle>
+          <path d="M194 132 C198 104, 222 91, 248 96" fill="none" stroke="#4f7b55" stroke-width="8" stroke-linecap="round"></path>
+          <text x="24" y="328" fill="#17212b" font-size="24" font-weight="900">${label}</text>
+        </svg>`;
+    }
+
+    function rivieraScene(label, color) {
+      return `
+        <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid slice">
+          <rect width="420" height="360" fill="#bfe2eb"></rect>
+          <circle cx="334" cy="74" r="34" fill="#f4c66f"></circle>
+          <path d="M0 222 C86 184, 151 210, 228 174 C300 140, 360 154, 420 124 L420 360 L0 360 Z" fill="#d9c98f"></path>
+          <path d="M0 268 C80 244, 144 266, 214 242 C296 214, 346 230, 420 202 L420 360 L0 360 Z" fill="#4fa3b7"></path>
+          <path d="M88 230 L88 168 L136 168 L136 230 Z M154 230 L154 142 L202 142 L202 230 Z M220 230 L220 178 L268 178 L268 230 Z" fill="#fff5df"></path>
+          <path d="M104 168 L122 132 L140 168 M170 142 L188 106 L206 142" fill="${color}"></path>
+          <text x="24" y="328" fill="#17212b" font-size="24" font-weight="900">${label}</text>
+        </svg>`;
+    }
+
+    function monacoScene(label, color) {
+      return `
+        <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid slice">
+          <rect width="420" height="360" fill="#c8e1e7"></rect>
+          <path d="M0 250 C72 215, 134 232, 204 198 C284 160, 346 174, 420 132 L420 360 L0 360 Z" fill="#b8c884"></path>
+          <path d="M0 286 C86 256, 156 280, 230 252 C306 224, 358 236, 420 210 L420 360 L0 360 Z" fill="#4fa3b7"></path>
+          <path d="M76 232 L76 152 L138 152 L138 232 Z M158 232 L158 116 L220 116 L220 232 Z M240 232 L240 168 L302 168 L302 232 Z" fill="#fff5df"></path>
+          <path d="M158 116 L189 72 L220 116 Z" fill="${color}"></path>
+          <path d="M310 250 C334 220, 368 220, 392 250" fill="none" stroke="#fff8eb" stroke-width="8" stroke-linecap="round"></path>
+          <text x="24" y="328" fill="#17212b" font-size="24" font-weight="900">${label}</text>
+        </svg>`;
+    }
+
+    function trainScene(label, color) {
+      return `
+        <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid slice">
+          <rect width="420" height="360" fill="#d8e7e5"></rect>
+          <path d="M0 252 C80 222, 150 238, 222 212 C298 184, 360 190, 420 166 L420 360 L0 360 Z" fill="#d8c691"></path>
+          <rect x="78" y="142" width="264" height="92" rx="22" fill="#fff8eb" stroke="#17212b" stroke-opacity="0.12" stroke-width="3"></rect>
+          <path d="M110 174 L310 174" stroke="${color}" stroke-width="12" stroke-linecap="round"></path>
+          <rect x="116" y="192" width="52" height="28" rx="6" fill="#b9dce5"></rect>
+          <rect x="184" y="192" width="52" height="28" rx="6" fill="#b9dce5"></rect>
+          <rect x="252" y="192" width="52" height="28" rx="6" fill="#b9dce5"></rect>
+          <path d="M82 268 L338 268 M112 292 L306 292" stroke="#17212b" stroke-opacity="0.4" stroke-width="8" stroke-linecap="round"></path>
+          <text x="24" y="328" fill="#17212b" font-size="24" font-weight="900">${label}</text>
+        </svg>`;
+    }
+
+    function avignonScene(label, color) {
+      return `
+        <svg viewBox="0 0 420 360" preserveAspectRatio="xMidYMid slice">
+          <rect width="420" height="360" fill="#d9e7ea"></rect>
+          <circle cx="336" cy="72" r="34" fill="#f4c66f"></circle>
+          <path d="M0 250 C80 220, 142 236, 214 204 C288 172, 348 184, 420 144 L420 360 L0 360 Z" fill="#d9c894"></path>
+          <path d="M82 252 L82 146 L142 146 L142 110 L204 110 L204 146 L268 146 L268 252 Z" fill="#efe5cc" stroke="#17212b" stroke-opacity="0.12" stroke-width="3"></path>
+          <path d="M102 146 L122 102 L142 146 M204 146 L236 92 L268 146" fill="${color}"></path>
+          <path d="M38 286 C92 246, 150 246, 204 286 M216 286 C270 246, 328 246, 382 286" fill="none" stroke="#fff8eb" stroke-width="9" stroke-linecap="round"></path>
+          <text x="24" y="328" fill="#17212b" font-size="24" font-weight="900">${label}</text>
+        </svg>`;
+    }
+
+    function slug(value) {
+      return String(value).toLowerCase().replace(/[^a-z0-9а-я]+/gi, "-");
+    }
+
+    document.addEventListener("click", event => {
+      const dayButton = event.target.closest("[data-day]");
+      if (dayButton) {
+        selectDay(dayButton.dataset.day, true);
+        return;
+      }
+
+      const filterButton = event.target.closest("[data-filter]");
+      if (filterButton) {
+        setFilter(filterButton.dataset.filter);
+        return;
+      }
+
+      const mapNode = event.target.closest("[data-map-day]");
+      if (mapNode) {
+        selectDay(mapNode.dataset.mapDay, true);
+        return;
+      }
+
+      const action = event.target.closest("[data-action]")?.dataset.action;
+      if (!action) return;
+
+      if (action === "export-notes") {
+        const text = exportMarkdown();
+        copyText(text);
+        const panel = document.getElementById("exportPanel");
+        const output = document.getElementById("exportOutput");
+        if (panel && output) {
+          panel.classList.add("open");
+          output.value = text;
+        }
+      }
+
+      if (action === "show-all") {
+        activeFilter = "all";
+        searchTerm = "";
+        els.search.value = "";
+        renderTabs();
+        renderDayList();
+        showToast("Показаны все дни");
+      }
+
+      if (action === "download-json") {
+        downloadJson();
+      }
+
+      if (action === "prev-day") {
+        selectDay(selectedDay - 1, true);
+      }
+
+      if (action === "next-day") {
+        selectDay(selectedDay + 1, true);
+      }
+
+      if (action === "copy-day-note") {
+        const day = tripDays.find(item => item.id === selectedDay);
+        const text = [
+          `День ${day.id} — ${day.date}, ${weekdayFor(day)} — ${day.title}`,
+          `База: ${day.base}`,
+          ...(day.lodging ? [`Отель: ${day.lodging}`] : []),
+          `Логистика: ${day.transfer}`,
+          "",
+          (notes[day.id] || "").trim() || "_Заметок пока нет._"
+        ].join("\n");
+        copyText(text);
+      }
+
+      if (action === "clear-day-note") {
+        notes[selectedDay] = "";
+        saveNotes();
+        renderTabs();
+        renderDayList();
+        renderDetail();
+        showToast("Заметка очищена");
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.target.matches("textarea, input")) return;
+      if (event.key === "ArrowLeft") selectDay(selectedDay - 1);
+      if (event.key === "ArrowRight") selectDay(selectedDay + 1);
+    });
+
+    els.search.addEventListener("input", event => {
+      searchTerm = event.target.value;
+      renderDayList();
+    });
+
+    document.querySelectorAll(".map-node").forEach(node => {
+      node.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          selectDay(node.dataset.mapDay, true);
+        }
+      });
+    });
+
+    renderTabs();
+    renderDayList();
+    renderDetail();
+    syncMap();
+  </script>
+</body>
+</html>
